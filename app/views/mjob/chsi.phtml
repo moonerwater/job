@@ -1,0 +1,232 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛 - 学信网{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	body, html {
+	    background-color: #fff;
+	}
+	.mui-content {
+		background: #fff;	
+	}
+	.mui-content {
+		padding:3.74rem;
+	}
+	.logobox {
+		height: 8.6rem;
+		width: 100%;
+		margin-top: 4.4rem;
+		margin-bottom: 2.96rem;
+	}
+	.inputbox input {
+		border: none;
+    	border-bottom: 1px solid #efefef;
+	}
+	.mui-btn-block {
+    	height: 4.62rem;
+	    border-radius: 4.62rem;
+	    font-size: 1.6rem;
+	    width: 100%;
+	    margin: 0 auto;
+	    border: 1px solid #1de291;
+	    background-color: #1de291;
+	    margin-top: 2rem;
+    }
+    .captcharow {
+    	position: relative;
+    }
+    img.captchabox {
+    	display:block;
+    	margin:0 auto;
+    	/*width: 6.45rem;
+    	height: 3.92rem;*/
+    	
+    	height:80px;
+    	/*position: absolute;
+    	right:0;
+    	top:-1rem;*/
+    }
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">学信网</h1>
+</header>
+
+<div class="mui-content">
+	<div class="logobox rel">
+		<img src="/public/img/mjob/chsi.png" class="auto-center">
+	</div>
+	<div class="inputbox">
+		<div class="mui-input-row">
+			<input type="text" name="username" class="mui-input-clear" placeholder="手机号/身份证号/邮箱">
+		</div>
+		<div class="mui-input-row mui-password">
+			<input type="password" name="password" class="mui-input-password" placeholder="密码">
+		</div>
+		<div class="mui-input-row none captcharow rel">
+			<input type="text" name="captcha" class="mui-input-clear" placeholder="请输入下方验证码">
+			<!-- <img class="captchabox" src="/public/img/mjob/login.png"> -->
+		</div>
+		<!-- <img class="captchabox" src="/public/img/mjob/login.png"> -->
+	</div>
+	<button type="button" id='Login' class="mui-btn mui-btn-success mui-btn-block loginbtn">验  证</button>
+	<button type="button" id='Catpcha' class="mui-btn mui-btn-success mui-btn-block loginbtn none" disabled="disabled">验  证</button>
+</div>
+
+
+<script type="text/javascript">
+
+	mui.init();
+
+	var nativeWebview, imm, InputMethodManager;
+	var initNativeObjects = function() {
+		if (mui.os.android) {
+			var main = plus.android.runtimeMainActivity();
+			var Context = plus.android.importClass("android.content.Context");
+			InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+			imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+		} else {
+			nativeWebview = plus.webview.currentWebview().nativeInstanceObject();
+		}
+	};
+	var showSoftInput = function() {
+		if (mui.os.android) {
+			imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+		} else {
+			nativeWebview.plusCallMethod({
+				"setKeyboardDisplayRequiresUserAction": false
+			});
+		}
+		setTimeout(function() {
+			var inputElem = document.querySelector('input');
+			inputElem.focus();
+			inputElem.parentNode.classList.add('mui-active'); //第一个是search，加上激活样式
+		}, 200);
+	};
+	mui.plusReady(function() {
+		initNativeObjects();
+		showSoftInput();
+	});
+
+	var userid = {{ userinfo['id'] }};
+	var indexload;
+
+	$(function(){
+		var cookie = $.cookie('waiting');
+		if(cookie){
+			$("input[name='username']").attr('disabled','disabled');
+			$("input[name='password']").attr('disabled','disabled');
+			$('.loginbtn').attr('disabled','disabled');
+			layer.msg('验证时间间隔为3分钟，请稍后再试。',{icon: 5});
+			setTimeout("window.location.href = 'promote'",3000);
+		}
+	});
+	
+	function getchsiresult(){
+		$.get('/mjob/getchsiresult',function(data){
+			if(data.result.status == "login success") {
+				layer.close(indexload);
+				layer.msg('验证成功。',{icon: 1});
+				setTimeout("window.location.href = 'main'",1000);
+			}
+			if(data.result.status == "error") {
+				layer.close(indexload);
+				layer.msg('验证失败，请3分钟后再试。',{icon: 5});
+				$('.loginbtn').attr('disabled','disabled');
+				// var expiresDate= new Date();
+				// expiresDate.setTime(expiresDate.getTime() + (60*2*1000));
+				// $.cookie('waiting', "2min", { expires: expiresDate });
+				setTimeout("window.location.href = 'promote'",2000);
+			}
+			if(data.result.status == "need code") {
+				layer.close(indexload);
+				var src = data.result.imgbase64;
+				$('.captcharow').show();
+				$('.captcharow').after("<img class='captchabox' src='"+src+"'>");
+				$('#Login').hide().attr('disabled','disabled');
+				$('#Catpcha').show().removeAttr('disabled');
+				return false;
+			}
+		},'json');
+		// console.log('222')
+		// layer.close(indexload);
+		// var src = "/public/img/mjob/login.png";
+		// $('.captcharow').show();
+		// $('.captcharow').after("<img class='captchabox' src='"+src+"'>");
+		// $('#Login').hide().attr('disabled','disabled');
+		// $('#Catpcha').show().removeAttr('disabled');
+		// return false;
+	}
+
+	function getchsiresult2(){
+		$.get('/mjob/getchsiresult',function(data){
+			if(data.result.status == "login success") {
+				layer.close(indexload);
+				layer.msg('验证成功。',{icon: 1});
+				setTimeout("window.location.href = 'main'",1000);
+			}
+			else {
+				layer.close(indexload);
+				layer.msg('验证失败，请3分钟后再试。',{icon: 5});
+				$('.loginbtn').attr('disabled','disabled');
+				// var expiresDate= new Date();
+				// expiresDate.setTime(expiresDate.getTime() + (60*2*1000));
+				// $.cookie('waiting', "2min", { expires: expiresDate });
+				setTimeout("window.location.href = 'promote'",2000);
+			}
+		},'json');
+		// console.log('333');
+		// layer.msg('哎呦不错哦',{icon: 1});
+		// setTimeout("window.location.href = 'main'",2000);
+	}
+
+	$('#Login').on('tap',function(){
+		var username = $("input[name='username']").val();
+		var password = $("input[name='password']").val();
+		
+		if(username.length == ''){
+	        layer.msg('请填写手机号/身份证号/邮箱。',{icon: 5});
+	        return false;
+	    }
+	    if(password.length == ''){
+	        layer.msg('请填写密码。',{icon: 5});
+	        return false;
+	    }
+
+	    $("input[name='username']").attr('disabled','disabled');
+		$("input[name='password']").attr('disabled','disabled');
+		//$("input[name='captcha']").attr('disable','disable');
+		indexload = layer.load(2, {
+		  shade: [0.4,'#000'] //0.1透明度的白色背景
+		});
+
+		$.get('http://18.188.242.251:81/mjob/addchsiuser',{'username':username,'password':password,'userid':userid},function(data){
+			
+		},'json');
+		//console.warn('111')
+		var expiresDate= new Date();
+		expiresDate.setTime(expiresDate.getTime() + (60*3*1000));
+		$.cookie('waiting', "2min", { expires: expiresDate });
+		setTimeout("getchsiresult()",20000);
+	});
+
+	$('#Catpcha').on('tap',function(){
+		var captcha = $("input[name='captcha']").val();
+		if(captcha == ''){
+	        layer.msg('请填写验证码。',{icon: 5});
+	        return false;
+	    } else{
+			indexload = layer.load(2, {
+			  shade: [0.4,'#000'] //0.1透明度的白色背景
+			});
+			$.get('/mjob/addchsicode',{'code':captcha},function(data){
+				
+			},'json');
+			setTimeout("getchsiresult2()",25000);
+		}
+	});
+
+</script>
+{% endblock %}

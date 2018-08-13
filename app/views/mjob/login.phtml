@@ -1,0 +1,286 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛 - 登录{% endblock %}
+{% block content %}
+<style type="text/css">
+	body, html {
+	    background-color: #1f36bf;
+	}
+	.bg {
+		width: 100%;
+		/*margin:0 auto;*/
+		margin-top:4.11rem;
+		height:22.3rem;
+		position: relative;
+    	left: -.6rem;
+	}
+	.bg img {
+		max-width: 100%;
+		max-height: 100%;
+	}
+	::-webkit-input-placeholder { /* WebKit browsers */
+    	color:    #647bff;
+	}
+	:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	    color:    #647bff;
+	}
+	::-moz-placeholder { /* Mozilla Firefox 19+ */
+	    color:    #647bff;
+	}
+	:-ms-input-placeholder { /* Internet Explorer 10+ */
+	    color:    #647bff;
+	}
+	.inputbox {
+		width: 70%;
+		margin:0 auto;
+		margin-top:-4.06rem;
+	}
+	.inputbox .rows {
+		border-bottom: 1px solid #647bff;
+		height:2.78rem;
+		margin-bottom: 1.1rem;
+	}
+	.inputbox .rows span,
+	.inputbox .rows input {
+		color:#fff;
+		font-size:1.32rem;
+		height:2.78rem;
+		line-height: 2.78rem;
+		padding:0;
+	}
+	.inputbox .rows input {
+		width:66.66%;
+		/*padding:0 15px;*/
+		border:none;
+		background-color: transparent;
+		margin:0;
+		float:left;
+	}
+	.inputbox .rows button {
+		width: 33.3%;
+		padding: .5rem .8rem;
+		font-size:1rem;
+		background-color: transparent;
+		border:none;
+		border-left:1px solid #647bff;
+		color:#fff;
+		float:left;
+		border-radius: 0;
+	    border-top-left-radius: 0;
+	    border-top-right-radius: 0;
+	    border-bottom-right-radius: 0;
+	    border-bottom-left-radius: 0;
+	    position: relative;
+	    top: -.3rem;
+	    left: -.2rem;
+	}
+	.login {
+		display: block;
+		position: relative;
+		text-decoration: none;
+		text-align: center;
+		font-weight: 700;
+		width: 65%;
+		height: 3.67rem;
+		line-height: 3.67rem;
+		font-size:1.51rem;
+		background-color: #fac82e;
+		color:#fff;
+		border-radius: 3.67rem;
+		margin:0 auto;
+		margin-top:5.64rem;
+		box-shadow: 2px 3px 5px #4e4e4e;
+	}
+	.login span {
+		position: absolute;
+		width: 4.43rem;
+		height: 4.05rem;
+		left: 2rem;
+		bottom: 0;
+		background: url("/public/img/mjob/loginbtn.png") center no-repeat;
+		background-size: cover;
+	}
+	h4{
+		color:#808fe6;
+		text-align: center;
+		font-size:.7rem;
+		margin-top:1rem;
+	}
+	.waiting {
+		color:#afafaf !important;
+	}
+</style>
+
+<div class="container">
+	
+	<div class="bg rel">
+		<img src="/public/img/mjob/login2.png" class="auto-center">
+	</div>
+
+	<div class="inputbox">
+		<div class="rows">
+			<span class="col-xs-2">+86</span>
+			<input type="number" name="phone" placeholder="请输入手机号码" class="col-xs-8">
+		</div>
+		<div class="rows">
+			<input type="number" name="captcha" placeholder="请输入验证码" style="position: relative;top:-.4rem;">
+			<button class="getcaptcha">发送验证码</button>
+			<button class="waiting none"></button>
+		</div>
+		<div class="rows none inviterow">
+			<span class="col-xs-4">邀请码：</span>
+			<input type="text" name="invitecode" value="{{ invitecode }}" placeholder="请输入邀请码" class="col-xs-8">
+		</div>
+	</div>
+
+	<a href="#" class="login">登  岛<span></span></a>
+
+	<h4>开启即表示同意<a href="#">《用户服务协议》</a></h4>
+</div>
+<script type="text/javascript">
+
+	var user_type;
+
+	var backurl = "{{ backurl }}";
+
+	//var invite = '{{ invitecode }}';
+
+	// $(function(){
+	// 	var urlArr = window.location.href.split('?');
+	//     var rulesA = urlArr[1];
+	//     if(rulesA){
+	//     	console.log(rulesA);
+	//     	var rulesB = rulesA.split('=');
+	//     	var rulesC = rulesB[1];
+	//     	invite = rulesC;
+	//     }
+	// });
+
+	$('.getcaptcha').on('tap',function(){
+		var mobile = $("input[name='phone']").val();
+		if(mobile.length == ''){
+	        layer.msg('请填写手机号。',{icon: 5});
+	        return false;
+	    }
+		if(mobile.length != 11){
+	        layer.msg('手机号长度不正确。',{icon: 5});
+	        return false;
+	    }
+	    if(!checkMobile(mobile)){
+	    	layer.msg('请输入正确的手机号。',{icon: 5});
+        	return false;
+        }
+
+        $(this).attr('disabled','disabled');
+        $.get('/mjob/getphonecode',{'mobile':mobile},function(data){
+			if(data.error_code == '0'){
+				mobileMsg();
+				//user_type = data.result.user_type;
+				if(data.result.user_type == "new") {
+					$('.inviterow').show();
+				} else {
+					$("input[name='invitecode']").val('');
+					$('.inviterow').hide();
+				}
+			} else {
+				layer.msg(data.reason,{icon: 5});
+			}
+		},'json');
+	});
+
+
+	$('.login').on('tap',function(){
+		var mobile = $("input[name='phone']").val();
+		var code = $("input[name='captcha']").val();
+
+		if(mobile.length == ''){
+	        layer.msg('请填写手机号。',{icon: 5});
+	        return false;
+	    }
+		if(mobile.length != 11){
+	        layer.msg('手机号长度不正确。',{icon: 5});
+	        return false;
+	    }
+	    if(!checkMobile(mobile)){
+	    	layer.msg('请输入正确的手机号。',{icon: 5});
+        	return false;
+        }
+        if(code.length == ''){
+	        layer.msg('请填写验证码。',{icon: 5});
+	        return false;
+	    }
+	    if(code.length != 4){
+	        layer.msg('验证码长度不正确。',{icon: 5});
+	        return false;
+	    }
+
+	    $.get('/mjob/checkphonecode',{
+	    	'mobile':mobile ,
+	    	'code':code ,
+	    	'code_user':$("input[name='invitecode']").val()
+	    },function(data){
+	    	if(data.reason == "success"){
+	    		if(data.result.user_type == "new"){
+	    			if(backurl == ""){
+		    			$.cookie('regscore', data.result.reg_score, { expires: 1 });
+		    			window.location.href = 'main';
+		    		} else {
+		    			//window.location.href = backurl;
+		    			layer.msg("登陆成功，即将跳转...",{icon: 1,time:2000});
+						setTimeout("window.location.href='" + backurl + "'",2000);
+		    		}
+	    		} else {
+	    			if(backurl == ""){
+		    			window.location.href = 'main';
+		    		} else {
+		    			//window.location.href = backurl;
+		    			layer.msg("登陆成功，即将跳转...",{icon: 1,time:2000});
+						setTimeout("window.location.href='" + backurl + "'",2000);
+		    		}
+	    			//window.location.href = 'main' + "?login_score="+ data.result.login_score;
+	    		}
+	    		// setCookie(mobile,'first','23:59:59',function(){
+	      //           //layer.msg("每日登陆，算力+"+10+"。",{icon: 6,time:3500});
+	      //           alert('cookie过期了');
+	      //       });
+	     		//$.cookie('usertype', 'data.result.user_type', { expires: 7 });
+	    	} else {
+	    		layer.msg(data.reason,{icon: 5});
+	    	}
+	    },'json');
+
+	});
+
+	var times = 0;
+
+	function mobileMsg(){
+	    if(times<60){
+	        $('.getcaptcha').hide();
+	        $('.waiting').show().text('等待'+(60-times)+'秒');
+	        // $('.getcaptcha').attr('disable','disable').removeClass('getcaptcha').addClass('waiting');
+	        // $('.waiting').text('等待'+(60-times)+'秒');
+	        times = times + 1;
+	        setTimeout(function(){mobileMsg()}, 1000);
+	    }else{
+	        times = 0;
+	        $('.waiting').hide()
+	        $('.getcaptcha').removeAttr('disabled');
+	        $('.getcaptcha').show();
+	        // $('.waiting').removeAttr('disable').removeClass('waiting').addClass('getcaptcha');
+	        // $('.getcaptcha').text('发送验证码');
+	    }
+	}
+
+	function checkMobile( strMobile ) {
+	    var regu = /^[1][3-9][0-9]{9}$/;
+	    var re = new RegExp(regu);
+	    if (re.test(strMobile)) {
+	        return true;  
+	    }
+	    else {
+	        return false;
+	    }
+	};
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <!--兼容性meta 让浏览器以webkit内核打开网页 start-->
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <!--兼容性meta end-->
+    <title>{% block title  %}{% endblock %}</title>
+    <meta name="keywords" content="金职链">
+    <meta name="description" content="金职链">
+    <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url('css/common.css')}}"/>
+    <script type="text/javascript" src="{{url('js/jquery.min.js')}}"></script>
+    {% block css %}
+        <style type="text/css">
+            body,html {
+                width: 100%;
+                font-family: '微软雅黑';
+            }
+        </style>
+    {% endblock %}
+    {% block js %}
+    {% endblock %}
+</head>
+<body>
+{% block header %}{% endblock %}
+{% block content %}{% endblock %} 
+{% block footer %}
+{{ partial('common/layout-footer')}}
+{% endblock %}
+</body>
+</html>

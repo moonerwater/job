@@ -1,0 +1,17 @@
+app/config/config.ini.dev
+cache/
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+.project
+.settings
+.buildpath
+*.komodoproject
+*.sublime-project
+*.sublime-workspace
+.idea/
+composer.json
+composer.lock
+composer.phar
+vendor/

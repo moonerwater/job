@@ -1,0 +1,60 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职岛 - 账户设置{% endblock %}
+
+
+{% block content %}
+<style type="text/css">
+	.mui-btn-block {
+	    height: 4.62rem;
+	    border-radius: 4.62rem;
+	    font-size: 1.6rem;
+	    width: 80%;
+	    margin: 0 auto;
+	    border: 1px solid #f44a4a;
+	    background-color: #f44a4a;
+	    margin-top: 2rem;
+	}
+	body,html,.mui-content {
+		height:100%;
+	}
+	.mui-table-view-cell:after {
+		left:0;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">账户设置</h1>
+</header>
+
+<div class="mui-content">
+	<ul class="mui-table-view">
+		<li class="mui-table-view-cell none">
+			<a class="mui-navigate-right">
+				人脸识别
+			</a>
+		</li>
+		<li class="mui-table-view-cell none">
+			<a href="warrant" class="mui-navigate-right">
+				授权设置
+			</a>
+		</li>
+		<li class="mui-table-view-cell none">
+			<a class="mui-navigate-right">
+				重置交易密码
+			</a>
+		</li>
+		<li class="mui-table-view-cell none">
+			<a href="aboutus" class="mui-navigate-right">
+				关于金职链
+			</a>
+		</li>
+		<li class="mui-table-view-cell none">
+			<a href="/mjob/main#a-tabbar-with-chat" class="mui-navigate-right">
+				关于金职岛
+			</a>
+		</li>
+	</ul>
+	<a href="/mjob/logout" id="logout" class="mui-btn mui-btn-danger mui-btn-block">退出登录</a>
+</div>
+{% endblock %}

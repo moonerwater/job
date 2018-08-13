@@ -1,0 +1,56 @@
+.rel {
+	position: relative;
+}
+.abo {
+	position: absolute;
+}
+.left {
+	float:left;
+}
+.right {
+	float:right;
+}
+.cls {
+	clear:both;
+}
+.auto-center {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin:auto;
+}
+img.auto-center {
+	max-width: 100%;
+	max-height: 100%;
+}
+.none {
+	display: none;
+}
+img.nonepng {
+	display: block;
+	width: 8rem;
+	height: 8rem;
+	margin:0 auto;
+	margin-top:10rem;
+	margin-bottom: 2rem;
+}
+div.noneshow {
+	padding: 10px 0;
+    text-align: center;
+    font-size: 1.4rem;
+}
+.mui-fullscreen.mui-slider .mui-slider-group {
+	padding-bottom: 5.82rem;
+}
+.gradual {
+	background: -webkit-linear-gradient(left, #ff0a8d , #ff5d24); /* Safari 5.1 - 6.0 */
+	background: -o-linear-gradient(right, #ff0a8d, #ff5d24); /* Opera 11.1 - 12.0 */
+	background: -moz-linear-gradient(right, #ff0a8d, #ff5d24); /* Firefox 3.6 - 15 */
+	background: linear-gradient(to right, #ff0a8d , #ff5d24); /* 标准的语法 */
+}
+.gradual.mui-btn-block {
+	border:none !important;
+	color:#fff !important;
+}

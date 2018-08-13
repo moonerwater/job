@@ -1,0 +1,293 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝 - 首页{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	
+	.bgtit {
+		height: 18.3rem;
+		background: #1f36bf;
+	}
+	.conrow {
+		height: 6.52rem;
+		margin-bottom: 1rem;
+		margin-top:2.2rem;
+	}
+	.conrow .con {
+		display: block;
+		padding:0;
+	}
+	.conrow .con .icorow {
+		height: 3.8rem;
+		margin-bottom: 1rem;
+	}
+	.conrow .con .icorow .ico {
+		width: 3.8rem;
+		height: 3.8rem;
+		border-radius: 50%;
+	}
+	.conrow .con h5 {
+		margin:0;
+		text-align: center;
+		font-size:1rem;
+		color:#fff;
+	}
+	.mui-slider {
+		height: 14.74rem;
+		background: #fff;
+	}
+	.mui-slider-indicator {
+		/*bottom: 0;*/
+	}
+	.mui-slider-indicator .mui-indicator {
+		margin: 1px 2px;
+		background: #d7dae7;
+	}
+	.mui-slider-indicator .mui-active.mui-indicator {
+		background: #1f36bf;
+	}
+	.mui-slider-item {
+		height: 14.74rem !important;
+		/*background: #fff;*/
+	}
+	.mui-slider-item a {
+		position:relative;
+		width: 100%;
+		height: 100%;
+	}
+	.news {
+	    width: 100%;
+	    height: 3.23rem;
+	    line-height: 3.23rem;
+	    border-radius: 3.23rem;
+	    background-color: #3552fc;
+	    margin-top: 1rem;
+	    margin-bottom: 1rem;
+	    color: #fff;
+	    padding: 0 1.2rem;
+	    font-size: 1rem;
+	}
+	.news a {
+	    color: #fff;
+	}
+	.news span {
+	    display: inline-block;
+	    width: 5.48rem;
+	    height: 1.96rem;
+	    line-height: 1.96rem;
+	    border-radius: 1.96rem;
+	    text-align: center;
+	    background-color: #fe4b28;
+	    margin-right: .3rem;
+	}
+	.mui-table-view {
+		margin-bottom: 6.82rem;
+	}
+	.mui-table-view:before,
+	.mui-table-view:after {
+		background: transparent;
+	}
+	.mui-table-view-cell {
+		height: 8.9rem;
+		padding:15px;
+	}
+	.mui-table-view-cell .item {
+		height: 100%;
+		display: block;
+		margin:0 !important;
+		padding:0 !important;
+		overflow: inherit !important;
+		white-space: inherit !important;
+	}
+	.mui-table-view .mui-media-object {
+		width: 6.46rem;
+		max-width:6.46rem;
+		height: 6.46rem;
+	}
+	.mui-table-view-cell:after {
+		right: 15px;
+	}
+	.mui-table-view-cell .title {
+		height: 3rem;
+		margin-bottom: 1.4rem;
+		color:#67686e;
+		line-height: 1.58rem;
+		font-size:1.14rem;
+		overflow: hidden;
+	}
+	.mui-table-view-cell .title .tips {
+		background: #fbb73c;
+		display: inline-block;
+		width: 5.5rem;
+		height: 1.52rem;
+		line-height: 1.58rem;
+		color:#fff;
+		text-align: center;
+		margin-right: 5px;
+		border-radius: 1.52rem;
+	}
+	.mui-table-view-cell .status {
+		height: 2.5rem;
+		font-size: 1rem;
+	}
+	.mui-table-view-cell .status .rate,
+	.mui-table-view-cell .status .link {
+		padding:0;
+	}
+	.mui-table-view-cell .status .rate.col-xs-7 {
+		width: 65%;
+	}
+	.mui-table-view-cell .status .rate p {
+		font-size:1rem;
+	}
+	.mui-table-view-cell .status .rate .progressrow {
+		width: 100%;
+		height: 5px;
+		background: #d7dae7;
+		border-radius: 5px;
+		position:relative;
+	}
+	.mui-table-view-cell .status .rate .progress {
+		position: absolute;
+		top:0;
+		left:0;
+		height: 5px;
+		border-radius: 5px;
+	}
+	.mui-table-view-cell .status .link {
+		height: 2.09rem;
+		line-height: 2.09rem;
+		border-radius: 2.09rem;
+		text-align: center;
+		font-size: 1.14rem;
+		color:#fff;
+	}
+	.mui-table-view-cell .status .link.disabled {
+		background: #d7dae7;
+	}
+</style>
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">金职夺宝</h1>
+</header>
+
+<div class="mui-content">
+	<div class="bgtit">
+		<div class="container">
+			<div class="conrow">
+				<a href="../mjob/assets" class="col-xs-3 con">
+					<div class="icorow rel">
+						<div class="ico auto-center" style="background: #fe1594;"></div>
+					</div>
+					<h5>我的资产</h5>
+				</a>
+				<a href="shareorder" class="col-xs-3 con">
+					<div class="icorow rel">
+						<div class="ico auto-center" style="background: #f85d31;"></div>
+					</div>
+					<h5>玩家晒单</h5>
+				</a>
+				<a href="message" class="col-xs-3 con">
+					<div class="icorow rel">
+						<div class="ico auto-center" style="background: #ffd02b;"></div>
+					</div>
+					<h5>系统消息</h5>
+				</a>
+				<a href="joinrecord" class="col-xs-3 con">
+					<div class="icorow rel">
+						<div class="ico auto-center" style="background: #3ab4f1;"></div>
+					</div>
+					<h5>参与记录</h5>
+				</a>
+			</div>
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="/public/img/db/banner1.jpg" class="auto-center">
+						</a>
+					</div>
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="/public/img/db/banner1.jpg" class="auto-center">
+						</a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="/public/img/db/banner1.jpg" class="auto-center">
+						</a>
+					</div>
+					<!-- 第三张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="/public/img/db/banner1.jpg" class="auto-center">
+						</a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="/public/img/db/banner1.jpg" class="auto-center">
+						</a>
+					</div>
+				</div>
+				<div class="mui-slider-indicator">
+					<div class="mui-indicator mui-active"></div>
+					<div class="mui-indicator"></div>
+					<div class="mui-indicator"></div>
+				</div>
+			</div>
+			<div class="news">
+				<a href="#">
+					<span>夺宝快报</span>
+					金职夺宝开放，开启夺宝狂欢！
+				</a>
+			</div>
+			<ul class="mui-table-view">
+				{% for key, item in data['list'] %}
+				<li class="mui-table-view-cell mui-media">
+					<a href="detail/{{ item['id'] }}" class="item">
+						<img class="mui-media-object mui-pull-left" src="{{ item['imgs'][0] }}">
+						<div class="mui-media-body">
+							<div class="title">
+								<span class="tips">{{ item['no'] }}期</span>
+								{{ item['name'] }}
+							</div>
+							<div class="status">
+								<div class="rate col-xs-7">
+									<p>夺宝进度：<span>{{ item['percent'] }}%</span></p>
+									<div class="progressrow">
+										<div class="progress gradual" style="width:{{ item['percent'] }}%"></div>
+									</div>
+								</div>
+								{% if item['is_end'] == 'Y' %}
+									<button class="link col-xs-4 right gradual disabled">立即购买</button>
+								{% else %}
+									<button class="btn link col-xs-4 right gradual">立即购买</button>
+								{% endif %}
+
+							</div>
+						</div>
+					</a>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	mui.init({
+		//swipeBack:true //启用右滑关闭功能
+	});
+	var slider = mui("#slider");
+	slider.slider({
+		interval: 3000
+	});
+</script>
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}

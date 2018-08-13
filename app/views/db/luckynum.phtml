@@ -1,0 +1,97 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}金职夺宝 - 本期幸运号码{% endblock %}
+{% block css %}{{ stylesheetLink('css/db/db.css') }}{% endblock %}
+{% block content %}
+<style type="text/css">
+	li {
+		font-size:1.4rem;
+	}
+	li span.tit {
+		color:#a4a6ad;
+		display: inline-block;
+		width: 40%;
+	}
+	.box {
+		padding:10px;
+		background: #fff;
+		margin-top:15px;
+	}
+	table {
+		font-size:1rem;
+		margin-bottom: 0 !important;
+	}
+	table thead {
+		color:#a4a6ad;
+		font-size:.8rem;
+	}
+	table thead th,
+	table tbody td {
+		text-align: center;
+	}
+	.table>thead>tr>th {
+		border-bottom: 0 !important;
+	}
+	.table>tbody>tr>td {
+		border-top: 0 !important;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">本期幸运号码</h1>
+</header>
+
+<div class="mui-content">
+	<ul class="mui-table-view">
+		 <li class="mui-table-view-cell">
+			<span class="tit">售罄时间</span>
+			 {{ data['end_time'] }}
+		 </li>
+         <li class="mui-table-view-cell" style="color:#3552fc;">
+         	<span class="tit">售罄时区块号</span>
+			{{ data['block_num'] }}</li>
+         <li class="mui-table-view-cell" style="color:#3552fc;">
+         	<span class="tit">幸运区块号</span>
+			<span>{{ data['block_num'] }}</span> +50
+         </li>
+         <li class="mui-table-view-cell">
+         	<span class="tit">幸运区块哈希值</span>
+			 {{ data['md5'] }} <span style="color:#a4a6ad;">(16进制后7位)</span>
+         </li>
+         <li class="mui-table-view-cell">
+         	<span class="tit">夺宝总人次</span>
+			 {{ data['already_num'] }}
+         </li>
+         <li class="mui-table-view-cell" style="color:#ff2a63;">
+         	<span class="tit">本期幸运号码</span>
+			 {{ data['lucky_num'] }}
+         </li>
+	</ul>
+	<div class="box">
+		<table class="table table-condensed">
+			<thead>
+			    <tr>
+			        <th>{{ data['md5'] }}转10进制</th>
+			        <th>取余</th>
+			        <th>夺宝总人次</th>
+			        <th>    </th>
+			        <th>幸运号码</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    <tr>
+			        <td>{{ data['temp10'] }}</td>
+			        <td>%</td>
+			        <td>{{ data['already_num'] }}</td>
+			        <td>=</td>
+			        <td>{{ data['lucky_num'] }}</td>
+			    </tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock %}
+{% block footer %}
+       {{ partial('common/footer_Db')}}
+{% endblock %}
