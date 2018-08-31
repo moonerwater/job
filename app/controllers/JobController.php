@@ -7,6 +7,11 @@
  */
 class JobController extends ControllerH5
 {
+    public function initialize()
+    {
+        parent::initialize();
+    }
+
     public function indexAction()
     {
         
