@@ -51,4 +51,14 @@ class JobController extends ControllerH5
     {
         
     }
+
+    public function aboutusAction()
+    {
+        
+    }
+
+    public function settingAction()
+    {
+        
+    }
 }
