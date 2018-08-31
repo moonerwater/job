@@ -6,17 +6,25 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <title>{% block title  %}{% endblock %}</title>
-        <meta name="keywords" content="金职岛">
-        <meta name="description" content="金职岛">
-        <link rel="stylesheet" type="text/css" href="{{url('css/mjob/mui.min.css')}}"/>
-        <link rel="stylesheet" type="text/css" href="{{url('css/mjob/icons-extra.css')}}"/>
-        <link rel="stylesheet" type="text/css" href="{{url('css/mjob/app.css?v='~versionNum)}}"/>
+        <meta name="keywords" content="兼职之家">
+        <meta name="description" content="兼职之家">
+        <link rel="stylesheet" type="text/css" href="{{url('css/mui.min.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/icons-extra.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/app.css?v='~versionNum)}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/mui.picker.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/mui.poppicker.css')}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/mui.dtpicker.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{url('css/bootstrap.min.css')}}"/>
         <link rel="stylesheet" type="text/css" href="{{url('css/common.css?v='~versionNum)}}"/>
+        <link rel="stylesheet" type="text/css" href="{{url('css/job.css?v='~versionNum)}}"/>
         <script type="text/javascript" src="{{url('js/jquery.min.js')}}"></script>
         <script type="text/javascript" src="{{url('js/jquery.cookie.min.js')}}"></script>
         <script type="text/javascript" src="{{url('js/layer.js')}}"></script>
-        <script type="text/javascript" src="{{url('js/mjob/mui.min.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/mui.min.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/mui.picker.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/mui.poppicker.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/mui.dtpicker.js')}}"></script>
+        <script type="text/javascript" src="{{url('js/job.js?v='~versionNum)}}"></script>
         <script type="text/javascript">
             (function (doc, win) {
               var docEl = doc.documentElement,
@@ -60,16 +68,14 @@
         </style>
         {% block css %}
             <style type="text/css">
-                body,html{
-                    background-color: #fefefe;
-                    /*padding:0 20px;*/
-                }
+                
             </style>
         {% endblock %}
         {% block js %}
         {% endblock %}
     </head>
 <body>
+
 {% block header %}{% endblock %}
 {% block content %}{% endblock %} 
 {% block footer %}

@@ -1,0 +1,107 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}兼职之家 - 个人中心{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">个人中心</h1>
+</header>
+
+<div class="mui-content">
+	<div id="usertop">
+		<div class="userinfo">
+			<div class="userimg left">
+				<img src="/public/img/1.png" class="auto-center">
+			</div>
+			<div class="info">
+				<div class="name">卡卡罗特</div>
+				<div class="else"><span class="score">4.9</span>52单</div>
+			</div>
+			<button id="Sign">签到</button>
+		</div>
+		<div class="myjob">
+			<div class="col-xs-4">
+				<a href="/job/myjob">
+					<div class="imgbox">
+						<img src="/public/img/jobicon1.png" class="auto-center">
+					</div>
+					<p>已报名</p>
+				</a>
+			</div>
+			<div class="col-xs-4">
+				<a href="/job/myjob">
+					<div class="imgbox">
+						<img src="/public/img/jobicon2.png" class="auto-center">
+					</div>
+					<p>已录用</p>
+				</a>
+			</div>
+			<div class="col-xs-4">
+				<a href="/job/myjob">
+					<div class="imgbox">
+						<img src="/public/img/jobicon3.png" class="auto-center">
+					</div>
+					<p>已拒绝</p>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<ul class="mui-table-view mylink">
+			<li class="mui-table-view-cell">
+				<a href="/job/bindtel" class="mui-navigate-right">
+					<span class="ident3"></span>绑定手机
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a href="/job/purse" class="mui-navigate-right">
+					<span class="ident1"></span>我的钱包
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a href="/job/resume" class="mui-navigate-right">
+					<span class="ident2"></span>我的简历
+				</a>
+			</li>
+			<li class="mui-table-view-cell none">
+				<a href="#" class="mui-navigate-right">
+					<span class="ident3"></span>我的收藏
+				</a>
+			</li>
+			<li class="mui-table-view-cell none">
+				<a href="#" class="mui-navigate-right">
+					<span class="ident4"></span>邀请有奖
+				</a>
+			</li>
+		</ul>
+		<br>
+		<ul class="mui-table-view mylink">
+			<li class="mui-table-view-cell none">
+				<a href="#" class="mui-navigate-right">
+					<span class="ident5"></span>意见反馈
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a href="#" class="mui-navigate-right">
+					<span class="ident6"></span>关于我们
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a href="#" class="mui-navigate-right">
+					<span class="ident7"></span>账号设置
+				</a>
+			</li>
+		</ul>
+	</div>
+	<br>
+	<br>
+</div>
+
+{% endblock %}
+{% block footer %}
+       
+{% endblock %}

@@ -1,0 +1,239 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}兼职之家 - 我的钱包{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	body,html,.mui-content {
+		background: #fff;
+	}
+	
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">我的钱包</h1>
+</header>
+
+<div class="mui-content">
+	<div id="usertop">
+		<div class="pursetop">
+			<h3>当前头条币余额</h3>
+			<div class="purserow row">
+				<div class="col-xs-8">500</div>
+				<div class="col-xs-4">
+					<button id="exchange">兑换JOB币</button>
+					<button id="recharge">充值</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="Pursegold">
+		<a href="">
+			<img class="goldbanner" src="/public/img/pursebanner.jpg">
+		</a>
+		<div class="golddetail">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="/public/img/purse1.png">
+						<div class="mui-media-body">
+							<div>签到奖励 余额：<span>20</span> <span class="mui-pull-right">+5 JOB</span></div>
+							<p class="mui-ellipsis">2018-05-32</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="/public/img/purse2.png">
+						<div class="mui-media-body">
+							<div>每日登陆奖励 余额：<span>20</span> <span class="mui-pull-right">+10 JOB</span></div>
+							<p class="mui-ellipsis">2018-05-32</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="/public/img/purse3.png">
+						<div class="mui-media-body">
+							<div>五星奖励 余额：<span>20</span> <span class="mui-pull-right">+50 JOB</span></div>
+							<p class="mui-ellipsis">2018-05-32</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="/public/img/purse4.png">
+						<div class="mui-media-body">
+							<div>邀请用户奖励 余额：<span>20</span> <span class="mui-pull-right">+50 JOB</span></div>
+							<p class="mui-ellipsis">2018-05-32</p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;">
+						<img class="mui-media-object mui-pull-left" src="/public/img/purse5.png">
+						<div class="mui-media-body">
+							<div>商场消耗 余额：<span>20</span> <span class="mui-pull-right">-50 JOB</span></div>
+							<p class="mui-ellipsis">2018-05-32</p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div id="Recharge" class="alert none">
+	<h3>充值头条币</h3>
+	<div class="selectrow row">
+		<div class="money active" data-money="50">50</div>
+		<div class="money" data-money="100">100</div>
+		<div class="money" data-money="1000">1000</div>
+		<div class="money" data-money="5000">5000</div>
+	</div>
+	<p>需支付 = ￥ <span id="need" data-need="5">5</span></p>
+	<div class="control row">
+		<div class="col-xs-5 cancle">取消</div>
+		<div class="col-xs-5 confirm right">充值</div>
+	</div>
+</div>
+
+<div id="Exchange" class="alert none">
+	<h3>兑换JOB币</h3>
+	<div class="selectrow row">
+		<div class="money active" data-expend="50">50</div>
+		<div class="money" data-expend="100">100</div>
+		<div class="money" data-expend="1000">1000</div>
+		<div class="money" data-expend="5000">5000</div>
+	</div>
+	<p>消耗头条币：<span id="expend" data-needexpend="50">50</span></p>
+	<p>头条币不足？<a href="javascript:void(0)" id="gorecharge">立即充值</a></p>
+	<br>
+	<p>请输入手机号：</p>
+	<input type="tel" placeholder="请输入手机号">
+	<div class="control row">
+		<div class="col-xs-5 cancle">取消</div>
+		<div class="col-xs-5 confirm right">兑换</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+
+	var money = 5;
+	var expend = 50;
+	var indexA;
+	var indexB;
+
+	$("#recharge").on('tap',function(){
+
+		indexA = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:false,
+			content: $("#Recharge"),
+			area: ['70%', 'auto'],
+			shadeClose: false,
+			time:0
+		});
+
+	});
+
+	$("#exchange").on('tap',function(){
+
+		indexB = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:false,
+			content: $("#Exchange"),
+			area: ['70%', 'auto'],
+			shadeClose: false,
+			time:0
+		});
+
+	});
+
+	$("#Recharge .selectrow .money").on('tap',function(){
+		money = ($(this).attr('data-money'))/10;
+		$('#need').html(money).attr('data-need',money);
+		$(this).addClass('active').siblings().removeClass('active');
+	});
+
+	$("#Exchange .selectrow .money").on('tap',function(){
+		expend = $(this).attr('data-expend');
+		$('#expend').html(expend).attr('data-needexpend',expend);
+		$(this).addClass('active').siblings().removeClass('active');
+	});
+
+	$("#Recharge .confirm").on('tap',function(){
+		layer.close(indexA);
+		var btnArray = ['取消', '去充值'];
+		mui.confirm("确认要花费￥"+money+"充值吗？", '即将前往微信充值', btnArray, function(e) {
+			if (e.index == 1) {
+				// window.location.href = "/db/talentrules";
+			} else {
+				indexA = layer.open({
+					type: 1,
+					title:false,
+					closeBtn:false,
+					content: $("#Recharge"),
+					area: ['70%', 'auto'],
+					shadeClose: false,
+					time:0
+				});
+			}
+		})
+	});
+
+	$("#Recharge .cancle").on('tap',function(){
+		layer.close(indexA);
+	});
+
+	$("#Exchange .confirm").on('tap',function(){
+		layer.close(indexB);
+		var btnArray = ['取消', '兑换'];
+		mui.confirm("确认要使用"+expend+"头条币兑换JOB币吗？", '兑换JOB币', btnArray, function(e) {
+			if (e.index == 1) {
+				var btnArrayB = ['取消', '立即夺宝'];
+				mui.confirm('您已兑换JOB币成功，立即前往夺宝？', '兑换成功！', btnArray, function(e) {
+					if (e.index == 1) {
+						window.location.href = "/db/talent";
+					} else {
+						
+					}
+				})
+			} else {
+				indexB = layer.open({
+					type: 1,
+					title:false,
+					closeBtn:false,
+					content: $("#Exchange"),
+					area: ['70%', 'auto'],
+					shadeClose: false,
+					time:0
+				});
+			}
+		})
+	});
+	
+	$("#Exchange .cancle").on('tap',function(){
+		layer.close(indexB);
+	});
+
+	$("#gorecharge").on('tap',function(){
+		layer.close(indexB);
+		indexA = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:false,
+			content: $("#Recharge"),
+			area: ['70%', 'auto'],
+			shadeClose: false,
+			time:0
+		});
+	});
+
+</script>
+{% endblock %}
+{% block footer %}
+       
+{% endblock %}

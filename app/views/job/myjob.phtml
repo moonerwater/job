@@ -1,0 +1,195 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}兼职之家 - 我的兼职{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	#Jobs .lists {
+		margin-bottom: 10px;
+	}
+	.mui-segmented-control {
+		font-size:1.4rem;
+		margin-top:-1rem;
+		border-bottom: 1px solid #cbcbcb !important;
+		background: #fff;
+	}
+	.mui-segmented-control .mui-control-item {
+		line-height: 3rem;
+		color:#8e8e8e;
+	}
+	.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+		color: #f07527;
+    	border-bottom: 2px solid #f07527;
+	}
+	
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">我的兼职</h1>
+</header>
+
+<div class="mui-content">
+	<div id="usertop">
+		<div class="userinfo">
+			<div class="userimg left">
+				<img src="/public/img/1.png" class="auto-center">
+			</div>
+			<div class="info">
+				<div class="name">卡卡罗特</div>
+				<div class="else"><span class="score">4.9</span>52单</div>
+			</div>
+			<button id="Sign">签到</button>
+		</div>
+	</div>
+	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+		<a href="#item1" class="mui-control-item mui-active">全部</a>
+		<a href="#item2" class="mui-control-item">已报名</a>
+		<a href="#item3" class="mui-control-item">已录用</a>
+		<a href="#item4" class="mui-control-item">已拒绝</a>
+	</div>
+	<div id="Jobs">
+		<div id="item1" class="mui-control-content mui-active">
+			<ul class="mui-table-view joblist">
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已录用</span>
+					<div class="controls">
+						<button data-stat="cancle">取消报名</button>
+						<button data-stat="contact">联系督导</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">周末结算</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已评价</span>
+					<div class="controls">
+						<button data-stat="evaluate">评价</button>
+						<button data-stat="contact">联系督导</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已报名</span>
+					<div class="controls">
+						<button data-stat="cancle">取消报名</button>
+						<button data-stat="contact">联系督导</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已拒绝</span>
+				</li>
+			</ul>
+		</div>
+		<div id="item2" class="mui-control-content">
+			<ul class="mui-table-view joblist">
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已录用</span>
+					<div class="controls">
+						<button data-stat="cancle">取消报名</button>
+						<button data-stat="contact">联系督导</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已录用</span>
+					<div class="controls">
+						<button data-stat="cancle">取消报名</button>
+						<button data-stat="contact">联系督导</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已录用</span>
+					<div class="controls">
+						<button data-stat="cancle">取消报名</button>
+						<button data-stat="contact">联系督导</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="item3" class="mui-control-content">
+			<ul class="mui-table-view joblist">
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已报名</span>
+					<div class="controls">
+						<button data-stat="cancle">取消报名</button>
+						<button data-stat="contact">联系督导</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已报名</span>
+					<div class="controls">
+						<button data-stat="cancle">取消报名</button>
+						<button data-stat="contact">联系督导</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="item4" class="mui-control-content">
+			<ul class="mui-table-view joblist">
+				<li class="mui-table-view-cell lists">
+					<a href="detail">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
+						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
+						<span class="range">300m</span>
+					</a>
+					<span class="stat">已拒绝</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block footer %}
+       
+{% endblock %}
