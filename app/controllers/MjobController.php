@@ -100,7 +100,7 @@ class MjobController extends ControllerH5
 
                 $user = new \User();
                 $user->score = 30;
-                $user->jobcoin = 50;
+                $user->jobcoin = 10;
                 $user->code_system = $this->buildCode('user', 6);
                 $user->phone = $mobile;
                 $user->code_user = $code_user;
@@ -120,7 +120,7 @@ class MjobController extends ControllerH5
                 $userjobcoin = new \UserJobcoin();
                 $userjobcoin->user_id = $user->id;
                 $userjobcoin->type = 'reg';
-                $userjobcoin->jobcoin = 50;
+                $userjobcoin->jobcoin = 10;
                 $userjobcoin->create_time = time();
                 $userjobcoin->last_time = time();
                 $userjobcoin->save();
@@ -134,14 +134,14 @@ class MjobController extends ControllerH5
                     $user = \User::findFirst(" code_system = '$code_user'");
                     if($user){
                         //一级
-                        $user->jobcoin += 20;
+                        $user->jobcoin += 5;
                         $user->candy += 10;
                         $user->save();
 
                         $userjobcoin = new \UserJobcoin();
                         $userjobcoin->user_id = $user->id;
                         $userjobcoin->type = 'regfor1';
-                        $userjobcoin->jobcoin = 20;
+                        $userjobcoin->jobcoin = 5;
                         $userjobcoin->create_time = time();
                         $userjobcoin->last_time = time();
                         $userjobcoin->save();
@@ -158,14 +158,14 @@ class MjobController extends ControllerH5
                         $code_user = $user->code_user;
                         $user = \User::findFirst(" code_system = '$code_user'");
                         if($user){
-                            $user->jobcoin += 10;
+                            $user->jobcoin += 2;
                             $user->candy += 5;
                             $user->save();
 
                             $userjobcoin = new \UserJobcoin();
                             $userjobcoin->user_id = $user->id;
                             $userjobcoin->type = 'regfor2';
-                            $userjobcoin->jobcoin = 10;
+                            $userjobcoin->jobcoin = 2;
                             $userjobcoin->create_time = time();
                             $userjobcoin->last_time = time();
                             $userjobcoin->save();
@@ -227,7 +227,7 @@ class MjobController extends ControllerH5
         $userid = $this->userinfo['id'];
         $total_score = $this->getTotalScore();
 
-        $canget = number_format(100*$this->userinfo['score']/$total_score, 2);
+        $canget = number_format(30*$this->userinfo['score']/$total_score, 2);
         $stime = strtotime('-3 days');
         $etime = time();
         $scorelist = \UserScoreList::query()->columns('create_time')->where(' user_id = '.$userid)->orderBy('create_time desc')->execute()->toArray();
@@ -241,7 +241,7 @@ class MjobController extends ControllerH5
         }
         //echo $stime;
 
-        //8小时放一次，每次放6个晶体，每8小时放出100个job币。
+        //8小时放一次，每次放6个晶体，每8小时放出30个job币。
         for($mytime = $stime+3600*8; $mytime<=$etime; $mytime+=3600*8){
             //
             $money_total=($canget < 0.1) ? 0.1 : $canget;
@@ -510,7 +510,7 @@ class MjobController extends ControllerH5
         //
         $userid = $this->userinfo['id'];
         //
-        $userjobcoin = \UserJobcoin::find(array('user_id ='.$userid, 'order' => 'create_time desc'));
+        $userjobcoin = \UserJobcoin::find(array('user_id ='.$userid, 'order' => 'id desc'));
         $userjobcoin = $userjobcoin->toArray();
         foreach($userjobcoin as $k => $v){
             $userjobcoin[$k]['time'] = date('Y-m-d H:i:s', $v['create_time']);
@@ -594,11 +594,18 @@ class MjobController extends ControllerH5
     }
 
     public function invitecardAction() {
-        $this->checkNoUserGoLogin();
         //
-        $userid = $this->userinfo['id'];
+        $userid = $this->request->get('userid', 'int');
+        $userinfo = \User::findFirstById($userid);
+        if($userinfo){
+            $userinfo = $userinfo->toArray();
+        }
+        else{
+            $this->replyFailure('error');
+            return '';
+        }
         $data = array();
-        $data['code_system'] = $this->userinfo['code_system'];
+        $data['code_system'] = $userinfo['code_system'];
         //
         $user = \User::find(array('', 'order' => 'id asc'));
         foreach($user as $k => $v){
@@ -607,8 +614,8 @@ class MjobController extends ControllerH5
             }
         }
         //
-        $data['username'] = $this->userinfo['name'];
-        $data['username'] = $data['username'] ? $data['username'] : $this->userinfo['phone'];
+        $data['username'] = $userinfo['name'];
+        $data['username'] = $data['username'] ? $data['username'] : $userinfo['phone'];
 
         //
         $this->view->setVar('data', $data);
@@ -918,6 +925,11 @@ class MjobController extends ControllerH5
         $list->last_time = time();
         $list->save();
 
+        $sms = new \Sms();
+        if (!$sms->sendSms($agentlist[$agent_id]['phone'], 'agentGet', array())) {
+            /*$this->replyFailure('发送失败');
+            return '';*/
+        }
 
         $this->reply('success', 0, $agentlist[$agent_id]);
     }
@@ -940,6 +952,7 @@ class MjobController extends ControllerH5
         }
         //
         $this->view->setVar('data', $list);
+        $this->view->setVar('canadmin', $this->checkCanAdmin($userid));
 
     }
 
