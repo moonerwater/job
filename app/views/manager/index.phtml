@@ -1,0 +1,129 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}兼职之家 - 岗位管理{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	body,html{
+		background: #fafafa;
+	}
+	.mui-content {
+		background: #fafafa;
+	}
+	
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<!-- <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a> -->
+	<h1 class="mui-title">岗位管理</h1>
+	<a class="mui-pull-right" href="admin"><span class="mui-icon mui-icon-contact"></span></a>
+</header>
+
+<div class="mui-content">
+	<a href="javascript:void(0)" id="ManagerBanner"></a>
+	<p>首次发布岗位需要实名认证<a href="/manager/info">去认证 > </a></p>
+	<div class="container" style="padding:15px;">
+		<div class="works">
+			<span class="status statA">审核中</span>
+			<h3>百货促销员兼陈列扫地倒垃圾我不信有这么长</h3>
+			<div class="row people">
+				<div class="col-xs-4">
+					<p class="num">20</p>
+					<p class="tit">报名人数</p>
+				</div>
+				<div class="col-xs-4">
+					<p class="num">20</p>
+					<p class="tit">录取人数</p>
+				</div>
+				<div class="col-xs-4">
+					<p class="num">20</p>
+					<p class="tit">浏览人数</p>
+				</div>
+			</div>
+			<div class="row control">
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="share">分享</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="extend">全网推</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="/manager/modify" class="modify">修改</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="delete">删除</a>
+				</div>
+			</div>
+		</div>
+		<div class="works">
+			<span class="status statB">审核通过</span>
+			<a href="/job/detail">
+				<h3>百货促销员兼陈列扫地倒垃圾</h3>
+				<div class="row people">
+					<div class="col-xs-4">
+						<p class="num">20</p>
+						<p class="tit">报名人数</p>
+					</div>
+					<div class="col-xs-4">
+						<p class="num">20</p>
+						<p class="tit">录取人数</p>
+					</div>
+					<div class="col-xs-4">
+						<p class="num">20</p>
+						<p class="tit">浏览人数</p>
+					</div>
+				</div>
+			</a>
+			<div class="row control">
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="share">分享</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="extend">全网推</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="/manager/modify" class="modify">修改</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="delete">删除</a>
+				</div>
+			</div>
+		</div>
+		<div class="works">
+			<span class="status statC">审核拒绝</span>
+			<h3>百货促销员兼陈列扫地倒垃圾</h3>
+			<div class="row people">
+				<div class="col-xs-4">
+					<p class="num">20</p>
+					<p class="tit">报名人数</p>
+				</div>
+				<div class="col-xs-4">
+					<p class="num">20</p>
+					<p class="tit">录取人数</p>
+				</div>
+				<div class="col-xs-4">
+					<p class="num">20</p>
+					<p class="tit">浏览人数</p>
+				</div>
+			</div>
+			<div class="row control">
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="share">分享</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="extend">全网推</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="/manager/modify" class="modify">修改</a>
+				</div>
+				<div class="col-xs-3">
+					<a href="javascript:void(0)" class="delete">删除</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block footer %}
+       
+{% endblock %}

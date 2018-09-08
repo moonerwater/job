@@ -1,0 +1,220 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}兼职之家 - 修改岗位{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	.resu {
+		padding:0;
+	}
+	.imgbox {
+	    margin: 0 auto;
+	    margin-top: 10px;
+	}
+	hr {
+		border-top: 1px solid #f2863a;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">修改岗位</h1>
+</header>
+
+<div class="mui-content">
+	<div class="release boxcontain container">
+		<h2>修改岗位</h2>
+		<input type="text" placeholder="请输入职位名称" id="jobname" value="">
+		<pre class="texts hidepre" id="pre"></pre>
+		<textarea class="texts" id="textarea" placeholder="请输入职位描述"></textarea>
+		<div class="boxcontain mar10 resu">
+			<div class="mui-input-row">
+				<label>岗位类别</label>
+				<input type="text" placeholder="请选择岗位类别" id="jobtype" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>计薪方式</label>
+				<input type="text" placeholder="请选择计薪方式" id="paytype" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>薪资</label>
+				<input type="text" placeholder="请输入金额(元)" id="paymoney" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>结算时间</label>
+				<input type="text" placeholder="请选择结算时间" id="paytime" value="">
+			</div>
+			<hr>
+			<div class="mui-input-row">
+				<label>开始日期</label>
+				<input type="text" placeholder="请选择开始日期" id="jobstarday" value="" data-options='{"type":"date","beginYear":2018,"endYear":2022}'>
+			</div>
+			<div class="mui-input-row">
+				<label>结束日期</label>
+				<input type="text" placeholder="请选择结束日期" id="jobendday" value="" data-options='{"type":"date","beginYear":2018,"endYear":2022}'>
+			</div>
+			<div class="mui-input-row">
+				<label>开始时间</label>
+				<input type="text" placeholder="请选择开始时间" id="jobstartime" value="" data-options='{"type":"time"}'>
+			</div>
+			<div class="mui-input-row">
+				<label>结束时间</label>
+				<input type="text" placeholder="请选择结束时间" id="jobendtime" value="" data-options='{"type":"time"}'>
+			</div>
+			<div class="mui-input-row">
+				<label>工作地点</label>
+				<input type="text" placeholder="添加工作地点" id="inputAddress">
+			</div>
+			<hr>
+			<div class="mui-input-row">
+				<label>企业全称</label>
+				<input type="text" placeholder="请输入企业全称" id="companyname" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>联系人</label>
+				<input type="text" placeholder="请输入联系人姓名" id="companyman" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>联系电话</label>
+				<input type="text" placeholder="请输入联系电话" id="companytel" value="">
+			</div>
+			<div class="mar10">
+				<label>微信二维码</label>
+				<span class="btn btn-default fileinput-button">
+		            <span>上传图片...</span>
+		            <input type="file" accept="image/jpg ,image/jpeg ,image/png" onchange="imgChange(event)" id="file">
+		        </span>
+		        <div class="imgbox rel">
+					<img src="" class="auto-center" id="showImage">
+				</div>
+			</div>
+
+		</div>
+		<button class="footbtn">修改并发布岗位</button>
+	</div>
+</div>
+
+<div id="allmap"></div>
+<script type="text/javascript">
+
+	var base;
+
+	var textarea = document.getElementById('textarea');
+	var pre = document.getElementById('pre');
+
+	textarea.oninput = function() {
+	    pre.textContent = textarea.value;
+	    textarea.style.height = pre.offsetHeight + 'px';
+	}
+
+	function imgChange(e) {
+	    var reader = new FileReader();
+	    reader.onload = (function (file) {
+	        return function (e) {
+	        	if(e.total>10*1024*1024){
+			        //alert('上传的图片的大于4M,请重新选择');
+			        layer.msg('上传的图片的大于10M,请重新选择。',{icon: 5});
+			        return false;
+		        } else {
+		        	$('.imgbox').css({"width":"8rem","height":"8rem"});
+		        	var IMG = new Image();
+		        	IMG.src = this.result;
+		            IMG.onload = function(){
+	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
+	      				console.log(w,h)
+	      			
+		      			var maxSize = {
+					        width: 1200,
+					        height: 1000,
+					        level: 0.6
+					    };
+					    if(w > maxSize.width || h > maxSize.height){
+					        var multiple = Math.max(w / maxSize.width, h / maxSize.height);
+					        resizeW = w / multiple;
+					        resizeH = h / multiple;
+					        var canvas = document.createElement('canvas'),
+						    ctx = canvas.getContext('2d');
+					        canvas.width = resizeW;
+					        canvas.height = resizeH;
+					        ctx.drawImage(IMG, 0, 0, resizeW, resizeH);
+						    var base64 = canvas.toDataURL('image/jpeg', maxSize.level);
+						    $("#showImage")[0].src=base64;
+						    var arr = base64.split(',');
+				            base = arr[1];
+				            console.log(base64)
+					    } else {
+					        // 如果图片尺寸小于最大限制，则不压缩直接上传
+					        $("#showImage")[0].src=IMG.src;
+				            var arr = IMG.src.split(',');
+				            base = arr[1];
+				            console.log(base);
+					    }
+					    
+				    }
+	        	
+	            //console.log(this.result); //这个就是base64的数据了
+		            // $("#showImage")[0].src=this.result;
+		            // var arr = this.result.split(',');
+		            // base = arr[1];
+		            // console.log(base);
+	            }
+	        };
+	    })(e.target.files[0]);
+	    reader.readAsDataURL(e.target.files[0]);
+	}
+
+	function G(id) {
+		return document.getElementById(id);
+	}
+
+	var map = new BMap.Map("allmap");            // 创建Map实例
+	map.centerAndZoom("深圳",12);
+	var ac = new BMap.Autocomplete(    //建立一个自动完成的对象
+		{"input" : "inputAddress"
+		,"location" : map
+	});
+
+	ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
+	var str = "";
+		var _value = e.fromitem.value;
+		var value = "";
+		if (e.fromitem.index > -1) {
+			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		}    
+		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+		
+		value = "";
+		if (e.toitem.index > -1) {
+			_value = e.toitem.value;
+			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		}    
+		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+		//G("searchResultPanel").innerHTML = str;
+	});
+
+	var myValue;
+	ac.addEventListener("onconfirm", function(e) {    //鼠标点击下拉列表后的事件
+	var _value = e.item.value;
+		myValue = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		//G("searchResultPanel").innerHTML ="onconfirm<br />index = " + e.item.index + "<br />myValue = " + myValue;
+		
+		setPlace();
+	});
+
+	function setPlace(){
+		map.clearOverlays();    //清除地图上所有覆盖物
+		function myFun(){
+			var pp = local.getResults().getPoi(0).point;    //获取第一个智能搜索的结果
+			map.centerAndZoom(pp, 18);
+			map.addOverlay(new BMap.Marker(pp));    //添加标注
+		}
+		var local = new BMap.LocalSearch(map, { //智能搜索
+		  onSearchComplete: myFun
+		});
+		local.search(myValue);
+	}
+
+</script>
+{% endblock %}
+{% block footer %}
+       
+{% endblock %}

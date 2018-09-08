@@ -1,0 +1,311 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}兼职之家 - 报名管理{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	.signselect {
+		background: #fff;
+		border-bottom: 1px solid #cbcbcb !important;
+	}
+	.signselect .mui-control-item.mui-active {
+		color: #f07527 !important;
+    	border-bottom: 2px solid #f07527 !important;
+	}
+	.joblist .signs {
+		border-bottom: 1px solid #ececec;
+    	background: #fff;
+    	margin-bottom: 10px;
+	}
+	.joblist .signs > a {
+	    white-space: inherit;
+	}
+	.joblist .signs .userinfo {
+		padding: 1rem 0 0 0;
+	    position: relative;
+	    color: #3b3b3b;
+	    height: auto;
+	}
+	.joblist .signs .userinfo .userimg {
+	    width: 20%;
+   		padding: 9.5%;
+	    position: relative;
+	    overflow: hidden;
+	    border-radius: 50%;
+	    border: 2px solid #fff;
+	    margin-right: 1rem;
+	}
+	.joblist .signs .userinfo .info .name {
+		font-weight: 300;
+		margin-bottom: 5px;
+		font-size:1.6rem;
+	}
+	.joblist .signs .userinfo .else {
+		margin-left: 10px;
+    	line-height: 1.8rem;
+	}
+	.joblist .signs .userinfo .tips span {
+		display: inline-block;
+		color:#fff;
+		background: #f07527;
+		padding:2px 5px;
+		margin-right: 5px;
+		margin-bottom: 5px;
+		float:left;
+		font-size:1rem;
+		height:auto;
+		border-radius: 5px;
+	}
+	.joblist .signs .rows {
+		border-top:1px solid #eee;
+		padding-top:5px;
+	}
+	.joblist .signs .rows button {
+		float:right;
+		width: 25%;
+		padding:5px;
+		border-radius: 5px;
+		margin-left:5px;
+		font-size:1rem;
+	}
+	.joblist .signs .rows button.agree,
+	.joblist .signs .rows button.assess,
+	.joblist .signs .rows button.complain {
+		background: #f07527;
+		border:1px solid #f07527;
+		color:#fff;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">报名管理</h1>
+</header>
+
+<div class="mui-content">
+	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary signselect">
+		<a href="#item1" class="mui-control-item mui-active">已报名</a>
+		<a href="#item2" class="mui-control-item">已录用</a>
+		<a href="#item3" class="mui-control-item">已评价</a>
+	</div>
+	<div id="Signlist">
+		<div id="item1" class="mui-control-content mui-active">
+			<ul class="mui-table-view joblist">
+				<li class="mui-table-view-cell signs">
+					<a href="userresume">
+						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
+						<div class="userinfo clearfix">
+							<div class="userimg left">
+								<img src="/public/img/1.png" class="auto-center">
+							</div>
+							<div class="info left">
+								<div class="name left">卡卡罗特</div>
+								<div class="else left">
+									<span class="score">4.9</span>52单
+								</div>
+								<div class="cls"></div>
+								<div class="tips clearfix">
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="rows">
+						<button class="agree">录用</button>
+						<button class="reject">拒绝</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell signs">
+					<a href="userresume">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div class="userinfo clearfix">
+							<div class="userimg left">
+								<img src="/public/img/1.png" class="auto-center">
+							</div>
+							<div class="info left">
+								<div class="name left">卡卡罗特</div>
+								<div class="else left">
+									<span class="score">4.9</span>52单
+								</div>
+								<div class="cls"></div>
+								<div class="tips clearfix">
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="rows">
+						<button class="agree">录用</button>
+						<button class="reject">拒绝</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell signs">
+					<a href="userresume">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div class="userinfo clearfix">
+							<div class="userimg left">
+								<img src="/public/img/1.png" class="auto-center">
+							</div>
+							<div class="info left">
+								<div class="name left">卡卡罗特</div>
+								<div class="else left">
+									<span class="score">4.9</span>52单
+								</div>
+								<div class="cls"></div>
+								<div class="tips clearfix">
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="rows">
+						<button class="agree">录用</button>
+						<button class="reject">拒绝</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="item2" class="mui-control-content">
+			<ul class="mui-table-view joblist">
+				<li class="mui-table-view-cell signs">
+					<a href="userresume">
+						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
+						<div class="userinfo clearfix">
+							<div class="userimg left">
+								<img src="/public/img/1.png" class="auto-center">
+							</div>
+							<div class="info left">
+								<div class="name left">卡卡罗特</div>
+								<div class="else left">
+									<span class="score">4.9</span>52单
+								</div>
+								<div class="cls"></div>
+								<div class="tips clearfix">
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="rows">
+						<button class="assess">评价</button>
+						<button class="contact">联系他/她</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell signs">
+					<a href="userresume">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div class="userinfo clearfix">
+							<div class="userimg left">
+								<img src="/public/img/1.png" class="auto-center">
+							</div>
+							<div class="info left">
+								<div class="name left">卡卡罗特</div>
+								<div class="else left">
+									<span class="score">4.9</span>52单
+								</div>
+								<div class="cls"></div>
+								<div class="tips clearfix">
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="rows">
+						<button class="assess">评价</button>
+						<button class="contact">联系他/她</button>
+					</div>
+				</li>
+				<li class="mui-table-view-cell signs">
+					<a href="userresume">
+						<h4>百货促销员兼陈列扫地倒垃圾</h4>
+						<div class="userinfo clearfix">
+							<div class="userimg left">
+								<img src="/public/img/1.png" class="auto-center">
+							</div>
+							<div class="info left">
+								<div class="name left">卡卡罗特</div>
+								<div class="else left">
+									<span class="score">4.9</span>52单
+								</div>
+								<div class="cls"></div>
+								<div class="tips clearfix">
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="rows">
+						<button class="assess">评价</button>
+						<button class="contact">联系他/她</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div id="item3" class="mui-control-content">
+			<ul class="mui-table-view joblist">
+				<li class="mui-table-view-cell signs">
+					<a href="userresume">
+						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
+						<div class="userinfo clearfix">
+							<div class="userimg left">
+								<img src="/public/img/1.png" class="auto-center">
+							</div>
+							<div class="info left">
+								<div class="name left">卡卡罗特</div>
+								<div class="else left">
+									<span class="score">4.9</span>52单
+								</div>
+								<div class="cls"></div>
+								<div class="tips clearfix">
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+									<span>效率高</span>
+									<span>准时</span>
+									<span>负责任</span>
+								</div>
+							</div>
+						</div>
+					</a>
+					<div class="rows">
+						<button class="complain">投诉</button>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block footer %}
+       
+{% endblock %}

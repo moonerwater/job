@@ -6,6 +6,15 @@ h1,h2,h3,h4,h5,h6 {
 	margin:0;
 	color:#474747;
 }
+p {
+	font-size:1rem;
+}
+.mar10 {
+	margin-top:10px;
+}
+#allmap {
+		width: 100%;height: 100%;overflow: hidden;margin:0;display: none;
+	}
 .mui-popup,
 .mui-poppicker,
 .mui-dtpicker {
@@ -439,37 +448,42 @@ h1,h2,h3,h4,h5,h6 {
 		background: -moz-linear-gradient(#f07527, #fedc2b); /* Firefox 3.6 - 15 */
 		background: linear-gradient(#f07527, #fedc2b); /* 标准的语法 */
 	}
-	#usertop .userinfo {
-		height: 6.6rem;
+	.userinfo {
+		/*height: 6.6rem;*/
 		/*margin-bottom: 1.2rem;*/
 		padding:1rem 15px 1rem 15px;
 		position: relative;
 		color:#fff;
 	}
-	#usertop .userinfo .userimg {
-		width: 4.6rem;
-		height: 4.6rem;
+	.userinfo .userimg {
+		width: 20%;
+    	padding: 9.5%;
 		position: relative;
 		overflow: hidden;
 		border-radius: 50%;
 		border:2px solid #fff;
 		margin-right: 1rem;
 	}
-	#usertop .userinfo .info .name {
+	.userinfo .info {
+		width: 75%;
+		float:left;
+	}
+	.userinfo .info .name {
 		font-size:1.8rem;
-		margin-bottom: 10px;
+		/*margin-bottom: 10px;*/
 		font-weight: 700;
 	}
-	#usertop .userinfo .info .else {
+	.userinfo .info .else {
 		font-size:1.2rem;
+		margin: 5px 0;
 	}
-	#usertop .userinfo .info .else .score {
+	.userinfo .info .else .score {
 		display: inline-block;
 		margin-right: 10px;
 		padding-left:1.6rem;
 		position: relative;
 	}
-	#usertop .userinfo .info .else .score::before {
+ 	.userinfo .info .else .score::before {
 		content: '';
 		position: absolute;
 		left: 0;
@@ -478,6 +492,17 @@ h1,h2,h3,h4,h5,h6 {
 		height:1.2rem;
 		background: url('/public/img/star.png') no-repeat center;
 		background-size: contain;
+	}
+	.userinfo .tips span {
+		display: inline-block;
+		padding:2px 5px;
+		text-align: center;
+		color:#fff;
+		border:1px solid #fff;
+		border-radius: 2px;
+		margin-right: 5px;
+		margin-bottom: 5px;
+		font-size:1rem;
 	}
 	#Sign {
 		position: absolute;
@@ -584,7 +609,7 @@ h1,h2,h3,h4,h5,h6 {
 	}
 	.resu {
 		background: #fff;
-		padding:5px 15px;
+		padding:0px 15px;
 		margin-bottom: 1rem;
 	}
 	.resu .mui-input-row {
@@ -594,6 +619,9 @@ h1,h2,h3,h4,h5,h6 {
 	.resu .mui-input-row label {
 		line-height: 1.6rem;
 		margin-bottom: 0;
+		padding: 11px 0;
+    	padding-right: 25px;
+    	text-align: right;
 	}
 	.resu .mui-input-row input {
 		float:left;
@@ -609,6 +637,16 @@ h1,h2,h3,h4,h5,h6 {
 		padding: 10px 15px;
 		border-left: 1px solid #eee;
 		width: 35%;
+	}
+	.resu .mui-input-row p {
+		float: left;
+	    width: 65%;
+	    border: none;
+	    margin-bottom: 0;
+	    padding: 10px 15px;
+	    margin:0;
+	    line-height: 21px;
+   	 	font-size:1.4rem;
 	}
 	.pursetop {
 		padding:15px;
@@ -743,4 +781,142 @@ h1,h2,h3,h4,h5,h6 {
 	#aboutus p {
 		text-indent: 3rem;
 		color:#565656;
+	}
+	#ManagerBanner {
+		display: block;
+		width: 100%;
+		height:0;
+		padding:16.3%;
+		background: url('/public/img/managerbanner.jpg') no-repeat center;
+		background-size:contain;
+	}
+	#ManagerBanner + p {
+		font-size:1.2rem;
+		color:#5a5a5a;
+		height:2.4rem;
+		line-height: 2.2rem;
+		padding:2px 15px;
+		background: #ffe7d7;
+		margin:0;
+	}
+	#ManagerBanner + p a {
+		color:#f07527;
+		float:right;
+	}
+	.works {
+		padding:15px;
+		background: #fff;
+		position: relative;
+		box-shadow: 2px 4px 6px 1px #eee;
+		margin-bottom: 15px;
+	}
+	.works span.status {
+		position: absolute;
+		display: inline-block;
+		padding:2px 2px;
+		top:5px;
+		right:5px;
+		font-size:1rem;
+	}
+	.works span.statA {
+		border:1px solid #ccc;
+		color:#ccc;
+	}
+	.works span.statB {
+		border:1px solid #4cd964;
+		color:#4cd964;
+	}
+	.works span.statC {
+		border:1px solid #dd524d;
+		color:#dd524d;
+	}
+	.works h3 {
+		font-size:1.6rem;
+		color:#484848;
+		margin:0;
+		width:80%;
+		/*overflow: hidden;*/
+	}
+	.works .people {
+		margin-top:10px;
+		margin-bottom: 10px;
+	}
+	.works .people p {
+		text-align: center;
+	}
+	.works .people p.num {
+		color:#f07527;
+		font-size:1.6rem;
+		margin-bottom: 5px;
+		font-weight: 700;
+	}
+	.works .people p.tit {
+		color:#9b9b9b;
+		font-size:1rem;
+		margin:0;
+	}
+	.works .control .col-xs-3 {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	.works .control a {
+		display: block;
+		width: 100%;
+		padding:4px 5px;
+		background: #ffe7d7;
+		color:#484848;
+		text-align: center;
+		border-radius: 3px;
+		font-size: 1rem;
+	}
+	.boxcontain {
+		background: #fff;
+		padding-top:15px;
+		padding-bottom:15px;
+	}
+	.release h2 {
+		font-size:1.8rem;
+		color:#535353;
+		margin:10px 0;
+	}
+	.release .statbox {
+		padding: 13%;
+	    position: relative;
+	    box-shadow: 4px 0px 8px 2px #eee;
+	    margin-left: -15px;
+	    margin-right: -15px;
+	}
+	.texts {
+		display: block;
+	    padding: 10px 15px;
+	    /*width: 100%;*/
+	    min-height: 6rem;
+	    border: 1px solid rgba(0,0,0,.2);
+	    resize: none;
+	    font-size: 1rem;
+	    line-height:1.6rem;
+	    overflow: hidden;
+	    word-wrap: break-word;
+
+	}
+	.hidepre {
+	    position: absolute;
+	    z-index: -100;
+	    visibility: hidden;
+	    white-space: pre-wrap;
+	}
+	.fileinput-button {
+	    position: relative;
+	    display: block;
+	    overflow: hidden;
+	    width: 10rem;
+	    margin: 0 auto;
+	}
+	.fileinput-button input {
+	    position: absolute;
+	    right: 0px;
+	    top: 0px;
+	    opacity: 0;
+	    -ms-filter: 'alpha(opacity=0)';
+	    font-size: 200px;
 	}

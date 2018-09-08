@@ -1,0 +1,141 @@
+{% extends "common/mobile-index.phtml" %}
+{% block title  %}兼职之家 - 个人信息{% endblock %}
+
+{% block content %}
+<style type="text/css">
+	.imgbox {
+	    margin: 0 auto;
+	    margin-top: 10px;
+	}
+</style>
+
+<header class="mui-bar mui-bar-nav">
+	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<h1 class="mui-title">个人信息</h1>
+</header>
+
+<div class="mui-content">
+	<div class="resu boxcontain container" id="ManagerBind">
+		<div class="mui-input-row">
+			<label>姓名</label>
+			<input type="text" placeholder="请输入您的手机号">
+		</div>
+		<div class="mui-input-row">
+			<label>手机号</label>
+			<input type="text" placeholder="请输入您的手机号">
+		</div>
+		<div class="mui-input-row">
+			<input type="text" placeholder="请输入短信验证码">
+			<button>获取验证码</button>
+		</div>
+		<div class="mar10">
+			<label>微信二维码</label>
+			<span class="btn btn-default fileinput-button">
+	            <span>上传图片...</span>
+	            <input type="file" accept="image/jpg ,image/jpeg ,image/png" onchange="imgChange(event)" id="file">
+	        </span>
+	        <div class="imgbox rel">
+				<img src="" class="auto-center" id="showImage">
+			</div>
+		</div>
+	</div>
+	<button class="footbtn" id="TelBind">绑定</button>
+</div>
+
+<div id="allmap"></div>
+
+<script type="text/javascript">
+
+	var map = new BMap.Map("allmap");    // 创建Map实例
+	map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+	//添加地图类型控件
+	map.addControl(new BMap.MapTypeControl({
+		mapTypes:[
+            BMAP_NORMAL_MAP,
+            BMAP_HYBRID_MAP
+        ]}));	  
+	map.setCurrentCity("深圳");          // 设置地图显示的城市 此项是必须设置的
+	map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+	// navigator.geolocation.getCurrentPosition( // 该函数有如下三个参数
+ //        function(pos){ // 如果成果则执行该回调函数
+ //            console.log(
+ //                '  经度：' + pos.coords.latitude +
+ //                '  纬度：' + pos.coords.longitude +
+ //                '  高度：' + pos.coords.altitude +
+ //                '  精确度(经纬)：' + pos.coords.accuracy +
+ //                '  精确度(高度)：' + pos.coords.altitudeAccuracy +
+ //                '  速度：' + pos.coords.speed
+ //            );
+ //        }, function(err){ // 如果失败则执行该回调函数
+ //            alert(err.message);
+ //        }, { // 附带参数
+ //            enableHighAccuracy: true, // 提高精度(耗费资源)
+ //            timeout: 3000, // 超过timeout则调用失败的回调函数
+ //            maximumAge: 1000 // 获取到的地理信息的有效期，超过有效期则重新获取一次位置信息
+ //        }
+ //    );
+
+	var base;
+
+	function imgChange(e) {
+	    var reader = new FileReader();
+	    reader.onload = (function (file) {
+	        return function (e) {
+	        	if(e.total>10*1024*1024){
+			        //alert('上传的图片的大于4M,请重新选择');
+			        layer.msg('上传的图片的大于10M,请重新选择。',{icon: 5});
+			        return false;
+		        } else {
+		        	$('.imgbox').css({"width":"8rem","height":"8rem"});
+		        	var IMG = new Image();
+		        	IMG.src = this.result;
+		            IMG.onload = function(){
+	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
+	      				console.log(w,h)
+	      			
+		      			var maxSize = {
+					        width: 1200,
+					        height: 1000,
+					        level: 0.6
+					    };
+					    if(w > maxSize.width || h > maxSize.height){
+					        var multiple = Math.max(w / maxSize.width, h / maxSize.height);
+					        resizeW = w / multiple;
+					        resizeH = h / multiple;
+					        var canvas = document.createElement('canvas'),
+						    ctx = canvas.getContext('2d');
+					        canvas.width = resizeW;
+					        canvas.height = resizeH;
+					        ctx.drawImage(IMG, 0, 0, resizeW, resizeH);
+						    var base64 = canvas.toDataURL('image/jpeg', maxSize.level);
+						    $("#showImage")[0].src=base64;
+						    var arr = base64.split(',');
+				            base = arr[1];
+				            console.log(base64)
+					    } else {
+					        // 如果图片尺寸小于最大限制，则不压缩直接上传
+					        $("#showImage")[0].src=IMG.src;
+				            var arr = IMG.src.split(',');
+				            base = arr[1];
+				            console.log(base);
+					    }
+					    
+				    }
+	        	
+	            //console.log(this.result); //这个就是base64的数据了
+		            // $("#showImage")[0].src=this.result;
+		            // var arr = this.result.split(',');
+		            // base = arr[1];
+		            // console.log(base);
+	            }
+	        };
+	    })(e.target.files[0]);
+	    reader.readAsDataURL(e.target.files[0]);
+	}
+
+</script>
+{% endblock %}
+{% block footer %}
+       
+{% endblock %}

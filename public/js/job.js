@@ -130,6 +130,143 @@ $(document).ready(function(){
 					});
 				}, false);
 			}
+			//------------------------------
+			//工作类别
+			var jobtype = new $.PopPicker();
+			jobtype.setData([{
+				text: '传单派发'
+			}, {
+				text: '促销导购'
+			}, {
+				text: '地推拉访'
+			}, {
+				text: '商品代理'
+			}, {
+				text: '网赚试玩'
+			}, {
+				text: '其他'
+			}]);
+			var setjobtype = doc.getElementById('jobtype');
+			if(setjobtype){
+				setjobtype.addEventListener('tap', function(event) {
+					jobtype.show(function(items) {
+						setjobtype.value = JSON.stringify(items[0].text).replace(/\"/g,'');
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+						//userSex.dispose();
+					});
+				}, false);
+			}
+			//------------------------------
+			//计薪方式
+			var paytype = new $.PopPicker();
+			paytype.setData([{
+				text: '小时'
+			}, {
+				text: '天'
+			}, {
+				text: '周'
+			}, {
+				text: '月'
+			}, {
+				text: '次'
+			}, {
+				text: '件'
+			}]);
+			var setpaytype = doc.getElementById('paytype');
+			if(setpaytype){
+				setpaytype.addEventListener('tap', function(event) {
+					paytype.show(function(items) {
+						setpaytype.value = JSON.stringify(items[0].text).replace(/\"/g,'');
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+						//userSex.dispose();
+					});
+				}, false);
+			}
+			//------------------------------
+			//结算时间
+			var paytime = new $.PopPicker();
+			paytime.setData([{
+				text: '日结'
+			}, {
+				text: '周结'
+			}, {
+				text: '月结'
+			}, {
+				text: '完工结'
+			}, {
+				text: '次月结'
+			}, {
+				text: '半月结'
+			}]);
+			var setpaytime = doc.getElementById('paytime');
+			if(setpaytime){
+				setpaytime.addEventListener('tap', function(event) {
+					paytime.show(function(items) {
+						setpaytime.value = JSON.stringify(items[0].text).replace(/\"/g,'');
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+						//userSex.dispose();
+					});
+				}, false);
+			}
+			//------------------------------
+			//开始日期
+			var jobstarday = doc.getElementById('jobstarday');
+			if(jobstarday){
+				jobstarday.addEventListener('tap', function() {
+					var optionsJson = this.getAttribute('data-options') || '{}';
+					var options = JSON.parse(optionsJson);
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						jobstarday.value = rs.text;
+						picker.dispose();
+					});
+				}, false);
+			}
+			//------------------------------
+			//结束日期
+			var jobendday = doc.getElementById('jobendday');
+			if(jobendday){
+				jobendday.addEventListener('tap', function() {
+					var optionsJson = this.getAttribute('data-options') || '{}';
+					var options = JSON.parse(optionsJson);
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						jobendday.value = rs.text;
+						picker.dispose();
+					});
+				}, false);
+			}
+			//------------------------------
+			//开始时间
+			var jobstartime = doc.getElementById('jobstartime');
+			if(jobstartime){
+				jobstartime.addEventListener('tap', function() {
+					var optionsJson = this.getAttribute('data-options') || '{}';
+					var options = JSON.parse(optionsJson);
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						jobstartime.value = rs.text;
+						picker.dispose();
+					});
+				}, false);
+			}
+			//------------------------------
+			//结束时间
+			var jobendtime = doc.getElementById('jobendtime');
+			if(jobendtime){
+				jobendtime.addEventListener('tap', function() {
+					var optionsJson = this.getAttribute('data-options') || '{}';
+					var options = JSON.parse(optionsJson);
+					var picker = new $.DtPicker(options);
+					picker.show(function(rs) {
+						jobendtime.value = rs.text;
+						picker.dispose();
+					});
+				}, false);
+			}
 		});
 	})(mui, document);
 

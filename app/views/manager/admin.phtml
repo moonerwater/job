@@ -1,5 +1,5 @@
 {% extends "common/mobile-index.phtml" %}
-{% block title  %}兼职之家 - 个人中心{% endblock %}
+{% block title  %}兼职之家 - 管理中心{% endblock %}
 
 {% block content %}
 <style type="text/css">
@@ -8,7 +8,7 @@
 
 <header class="mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-	<h1 class="mui-title">个人中心</h1>
+	<h1 class="mui-title">管理中心</h1>
 </header>
 
 <div class="mui-content">
@@ -23,38 +23,13 @@
 			</div>
 			<button id="Sign">签到</button>
 		</div>
-		<div class="myjob">
-			<div class="col-xs-4">
-				<a href="/job/myjob">
-					<div class="imgbox">
-						<img src="/public/img/jobicon1.png" class="auto-center">
-					</div>
-					<p>已报名</p>
-				</a>
-			</div>
-			<div class="col-xs-4">
-				<a href="/job/myjob">
-					<div class="imgbox">
-						<img src="/public/img/jobicon2.png" class="auto-center">
-					</div>
-					<p>已录用</p>
-				</a>
-			</div>
-			<div class="col-xs-4">
-				<a href="/job/myjob">
-					<div class="imgbox">
-						<img src="/public/img/jobicon3.png" class="auto-center">
-					</div>
-					<p>已拒绝</p>
-				</a>
-			</div>
-		</div>
+		
 	</div>
 	<div class="container">
 		<ul class="mui-table-view mylink">
 			<li class="mui-table-view-cell">
-				<a href="/job/bindtel" class="mui-navigate-right">
-					<span class="ident3"></span>绑定手机
+				<a href="/manager/info" class="mui-navigate-right">
+					<span class="ident3"></span>个人信息
 				</a>
 			</li>
 			<li class="mui-table-view-cell">
@@ -62,7 +37,30 @@
 					<span class="ident1"></span>我的钱包
 				</a>
 			</li>
+			
+		</ul>
+		<br>
+		<ul class="mui-table-view mylink">
 			<li class="mui-table-view-cell">
+				<a href="/manager/signlist" class="mui-navigate-right">
+					<span class="ident5"></span>报名管理
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a href="/manager/index" class="mui-navigate-right">
+					<span class="ident4"></span>岗位管理
+				</a>
+			</li>
+			<li class="mui-table-view-cell">
+				<a href="/manager/release" class="mui-navigate-right">
+					<span class="ident3"></span>发布岗位
+				</a>
+			</li>
+			
+		</ul>
+		<br>
+		<ul class="mui-table-view mylink">
+			<li class="mui-table-view-cell none">
 				<a href="/job/resume" class="mui-navigate-right">
 					<span class="ident2"></span>我的简历
 				</a>
@@ -77,9 +75,6 @@
 					<span class="ident4"></span>邀请有奖
 				</a>
 			</li>
-		</ul>
-		<br>
-		<ul class="mui-table-view mylink">
 			<li class="mui-table-view-cell none">
 				<a href="#" class="mui-navigate-right">
 					<span class="ident5"></span>意见反馈
