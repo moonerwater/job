@@ -17,6 +17,19 @@
 	    margin: 0 auto;
 	    margin-top: 10px;
 	}
+	.col-xs-6 button {
+		display: block;
+		width: 100%;
+	    height: 3rem;
+	    line-height: 2rem;
+	    background: #f07527;
+	    color: #fff;
+	    font-size: 1.8rem;
+	    text-align: center;
+	    border-radius: 3rem;
+	    margin: 0 auto;
+	    margin-top: 2rem;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -25,7 +38,7 @@
 </header>
 
 <div class="mui-content">
-	<div class="release boxcontain container" id="RelA">
+	<div class="release boxcontain container" id="RelA" data-rid="1">
 		<h2>发布兼职 (1)</h2>
 		<div class="statbox">
 			<img src="/public/img/relA.png" class="auto-center">
@@ -36,9 +49,13 @@
 				<input type="text" placeholder="请选择岗位类别" id="jobtype" value="">
 			</div>
 		</div>
-		<button class="footbtn">下一步</button>
+		<div class="row">
+			<div class="col-xs-6 right">
+				<button class="turn" data-turn="2">下一步</button>
+			</div>
+		</div>
 	</div>
-	<div class="release boxcontain container none" id="RelB">
+	<div class="release boxcontain container none" id="RelB" data-rid="2">
 		<h2>发布兼职 (2)</h2>
 		<div class="statbox">
 			<img src="/public/img/relB.png" class="auto-center">
@@ -48,9 +65,16 @@
 			<pre class="texts hidepre" id="pre"></pre>
 			<textarea class="texts" id="textarea" placeholder="请输入职位描述"></textarea>
 		</div>
-		<button class="footbtn">下一步</button>
+		<div class="row">
+			<div class="col-xs-6">
+				<button class="turn" data-turn="1">上一步</button>
+			</div>
+			<div class="col-xs-6">
+				<button class="turn" data-turn="3">下一步</button>
+			</div>
+		</div>
 	</div>
-	<div class="release boxcontain container none" id="RelC">
+	<div class="release boxcontain container none" id="RelC" data-rid="3">
 		<h2>发布兼职 (3)</h2>
 		<div class="statbox">
 			<img src="/public/img/relC.png" class="auto-center">
@@ -69,9 +93,16 @@
 				<input type="text" placeholder="请选择结算时间" id="paytime" value="">
 			</div>
 		</div>
-		<button class="footbtn">下一步</button>
+		<div class="row">
+			<div class="col-xs-6">
+				<button class="turn" data-turn="2">上一步</button>
+			</div>
+			<div class="col-xs-6">
+				<button class="turn" data-turn="4">下一步</button>
+			</div>
+		</div>
 	</div>
-	<div class="release boxcontain container none" id="RelD">
+	<div class="release boxcontain container none" id="RelD" data-rid="4">
 		<h2>发布兼职 (4)</h2>
 		<div class="statbox">
 			<img src="/public/img/relD.png" class="auto-center">
@@ -104,9 +135,16 @@
 			</div>
 			<!-- <div id="r-result"></div> -->
 		</div>
-		<button class="footbtn">下一步</button>
+		<div class="row">
+			<div class="col-xs-6">
+				<button class="turn" data-turn="3">上一步</button>
+			</div>
+			<div class="col-xs-6">
+				<button class="turn" data-turn="5">下一步</button>
+			</div>
+		</div>
 	</div>
-	<div class="release boxcontain container none" id="RelE">
+	<div class="release boxcontain container none" id="RelE" data-rid="5">
 		<h2>发布兼职 (5)</h2>
 		<div class="statbox">
 			<img src="/public/img/relE.png" class="auto-center">
@@ -135,7 +173,14 @@
 				</div>
 			</div>
 		</div>
-		<button class="footbtn">发布</button>
+		<div class="row">
+			<div class="col-xs-6">
+				<button class="turn" data-turn="4">上一步</button>
+			</div>
+			<div class="col-xs-6">
+				<button class="push">发布</button>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -215,27 +260,13 @@
 	    reader.readAsDataURL(e.target.files[0]);
 	}
 
-	$('#RelA button.footbtn').on('tap',function(){
-		$("#RelA").hide();
-		$("#RelB").fadeIn(200);
+	$(".turn").on('tap',function(){
+		var page = $(this).attr('data-turn');
+		$('.release').hide();
+		$(".release[data-rid='"+page+"']").fadeIn(200);
 	});
 
-	$('#RelB button.footbtn').on('tap',function(){
-		$("#RelB").hide();
-		$("#RelC").fadeIn(200);
-	});
-
-	$('#RelC button.footbtn').on('tap',function(){
-		$("#RelC").hide();
-		$("#RelD").fadeIn(200);
-	});
-
-	$('#RelD button.footbtn').on('tap',function(){
-		$("#RelD").hide();
-		$("#RelE").fadeIn(200);
-	});
-
-	$('#RelE button.footbtn').on('tap',function(){
+	$('.push').on('tap',function(){
 		layer.msg("发布成功！",{time:2000});
 		setTimeout("window.location.href = '/manager/index'",2000);
 	});
