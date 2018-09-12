@@ -29,7 +29,10 @@ class ControllerH5 extends ControllerBase
 
         }
         else{
-            $this->response->redirect('/mjob/login?backurl='.urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']));
+            $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+            $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4881a7dbcae7aab1&redirect_uri='.$url.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+            header("Location:".$url);
+            die();
         }
     }
 
