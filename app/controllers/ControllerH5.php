@@ -29,7 +29,10 @@ class ControllerH5 extends ControllerBase
 
         }
         else{
-            $this->response->redirect('/mjob/login?backurl='.urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']));
+            $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
+            $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4881a7dbcae7aab1&redirect_uri='.$url.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
+            header("Location:".$url);
+            die();
         }
     }
 
@@ -73,25 +76,6 @@ class ControllerH5 extends ControllerBase
         else{
 
         }
-    }
-
-    protected function getTotalScore(){
-        $user = \User::find();
-        $score = 0;
-        foreach($user as $k => $v){
-            $score += $v->score;
-        }
-        return $score;
-    }
-
-    protected function checkCanAdmin($userid) {
-        if($userid == 1 || $userid == 2 || $userid == 5){
-            return true;
-        }
-        else{
-            return false;
-        }
-
     }
 
     protected function request_post($url = '', $param = '') {

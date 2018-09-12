@@ -12,8 +12,8 @@ class ManagerController extends ControllerH5
         parent::initialize();
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
+        $this->checkNoUserGoLogin();
         
     }
 
