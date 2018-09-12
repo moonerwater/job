@@ -6,6 +6,12 @@ class ControllerH5 extends ControllerBase
     protected function initialize()
     {
         parent::initialize();
+        /*$userLogin = \User::findFirst(array(
+            sprintf(" id = 2"),
+            "columns" => "id, openid"
+        ));
+        $this->session->set('userinfo', $userLogin->toArray());*/
+
         $this->userinfo = $this->session->get('userinfo');
 
         /*if(!$this->session->get('auth-code') && $this->dispatcher->getActionName() != 'please' && $this->dispatcher->getActionName() != 'getCode'){
