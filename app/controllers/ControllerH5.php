@@ -24,11 +24,61 @@ class ControllerH5 extends ControllerBase
         $this->view->setVar('today', date('Y-m-d'));
     }
 
-    protected function checkNoUserGoLogin(){
-        if($this->userinfo){
-
+    protected function getWxPower($code) {
+        $data = file_get_contents("https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx4881a7dbcae7aab1&secret=39fe7c54ada0e213c5f18b630fb39451&code=$code&grant_type=authorization_code");
+        $obj = array();
+        if($data) {
+            $obj = json_decode($data, true);
         }
-        else{
+        return $obj;
+    }
+
+    protected function getWxUserInfo2($access_token, $open_id) {
+        $data = file_get_contents("https://api.weixin.qq.com/sns/userinfo?access_token=$access_token&openid=$open_id&lang=zh_CN");
+        $obj = array();
+        if($data) {
+            $obj = json_decode($data, true);
+        }
+        return $obj;
+    }
+
+    protected function checkNoUserGoLogin(){
+        $code = $this->request->get('code', 'string');
+        if($code) {
+            $power = $this->getWxPower($code);
+            if($power['openid']){
+                $wxuser = $this->getWxUserInfo2($power['access_token'], $power['openid']);
+                if($wxuser['openid']){
+                    //$this->session->set('wx_openid', $wxuser['openid']);
+                    $user = \User::findFirst(sprintf(" openid = '%s' ", $wxuser['openid']));
+                    if(!$user) {
+                        $user = new \User();
+                        $user->openid = $wxuser['openid'];
+                        $user->nickname = $wxuser['nickname'];
+                        $user->headimgurl = $wxuser['headimgurl'];
+                        $user->create_time = time();
+                        $user->last_time = time();
+                        $user->save();
+                    }
+                    $userid = $user->id;
+
+                    $userLogin = \User::findFirst(array(
+                        sprintf(" id = ".$userid),
+                        "columns" => "id, openid"
+                    ));
+                    $this->session->set('userinfo', $userLogin->toArray());
+
+                    $userinfo = \User::findFirst(" id = ".$userid);
+                    $this->userinfo = $userinfo->toArray();
+                }
+            }
+            else {
+                echo '<h3>无法获取当前用户的微信标识，不能提供服务。</h3>';
+                die();
+            }
+        }
+
+        if(!$this->userinfo){
             $url = urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']);
             $url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx4881a7dbcae7aab1&redirect_uri='.$url.'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
             header("Location:".$url);
