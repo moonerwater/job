@@ -59,6 +59,10 @@ class ControllerH5 extends ControllerBase
                         $user->last_time = time();
                         $user->save();
                     }
+                    else{
+                        $user->last_time = time();
+                        $user->save();
+                    }
                     $userid = $user->id;
 
                     $userLogin = \User::findFirst(array(
