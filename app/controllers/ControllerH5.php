@@ -75,25 +75,6 @@ class ControllerH5 extends ControllerBase
         }
     }
 
-    protected function getTotalScore(){
-        $user = \User::find();
-        $score = 0;
-        foreach($user as $k => $v){
-            $score += $v->score;
-        }
-        return $score;
-    }
-
-    protected function checkCanAdmin($userid) {
-        if($userid == 1 || $userid == 2 || $userid == 5){
-            return true;
-        }
-        else{
-            return false;
-        }
-
-    }
-
     protected function request_post($url = '', $param = '') {
         if (empty($url) || empty($param)) {
             return false;
