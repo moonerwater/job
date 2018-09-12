@@ -1,7 +1,5 @@
 $(document).ready(function(){
 
-
-
 	$("#Sign").on('tap',function(){
 		layer.msg('签到成功！<br>积分 +5 ',{time:2500});
 		$(this).attr('disabled',true);
@@ -277,6 +275,7 @@ $(document).ready(function(){
 			});
 			cityPicker3.setData(cityData);
 			var showCityPickerButton = doc.getElementById('jobarea');
+			var jobcity = doc.getElementById('jobcity');
 			if(showCityPickerButton){
 				//var cityResult3 = doc.getElementById('cityResult3');
 				showCityPickerButton.addEventListener('tap', function(event) {
@@ -285,6 +284,7 @@ $(document).ready(function(){
 					// 	//返回 false 可以阻止选择框的关闭
 					// 	//return false;
 						showCityPickerButton.value = _getParam(items[0], 'text') + _getParam(items[1], 'text') +_getParam(items[2], 'text');
+						jobcity.value = _getParam(items[1], 'text');
 					});
 				}, false);
 			}
