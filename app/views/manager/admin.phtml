@@ -15,10 +15,10 @@
 	<div id="usertop">
 		<div class="userinfo clearfix">
 			<div class="userimg left">
-				<img src="/public/img/1.png" class="auto-center">
+				<img src="{{ data['userinfo']['headimgurl'] }}" class="auto-center">
 			</div>
 			<div class="info">
-				<div class="name">卡卡罗特</div>
+				<div class="name">{{ data['userinfo']['nickname'] }}</div>
 				<div class="else"><span class="score">4.9</span>52单</div>
 			</div>
 			<button id="Sign">签到</button>
