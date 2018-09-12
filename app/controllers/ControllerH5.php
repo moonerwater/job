@@ -49,7 +49,6 @@ class ControllerH5 extends ControllerBase
             if($power['openid']){
                 $wxuser = $this->getWxUserInfo2($power['access_token'], $power['openid']);
                 if($wxuser['openid']){
-                    //$this->session->set('wx_openid', $wxuser['openid']);
                     $user = \User::findFirst(sprintf(" openid = '%s' ", $wxuser['openid']));
                     if(!$user) {
                         $user = new \User();
