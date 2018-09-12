@@ -278,28 +278,26 @@
 	var indexA;
 	var indexB;
 
-	var cityName = "深圳市";
-	var code = '340';
 	// var cityName;
 	// var code;
 	var lng;	//经度
 	var lat;	//纬度
 	var map = new BMap.Map("allmap");
-	// function myFun(result){
-	// 	console.log(result)
-	// 	lng = result.center.lng;
-	// 	lat = result.center.lat;
-	// 	code = result.code;
-	// 	cityName = result.name;
-	// 	//map.setCenter(cityName);
-	// 	alert("当前定位城市:"+cityName);
-	// 	console.log(lng,lat)
-	// }
-	// var myCity = new BMap.LocalCity();
-	// myCity.get(myFun);
+	function myFun(result){
+		console.log(result)
+		lng = result.center.lng;
+		lat = result.center.lat;
+		var code = result.code;
+		var cityName = result.name;
+		//map.setCenter(cityName);
+		console.log("当前定位城市:"+cityName);
+		console.log(lng,lat)
+		star(code,cityName);
+	}
+	var myCity = new BMap.LocalCity();
+	myCity.get(myFun);
 
-	$(function(){
-
+	function star(code,cityName){
 		var urlArr = window.location.href.split('?');
 	    var rulesA = urlArr[1];
 	    if(rulesA){
@@ -335,7 +333,7 @@
 	    		}
 	    	});
 	    }
-	});
+	}
 
 	function showBindTel(){
 		indexA = layer.open({

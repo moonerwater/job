@@ -125,7 +125,11 @@
 				<input type="text" placeholder="请选择结束时间" id="jobendtime" value="" data-options='{"type":"time"}'>
 			</div>
 			<div class="mui-input-row">
-				<label>工作地点</label>
+				<label>工作区域</label>
+				<input type="text" placeholder="请选择结束时间" id="jobarea" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>详细地址</label>
 				<!-- <span class="btn btn-default fileinput-button">
 		            <span>上传图片...</span>
 		            <input type="button" id="addaddress">
@@ -295,20 +299,20 @@
 	});
 
 	ac.addEventListener("onhighlight", function(e) {  //鼠标放在下拉列表上的事件
-	var str = "";
+		var str = "";
 		var _value = e.fromitem.value;
 		var value = "";
 		if (e.fromitem.index > -1) {
 			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
 		}    
-		str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
+		//str = "FromItem<br />index = " + e.fromitem.index + "<br />value = " + value;
 		
-		value = "";
-		if (e.toitem.index > -1) {
-			_value = e.toitem.value;
-			value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
-		}    
-		str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
+		// value = "";
+		// if (e.toitem.index > -1) {
+		// 	_value = e.toitem.value;
+		// 	value = _value.province +  _value.city +  _value.district +  _value.street +  _value.business;
+		// }    
+		//str += "<br />ToItem<br />index = " + e.toitem.index + "<br />value = " + value;
 		//G("searchResultPanel").innerHTML = str;
 	});
 

@@ -267,6 +267,27 @@ $(document).ready(function(){
 					});
 				}, false);
 			}
+			//-----------------------------------------
+			//城市列表
+			var _getParam = function(obj, param) {
+				return obj[param] || '';
+			};
+			var cityPicker3 = new $.PopPicker({
+				layer: 3
+			});
+			cityPicker3.setData(cityData);
+			var showCityPickerButton = doc.getElementById('jobarea');
+			if(showCityPickerButton){
+				//var cityResult3 = doc.getElementById('cityResult3');
+				showCityPickerButton.addEventListener('tap', function(event) {
+					cityPicker3.show(function(items) {
+					// 	cityResult3.innerText = "你选择的城市是:" + _getParam(items[0], 'text') + " " + _getParam(items[1], 'text') + " " + _getParam(items[2], 'text');
+					// 	//返回 false 可以阻止选择框的关闭
+					// 	//return false;
+						showCityPickerButton.value = _getParam(items[0], 'text') + _getParam(items[1], 'text') +_getParam(items[2], 'text');
+					});
+				}, false);
+			}
 		});
 	})(mui, document);
 
