@@ -128,6 +128,27 @@ $(document).ready(function(){
 					});
 				}, false);
 			}
+			//-------------------------------
+			//性别要求
+			var userJobsex = new $.PopPicker();
+			userJobsex.setData([{
+				text: '不限'
+			}, {
+				text: '男'
+			}, {
+				text: '女'
+			}]);
+			var setJobsex = doc.getElementById('jobsex');
+			if(setJobsex){
+				setJobsex.addEventListener('tap', function(event) {
+					userJobsex.show(function(items) {
+						setJobsex.value = JSON.stringify(items[0].text).replace(/\"/g,'');
+						//返回 false 可以阻止选择框的关闭
+						//return false;
+						//userJobyear.dispose();
+					});
+				}, false);
+			}
 			//------------------------------
 			//工作类别
 			var jobtype = new $.PopPicker();

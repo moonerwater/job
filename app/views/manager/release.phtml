@@ -48,6 +48,14 @@
 				<label>岗位类别</label>
 				<input type="text" placeholder="请选择岗位类别" id="jobtype" value="">
 			</div>
+			<div class="mui-input-row">
+				<label>性别要求</label>
+				<input type="text" placeholder="请选择性别" id="jobsex" value="">
+			</div>
+			<div class="mui-input-row">
+				<label>招聘人数</label>
+				<input type="text" placeholder="请输入招聘人数" id="jobpeople" value="">
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-6 right">
@@ -168,16 +176,6 @@
 				<label>联系电话</label>
 				<input type="text" placeholder="请输入联系电话" id="companytel" value="">
 			</div>
-			<div class="mar10">
-				<label>微信二维码</label>
-				<span class="btn btn-default fileinput-button">
-		            <span>上传图片...</span>
-		            <input type="file" accept="image/jpg ,image/jpeg ,image/png" onchange="imgChange(event)" id="file">
-		        </span>
-		        <div class="imgbox rel">
-					<img src="" class="auto-center" id="showImage">
-				</div>
-			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-6">
@@ -211,64 +209,6 @@
 	textarea.oninput = function() {
 	    pre.textContent = textarea.value;
 	    textarea.style.height = pre.offsetHeight + 'px';
-	}
-
-	var base;
-
-	function imgChange(e) {
-	    var reader = new FileReader();
-	    reader.onload = (function (file) {
-	        return function (e) {
-	        	if(e.total>10*1024*1024){
-			        //alert('上传的图片的大于4M,请重新选择');
-			        layer.msg('上传的图片的大于10M,请重新选择。',{icon: 5});
-			        return false;
-		        } else {
-		        	$('.imgbox').css({"width":"8rem","height":"8rem"});
-		        	var IMG = new Image();
-		        	IMG.src = this.result;
-		            IMG.onload = function(){
-	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
-	      				console.log(w,h)
-	      			
-		      			var maxSize = {
-					        width: 1200,
-					        height: 1000,
-					        level: 0.6
-					    };
-					    if(w > maxSize.width || h > maxSize.height){
-					        var multiple = Math.max(w / maxSize.width, h / maxSize.height);
-					        resizeW = w / multiple;
-					        resizeH = h / multiple;
-					        var canvas = document.createElement('canvas'),
-						    ctx = canvas.getContext('2d');
-					        canvas.width = resizeW;
-					        canvas.height = resizeH;
-					        ctx.drawImage(IMG, 0, 0, resizeW, resizeH);
-						    var base64 = canvas.toDataURL('image/jpeg', maxSize.level);
-						    $("#showImage")[0].src=base64;
-						    var arr = base64.split(',');
-				            base = arr[1];
-				            console.log(base64)
-					    } else {
-					        // 如果图片尺寸小于最大限制，则不压缩直接上传
-					        $("#showImage")[0].src=IMG.src;
-				            var arr = IMG.src.split(',');
-				            base = arr[1];
-				            console.log(base);
-					    }
-					    
-				    }
-	        	
-	            //console.log(this.result); //这个就是base64的数据了
-		            // $("#showImage")[0].src=this.result;
-		            // var arr = this.result.split(',');
-		            // base = arr[1];
-		            // console.log(base);
-	            }
-	        };
-	    })(e.target.files[0]);
-	    reader.readAsDataURL(e.target.files[0]);
 	}
 
 	$(".turn").on('tap',function(){

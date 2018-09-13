@@ -36,16 +36,16 @@
 						<div class="col-xs-4"><a href="javascript:void(0)" class="active" id="allcity">全部</a></div>
 					</div>
 					<div class="row citys">
-						<div class="col-xs-4"><a href="/job/index?city=guangzhou" data-city="guangzhou" data-code="257">广州</a></div>
-						<div class="col-xs-4"><a href="/job/index?city=shenzhen" data-city="shenzhen" data-code="340">深圳</a></div>
-						<div class="col-xs-4"><a href="/job/index?city=dongguan" data-city="dongguan" data-code="119">东莞</a></div>
-						<div class="col-xs-4"><a href="/job/index?city=huizhou" data-city="huizhou" data-code="301">惠州</a></div>
+						<div class="col-xs-4"><a href="/job/index?city=guangzhou" data-city="guangzhou" data-code="257" data-province="440000" data-cityid="440100">广州</a></div>
+						<div class="col-xs-4"><a href="/job/index?city=shenzhen" data-city="shenzhen" data-code="340" data-province="440000" data-cityid="440300">深圳</a></div>
+						<div class="col-xs-4"><a href="/job/index?city=dongguan" data-city="dongguan" data-code="119" data-province="440000" data-cityid="441900">东莞</a></div>
+						<!-- <div class="col-xs-4"><a href="/job/index?city=huizhou" data-city="huizhou" data-code="301">惠州</a></div>
 						<div class="col-xs-4"><a href="/job/index?city=shanghai" data-city="shanghai" data-code="289">上海</a></div>
 						<div class="col-xs-4"><a href="/job/index?city=beijing" data-city="beijing" data-code="131">北京</a></div>
 						<div class="col-xs-4"><a href="/job/index?city=chengdu" data-city="chengdu" data-code="75">成都</a></div>
 						<div class="col-xs-4"><a href="/job/index?city=chongqing" data-city="chongqing" data-code="132">重庆</a></div>
 						<div class="col-xs-4"><a href="/job/index?city=xian" data-city="xian" data-code="233">西安</a></div>
-						<div class="col-xs-4"><a href="/job/index?city=wuhan" data-city="wuhan" data-code="218">武汉</a></div>
+						<div class="col-xs-4"><a href="/job/index?city=wuhan" data-city="wuhan" data-code="218">武汉</a></div> -->
 					</div>
 				</div>
 			</div>
@@ -308,6 +308,8 @@
 	    		var _this = $(this);
 	    		var data = _this.attr("data-city");
 	    		var text = _this.text();
+	    		var provinceid = _this.attr("data-province");
+	    		var cityid = _this.attr("data-cityid");
 	    		console.log(city,data,text)
 	    		if(data == city){
 	    			var codA = _this.attr("data-code");
@@ -322,6 +324,7 @@
 				    			$("#Selections").text(text);
 				    			$("#allcity").removeClass('active');
 				    			showBindTel();
+				    			showCityList(provinceid,cityid);
 							}
 						})
 		    		} else {
@@ -329,10 +332,36 @@
 		    			$("#Selections").text(text);
 		    			$("#allcity").removeClass('active');
 		    			showBindTel();
+		    			showCityList(provinceid,cityid);
 		    		}
 	    		}
 	    	});
 	    }
+	}
+
+	function showCityList(province,city){
+		$(".selectbox[data-select='address'] .addresses").empty();
+		var lenA = cityData.length;
+		for(var i = 0;i < lenA; i++){
+			if(cityData[i].id == province){
+				var cityList = cityData[i].children;
+				//console.log(cityList)
+				var lenB = cityList.length;
+				for(var j = 0; j < lenB; j++){
+					if(cityList[j].id == city){
+						var districtList = cityList[j].children;
+						//console.log(districtList);
+						var lenC = districtList.length;
+						for(var k = 0; k < lenC; k++){
+							//var district = districtList[k].text;
+							//console.log(district);
+							var dom = "<div class='col-xs-4'><a href='javascript:void(0)'>"+districtList[k].text+"</a></div>"
+							$(".selectbox[data-select='address'] .addresses").append(dom);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	function showBindTel(){
