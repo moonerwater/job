@@ -61,6 +61,7 @@ class ControllerH5 extends ControllerBase
                         $user->openid = $wxuser['openid'];
                         $user->nickname = $wxuser['nickname'];
                         $user->headimgurl = $wxuser['headimgurl'];
+                        $user->sex = ($wxuser['sex'] == 2 ? '女' : '男');
                         $user->create_time = time();
                         $user->last_time = time();
                         $user->save();
