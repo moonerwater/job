@@ -117,7 +117,7 @@ class ManagerController extends ControllerH5
         $user->phone = $mobile;
         $user->real_name = $real_name;
         $user->company_name = $company_name;
-        $user->xcode_img = $file;
+        $user->wxcode_img = $file;
         $user->last_time = time();
         $user->save();
         //
