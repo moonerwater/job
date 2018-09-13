@@ -19,7 +19,11 @@ class ManagerController extends ControllerH5
         $job = \Job::find(array('user_id ='.$userid, 'order' => 'id desc'));
         $job = $job->toArray();
         foreach($job as $k => $v){
-            //$userjobcoin[$k]['time'] = date('Y-m-d H:i:s', $v['create_time']);
+            $applynum = \Apply::find("job_id = ".$v['id'])->count();
+            $job[$k]['applynum'] = $applynum;
+
+            $applyYnum = \Apply::find("job_id = ".$v['id']." and type = 'Y' ")->count();
+            $job[$k]['applyYnum'] = $applyYnum;
         }
         $data['job'] = $job;
         //

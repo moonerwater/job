@@ -2,7 +2,7 @@
 
 use Phalcon\Mvc\Model;
 
-class PayinList extends Model
+class Apply extends Model
 {
     public function initialize()
     {
@@ -11,6 +11,6 @@ class PayinList extends Model
 
     public function getSource()
     {
-        return "payin_list";
+        return "apply";
     }
 }
