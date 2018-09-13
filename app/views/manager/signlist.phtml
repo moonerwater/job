@@ -85,221 +85,124 @@
 	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary signselect">
 		<a href="#item1" class="mui-control-item mui-active">已报名</a>
 		<a href="#item2" class="mui-control-item">已录用</a>
-		<a href="#item3" class="mui-control-item">已评价</a>
+		<a href="#item3" class="mui-control-item">已拒绝</a>
 	</div>
 	<div id="Signlist">
 		<div id="item1" class="mui-control-content mui-active">
 			<ul class="mui-table-view joblist">
-				<li class="mui-table-view-cell signs">
-					<a href="userresume">
-						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
-						<div class="userinfo clearfix">
-							<div class="userimg left">
-								<img src="/public/img/1.png" class="auto-center">
-							</div>
-							<div class="info left">
-								<div class="name left">卡卡罗特</div>
-								<div class="else left">
-									<span class="score">4.9</span>52单
+				{% for key, item in data['apply'] %}
+					<li class="mui-table-view-cell signs" idvalue="{{ item['id'] }}">
+						<a href="userresume">
+							<h4>{{ item['title'] }}</h4>
+							<div class="userinfo clearfix">
+								<div class="userimg left">
+									<img src="{{ item['headimgurl'] }}" class="auto-center">
 								</div>
-								<div class="cls"></div>
-								<div class="tips clearfix">
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-								</div>
-							</div>
-						</div>
-					</a>
-					<div class="rows">
-						<button class="agree">录用</button>
-						<button class="reject">拒绝</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell signs">
-					<a href="userresume">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div class="userinfo clearfix">
-							<div class="userimg left">
-								<img src="/public/img/1.png" class="auto-center">
-							</div>
-							<div class="info left">
-								<div class="name left">卡卡罗特</div>
-								<div class="else left">
-									<span class="score">4.9</span>52单
-								</div>
-								<div class="cls"></div>
-								<div class="tips clearfix">
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
+								<div class="info left">
+									<div class="name left">{{ item['real_name'] }}</div>
+									<!--<div class="else left">
+										<span class="score">4.9</span>52单
+									</div>
+									<div class="cls"></div>
+									<div class="tips clearfix">
+										<span>效率高</span>
+										<span>准时</span>
+										<span>负责任</span>
+										<span>效率高</span>
+										<span>准时</span>
+										<span>负责任</span>
+									</div>-->
 								</div>
 							</div>
-						</div>
-					</a>
-					<div class="rows">
-						<button class="agree">录用</button>
-						<button class="reject">拒绝</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell signs">
-					<a href="userresume">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div class="userinfo clearfix">
-							<div class="userimg left">
-								<img src="/public/img/1.png" class="auto-center">
+						</a>
+						{% if item['type'] == 'Wait' %}
+							<div class="rows">
+								<button class="agree">录用</button>
+								<button class="reject">拒绝</button>
 							</div>
-							<div class="info left">
-								<div class="name left">卡卡罗特</div>
-								<div class="else left">
-									<span class="score">4.9</span>52单
-								</div>
-								<div class="cls"></div>
-								<div class="tips clearfix">
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-								</div>
+						{% elseif item['type'] == 'N' %}
+							<div class="rows">
+								<button class="contact">联系他/她{{ item['phone'] }}</button>
 							</div>
-						</div>
-					</a>
-					<div class="rows">
-						<button class="agree">录用</button>
-						<button class="reject">拒绝</button>
-					</div>
-				</li>
+						{% elseif item['type'] == 'Y' %}
+							<div class="rows">
+								<button class="contact">联系他/她{{ item['phone'] }}</button>
+							</div>
+						{% endif %}
+					</li>
+				{% endfor %}
 			</ul>
 		</div>
 		<div id="item2" class="mui-control-content">
 			<ul class="mui-table-view joblist">
-				<li class="mui-table-view-cell signs">
-					<a href="userresume">
-						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
-						<div class="userinfo clearfix">
-							<div class="userimg left">
-								<img src="/public/img/1.png" class="auto-center">
-							</div>
-							<div class="info left">
-								<div class="name left">卡卡罗特</div>
-								<div class="else left">
-									<span class="score">4.9</span>52单
+				{% for key, item in data['apply'] %}
+				{% if item['type'] == 'Y' %}
+					<li class="mui-table-view-cell signs" idvalue="{{ item['id'] }}">
+						<a href="userresume">
+							<h4>{{ item['title'] }}</h4>
+							<div class="userinfo clearfix">
+								<div class="userimg left">
+									<img src="{{ item['headimgurl'] }}" class="auto-center">
 								</div>
-								<div class="cls"></div>
-								<div class="tips clearfix">
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
+								<div class="info left">
+									<div class="name left">{{ item['real_name'] }}</div>
+									<!--<div class="else left">
+										<span class="score">4.9</span>52单
+									</div>
+									<div class="cls"></div>
+									<div class="tips clearfix">
+										<span>效率高</span>
+										<span>准时</span>
+										<span>负责任</span>
+										<span>效率高</span>
+										<span>准时</span>
+										<span>负责任</span>
+									</div>-->
 								</div>
 							</div>
+						</a>
+						<div class="rows">
+							<button class="contact">联系他/她{{ item['phone'] }}</button>
 						</div>
-					</a>
-					<div class="rows">
-						<button class="assess">评价</button>
-						<button class="contact">联系他/她</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell signs">
-					<a href="userresume">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div class="userinfo clearfix">
-							<div class="userimg left">
-								<img src="/public/img/1.png" class="auto-center">
-							</div>
-							<div class="info left">
-								<div class="name left">卡卡罗特</div>
-								<div class="else left">
-									<span class="score">4.9</span>52单
-								</div>
-								<div class="cls"></div>
-								<div class="tips clearfix">
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-								</div>
-							</div>
-						</div>
-					</a>
-					<div class="rows">
-						<button class="assess">评价</button>
-						<button class="contact">联系他/她</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell signs">
-					<a href="userresume">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div class="userinfo clearfix">
-							<div class="userimg left">
-								<img src="/public/img/1.png" class="auto-center">
-							</div>
-							<div class="info left">
-								<div class="name left">卡卡罗特</div>
-								<div class="else left">
-									<span class="score">4.9</span>52单
-								</div>
-								<div class="cls"></div>
-								<div class="tips clearfix">
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-								</div>
-							</div>
-						</div>
-					</a>
-					<div class="rows">
-						<button class="assess">评价</button>
-						<button class="contact">联系他/她</button>
-					</div>
-				</li>
+					</li>
+				{% endif %}
+				{% endfor %}
 			</ul>
 		</div>
 		<div id="item3" class="mui-control-content">
 			<ul class="mui-table-view joblist">
-				<li class="mui-table-view-cell signs">
+				{% for key, item in data['apply'] %}
+				{% if item['type'] == 'N' %}
+				<li class="mui-table-view-cell signs" idvalue="{{ item['id'] }}">
 					<a href="userresume">
-						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
+						<h4>{{ item['title'] }}</h4>
 						<div class="userinfo clearfix">
 							<div class="userimg left">
-								<img src="/public/img/1.png" class="auto-center">
+								<img src="{{ item['headimgurl'] }}" class="auto-center">
 							</div>
 							<div class="info left">
-								<div class="name left">卡卡罗特</div>
-								<div class="else left">
-									<span class="score">4.9</span>52单
-								</div>
-								<div class="cls"></div>
-								<div class="tips clearfix">
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-									<span>效率高</span>
-									<span>准时</span>
-									<span>负责任</span>
-								</div>
+								<div class="name left">{{ item['real_name'] }}</div>
+								<!--<div class="else left">
+                                    <span class="score">4.9</span>52单
+                                </div>
+                                <div class="cls"></div>
+                                <div class="tips clearfix">
+                                    <span>效率高</span>
+                                    <span>准时</span>
+                                    <span>负责任</span>
+                                    <span>效率高</span>
+                                    <span>准时</span>
+                                    <span>负责任</span>
+                                </div>-->
 							</div>
 						</div>
 					</a>
 					<div class="rows">
-						<button class="complain">投诉</button>
+						<button class="contact">联系他/她{{ item['phone'] }}</button>
 					</div>
 				</li>
+				{% endif %}
+				{% endfor %}
 			</ul>
 		</div>
 	</div>

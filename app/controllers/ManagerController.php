@@ -269,9 +269,61 @@ class ManagerController extends ControllerH5
         $this->reply('success', 0, $result);
     }
 
-    public function signlistAction()
-    {
-        
+    public function signlistAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $jobid = $this->request->get('jobid','int');
+        if (!$jobid) {
+            $this->replyFailure('jobid error');
+            return '';
+        }
+        $job =\Job::findFirst([' user_id = ?1 and id = ?2 ', 'bind'=>[ 1=>$userid, 2=>$jobid ] ]);
+        if (!$job) {
+            $this->replyFailure('jobid error 2');
+            return '';
+        }
+
+        $apply = \Apply::find("job_id = ".$jobid);
+        $apply = $apply->toArray();
+        foreach($apply as $k => $v){
+            $job = \Job::findFirstById($v['job_id']);
+            $apply[$k]['title'] = $job->title;
+            $user = \User::findFirstById($v['user_id']);
+            $apply[$k]['real_name'] = $user->real_name;
+            $apply[$k]['headimgurl'] = $user->headimgurl;
+            $apply[$k]['phone'] = $user->phone;
+        }
+        $data['apply'] = $apply;
+        //
+        $this->view->setVar('data', $data);
+
+
+    }
+
+    public function changeapplyAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $applyid = $this->request->get('applyid','int');
+        $type = $this->request->get('type','string');
+        if (!$applyid) {
+            $this->replyFailure('applyid error');
+            return '';
+        }
+        if ($type != 'Y' && $type != 'N' ) {
+            $this->replyFailure('type error');
+            return '';
+        }
+        $apply = \Apply::findFirstById($applyid);
+        $job = \Job::findFirstById($apply->job_id);
+        if($job->user_id != $userid){
+            $this->replyFailure('power error');
+            return '';
+        }
+        $apply->type = $type;
+        $apply->save();
+        $this->reply('success', 0, $result);
     }
 
     public function modifyAction()
