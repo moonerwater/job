@@ -476,6 +476,7 @@ p {
 	.userinfo .info .else {
 		font-size:1.2rem;
 		margin: 5px 0;
+		display: none;
 	}
 	.userinfo .info .else .score {
 		display: inline-block;
@@ -513,6 +514,7 @@ p {
 		text-align: center;
 		color:#fff;
 		background: transparent;
+		display: none;
 	}
 	#usertop .myjob {
 		width: 100%;

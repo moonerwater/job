@@ -1,3 +1,44 @@
+function checkName( name ) {
+    var regu = /[\u4E00-\u9FA5]/;
+    var re = new RegExp(regu);
+    if (re.test(name)) {
+        return true;  
+    }
+    else {
+        return false;
+    }
+};
+
+var times = 0;
+function mobileMsg(){
+    if(times<60){
+        $('.getcaptcha').hide();
+        $('.waiting').show().text('等待'+(60-times)+'秒');
+        // $('.getcaptcha').attr('disable','disable').removeClass('getcaptcha').addClass('waiting');
+        // $('.waiting').text('等待'+(60-times)+'秒');
+        times = times + 1;
+        setTimeout(function(){mobileMsg()}, 1000);
+    }else{
+        times = 0;
+        $('.waiting').hide()
+        $('.getcaptcha').removeAttr('disabled');
+        $('.getcaptcha').show();
+        // $('.waiting').removeAttr('disable').removeClass('waiting').addClass('getcaptcha');
+        // $('.getcaptcha').text('发送验证码');
+    }
+}
+
+function checkMobile( strMobile ) {
+    var regu = /^[1][3-9][0-9]{9}$/;
+    var re = new RegExp(regu);
+    if (re.test(strMobile)) {
+        return true;  
+    }
+    else {
+        return false;
+    }
+};
+
 $(document).ready(function(){
 
 	$("#Sign").on('tap',function(){
