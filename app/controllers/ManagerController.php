@@ -14,6 +14,16 @@ class ManagerController extends ControllerH5
 
     public function indexAction() {
         $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $job = \Job::find(array('user_id ='.$userid, 'order' => 'id desc'));
+        $job = $job->toArray();
+        foreach($job as $k => $v){
+            //$userjobcoin[$k]['time'] = date('Y-m-d H:i:s', $v['create_time']);
+        }
+        $data['job'] = $job;
+        //
+        $this->view->setVar('data', $data);
         
     }
 
@@ -137,7 +147,12 @@ class ManagerController extends ControllerH5
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
 
+        $jobid = $this->request->get('jobid','int');
+        $jobinfo = \Job::findFirstById($jobid);
+
         $data['userinfo'] = $this->userinfo;
+        $data['jobinfo'] = $jobinfo->toArray();
+
         $this->view->setVar('data', $data);
     }
 
@@ -145,6 +160,7 @@ class ManagerController extends ControllerH5
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
 
+        $jobid = $this->request->get('jobid','int');
         $title = $this->request->get('title');
         $province = $this->request->get('province');
         $city = $this->request->get('city');
@@ -169,6 +185,14 @@ class ManagerController extends ControllerH5
         $phone = $this->request->get('phone');
         $wxcode_img = $this->request->get('wxcode_img');
 
+        if($jobid){
+            $job =\Job::findFirst([' user_id = ?1 and id = ?2 ', 'bind'=>[ 1=>$userid, 2=>$jobid ] ]);
+            if (!$job) {
+                $this->replyFailure('jobid error 2');
+                return '';
+            }
+        }
+
         if (!$title || !$province || !$city || !$district || !$address || !$lng || !$lat || !$content || !$type || !$sex || !$num || !$salary_type || !$salary || !$salary_time || !$start_date|| !$end_date|| !$start_time|| !$end_time|| !$real_name|| !$company_name|| !$phone|| !$wxcode_img) {
             $this->replyFailure('data error');
             return '';
@@ -180,7 +204,12 @@ class ManagerController extends ControllerH5
             return '';
         }
 
-        $job = new \Job();
+        if($jobid){
+            $job =\Job::findFirst([' user_id = ?1 and id = ?2 ', 'bind'=>[ 1=>$userid, 2=>$jobid ] ]);
+        }
+        else{
+            $job = new \Job();
+        }
         $job->user_id = $userid;
         $job->title = $title;
         $job->province = $province;
@@ -211,6 +240,28 @@ class ManagerController extends ControllerH5
 
         $this->reply('success', 0, $result);
 
+    }
+
+    public function deljobAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $jobid = $this->request->get('jobid','int');
+
+        if (!$jobid) {
+            $this->replyFailure('jobid error');
+            return '';
+        }
+
+        $job =\Job::findFirst([' user_id = ?1 and id = ?2 ', 'bind'=>[ 1=>$userid, 2=>$jobid ] ]);
+        if (!$job) {
+            $this->replyFailure('jobid error 2');
+            return '';
+        }
+        else{
+            $job->delete();
+        }
+        $this->reply('success', 0, $result);
     }
 
     public function signlistAction()
