@@ -22,43 +22,47 @@
 	<a href="javascript:void(0)" id="ManagerBanner"></a>
 	<p>首次发布岗位需要实名认证<a href="/manager/info">去认证 > </a></p>
 	<div class="container" style="padding:15px;">
-		{% for key, item in data['job'] %}
-			<div class="works" idvalue = "{{ item['id'] }}">
-				<!--<span class="status statA">审核中</span>
-				<span class="status statB">审核通过</span>
-				<span class="status statC">审核拒绝</span>-->
-				<span class="status statB">审核通过</span>
-				<h3>{{ item['title'] }}</h3>
-				<div class="row people">
-					<div class="col-xs-4">
-						<p class="num">20</p>
-						<p class="tit">报名人数</p>
+		{%if data['job']%}
+			{% for key, item in data['job'] %}
+				<div class="works" idvalue = "{{ item['id'] }}">
+					<!--<span class="status statA">审核中</span>
+					<span class="status statB">审核通过</span>
+					<span class="status statC">审核拒绝</span>-->
+					<span class="status statB">审核通过</span>
+					<h3>{{ item['title'] }}</h3>
+					<div class="row people">
+						<div class="col-xs-4">
+							<p class="num">20</p>
+							<p class="tit">报名人数</p>
+						</div>
+						<div class="col-xs-4">
+							<p class="num">20</p>
+							<p class="tit">录取人数</p>
+						</div>
+						<div class="col-xs-4">
+							<p class="num">{{ item['view_num'] }}</p>
+							<p class="tit">浏览人数</p>
+						</div>
 					</div>
-					<div class="col-xs-4">
-						<p class="num">20</p>
-						<p class="tit">录取人数</p>
-					</div>
-					<div class="col-xs-4">
-						<p class="num">{{ item['view_num'] }}</p>
-						<p class="tit">浏览人数</p>
+					<div class="row control">
+						<div class="col-xs-3">
+							<a href="javascript:void(0)" class="share">分享</a>
+						</div>
+						<div class="col-xs-3">
+							<a href="javascript:void(0)" class="extend">全网推</a>
+						</div>
+						<div class="col-xs-3">
+							<a href="/manager/modify" class="modify">修改</a>
+						</div>
+						<div class="col-xs-3">
+							<a href="javascript:void(0)" class="delete">删除</a>
+						</div>
 					</div>
 				</div>
-				<div class="row control">
-					<div class="col-xs-3">
-						<a href="javascript:void(0)" class="share">分享</a>
-					</div>
-					<div class="col-xs-3">
-						<a href="javascript:void(0)" class="extend">全网推</a>
-					</div>
-					<div class="col-xs-3">
-						<a href="/manager/modify" class="modify">修改</a>
-					</div>
-					<div class="col-xs-3">
-						<a href="javascript:void(0)" class="delete">删除</a>
-					</div>
-				</div>
-			</div>
-		{% endfor %}
+			{% endfor %}
+		{% else %}
+			你没有发布过工作
+		{% endif %}
 	</div>
 </div>
 
