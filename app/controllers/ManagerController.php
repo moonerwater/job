@@ -17,6 +17,11 @@ class ManagerController extends ControllerH5
         
     }
 
+    public function logoutAction() {
+        $this->session->remove('userinfo');
+        $this->response->redirect('/manager/index');
+    }
+
     public function adminAction() {
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
