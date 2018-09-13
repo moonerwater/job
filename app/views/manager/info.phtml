@@ -51,6 +51,35 @@
 
 	var base;
 
+	$(function(){
+		var src = $("#showImage").attr('src');
+		if(src != ''){
+			$('.imgbox').css({"width":"8rem","height":"8rem"});
+			main(src);
+		}
+	});
+
+	 function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var dataURL = canvas.toDataURL("image/png");
+        base = dataURL;
+        console.log(base);
+        //return dataURL; // return dataURL.replace("data:image/png;base64,", ""); 
+    }
+    function main(srcA) { 
+        var img = document.createElement('img'); 
+        img.src = srcA; 
+        img.onload =function() { 
+            var data = getBase64Image(img); 
+            //console.log(data); 
+        } 
+        //document.body.appendChild(img); 
+    }
+
 	function imgChange(e) {
 	    var reader = new FileReader();
 	    reader.onload = (function (file) {
@@ -63,6 +92,9 @@
 		        	$('.imgbox').css({"width":"8rem","height":"8rem"});
 		        	var IMG = new Image();
 		        	IMG.src = this.result;
+		        	var arA = this.result.split(';');
+		        	var arB = arA[0].split('/');
+		        	var arC = arB[1];
 		            IMG.onload = function(){
 	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
 	      				console.log(w,h)
@@ -81,7 +113,7 @@
 					        canvas.width = resizeW;
 					        canvas.height = resizeH;
 					        ctx.drawImage(IMG, 0, 0, resizeW, resizeH);
-						    var base64 = canvas.toDataURL('image/jpeg', maxSize.level);
+						    var base64 = canvas.toDataURL("image/"+arC, maxSize.level);
 						    $("#showImage")[0].src=base64;
 				            base = base64
 				            console.log(base)

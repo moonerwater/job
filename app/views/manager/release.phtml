@@ -69,7 +69,7 @@
 			<img src="/public/img/relB.png" class="auto-center">
 		</div>
 		<div class="boxcontain mar10">
-			<input type="text" placeholder="请输入职位名称" id="jobname" value="">
+			<input type="text" placeholder="请输入职位名称" id="jobname" value="{{ data['jobinfo']['title'] }}">
 			<pre class="texts hidepre" id="pre"></pre>
 			<textarea class="texts" id="textarea" placeholder="请输入职位描述"></textarea>
 		</div>
@@ -135,10 +135,12 @@
 			<div class="mui-input-row">
 				<label>工作区域</label>
 				<input type="text" placeholder="请选择工作区域" id="jobarea" value="">
+				<input type="hidden" id="jobprovince">
 				<input type="hidden" id="jobcity">
+				<input type="hidden" id="jobdistrict">
 			</div>
 			<div class="mui-input-row">
-				<label>详细地址</label>
+				<label>定位地址</label>
 				<!-- <span class="btn btn-default fileinput-button">
 		            <span>上传图片...</span>
 		            <input type="button" id="addaddress">
@@ -146,6 +148,10 @@
 				<input type="text" placeholder="添加工作地点" id="inputAddress" v-model="inputtext">
 				<input type="hidden" id="lng">
 				<input type="hidden" id="lat">
+			</div>
+			<div class="mui-input-row">
+				<label>门牌号</label>
+				<input type="text" placeholder="请输入门牌号（选填）" id="jobroom" value="">
 			</div>
 			<!-- <div id="r-result"></div> -->
 		</div>
@@ -166,15 +172,25 @@
 		<div class="boxcontain mar10 resu">
 			<div class="mui-input-row">
 				<label>企业全称</label>
-				<input type="text" placeholder="请输入企业全称" id="companyname" value="">
+				<input type="text" placeholder="请输入企业全称" id="companyname" value="{{ data['userinfo']['company_name'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>联系人</label>
-				<input type="text" placeholder="请输入联系人姓名" id="companyman" value="">
+				<input type="text" placeholder="请输入联系人姓名" id="companyman" value="{{ data['userinfo']['real_name'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>联系电话</label>
-				<input type="text" placeholder="请输入联系电话" id="companytel" value="">
+				<input type="text" placeholder="请输入联系电话" id="companytel" value="{{ data['userinfo']['phone'] }}">
+			</div>
+			<div class="mar10">
+				<label>微信二维码</label>
+				<span class="btn btn-default fileinput-button">
+		            <span>上传图片...</span>
+		            <input type="file" accept="image/jpg ,image/jpeg ,image/png" onchange="imgChange(event)" id="file">
+		        </span>
+		        <div class="imgbox rel">
+					<img src="{{ data['userinfo']['wxcode_img'] }}" class="auto-center" id="showImage">
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -196,12 +212,33 @@
 <div id="allmap"></div>
 <script type="text/javascript">
 
+	//index 1
+	var jobtype;
+	var jobsex;
+	var jobpeople;
+
+	//index 2
+	var jobname;
+	var textarea;
+
+	//index 3
+	var paytype;
+	var paymoney;
+	var paytime;
 
 	//index 4
 	var lng;	//经度
 	var lat;	//纬度
+	var province;
+	var city;
 	var district;
-	var name;
+	var address;
+	var jobroom;
+
+	//index 5
+	var companyname;
+	var companyman;
+	var companytel;
 
 	var textarea = document.getElementById('textarea');
 	var pre = document.getElementById('pre');
@@ -211,10 +248,190 @@
 	    textarea.style.height = pre.offsetHeight + 'px';
 	}
 
-	$(".turn").on('tap',function(){
-		var page = $(this).attr('data-turn');
+	var base;
+
+	$(function(){
+		var src = $("#showImage").attr('src');
+		if(src != ''){
+			$('.imgbox').css({"width":"8rem","height":"8rem"});
+			main(src);
+		}
+	});
+
+	function getBase64Image(img) {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, img.width, img.height);
+        var dataURL = canvas.toDataURL("image/png");
+        base = dataURL;
+        console.log(base);
+        //return dataURL; // return dataURL.replace("data:image/png;base64,", ""); 
+    }
+    function main(srcA) { 
+        var img = document.createElement('img'); 
+        img.src = srcA; 
+        img.onload =function() { 
+            var data = getBase64Image(img); 
+        } 
+    }
+
+	function imgChange(e) {
+	    var reader = new FileReader();
+	    reader.onload = (function (file) {
+	        return function (e) {
+	        	if(e.total>10*1024*1024){
+			        //alert('上传的图片的大于4M,请重新选择');
+			        layer.msg('上传的图片的大于10M,请重新选择。',{icon: 5});
+			        return false;
+		        } else {
+		        	$('.imgbox').css({"width":"8rem","height":"8rem"});
+		        	var IMG = new Image();
+		        	IMG.src = this.result;
+		        	var arA = this.result.split(';');
+		        	var arB = arA[0].split('/');
+		        	var arC = arB[1];
+		            IMG.onload = function(){
+	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
+	      				console.log(w,h)
+	      			
+		      			var maxSize = {
+					        width: 1200,
+					        height: 1000,
+					        level: 0.6
+					    };
+					    if(w > maxSize.width || h > maxSize.height){
+					        var multiple = Math.max(w / maxSize.width, h / maxSize.height);
+					        resizeW = w / multiple;
+					        resizeH = h / multiple;
+					        var canvas = document.createElement('canvas'),
+						    ctx = canvas.getContext('2d');
+					        canvas.width = resizeW;
+					        canvas.height = resizeH;
+					        ctx.drawImage(IMG, 0, 0, resizeW, resizeH);
+						    var base64 = canvas.toDataURL("image/"+arC, maxSize.level);
+						    $("#showImage")[0].src=base64;
+				            base = base64
+				            console.log(base)
+					    } else {
+					        // 如果图片尺寸小于最大限制，则不压缩直接上传
+					        $("#showImage")[0].src=IMG.src;
+				            //var arr = IMG.src.split(',');
+				            base = IMG.src;
+				            console.log(base);
+					    }   
+				    }
+	            }
+	        };
+	    })(e.target.files[0]);
+	    reader.readAsDataURL(e.target.files[0]);
+	}
+
+	function showNextPage(page){
 		$('.release').hide();
 		$(".release[data-rid='"+page+"']").fadeIn(200);
+	}
+
+	$("#RelA .turn").on('tap',function(){
+		var page = $(this).attr('data-turn');
+
+		jobtype = $("#jobtype").val();
+		if(jobtype.length == ''){
+	        layer.msg('请选择岗位类别。');
+	        return false;
+	    }
+
+	    jobsex = $("#jobsex").val();
+	    if(jobsex.length == ''){
+	        layer.msg('请选择性别。');
+	        return false;
+	    }
+
+	    jobpeople = $("#jobpeople").val();
+	    if(jobpeople.length == ''){
+	        layer.msg('请填写招聘人数。');
+	        return false;
+	    }
+
+		showNextPage(page);
+	});
+
+	$("#RelB .turn").on('tap',function(){
+		var page = $(this).attr('data-turn');
+
+		jobname = $("#jobname").val();
+		if(jobname.length == ''){
+	        layer.msg('请填写职位标题。');
+	        return false;
+	    }
+
+	    textarea = $("#textarea").val();
+	    if(textarea.length == ''){
+	        layer.msg('请填写职位描述。');
+	        return false;
+	    }
+
+		showNextPage(page);
+	});
+
+	$("#RelC .turn").on('tap',function(){
+		var page = $(this).attr('data-turn');
+
+		paytype = $("#paytype").val();
+		if(paytype.length == ''){
+	        layer.msg('请选择计薪方式。');
+	        return false;
+	    }
+
+	    paymoney = $("#paymoney").val();
+	    if(paymoney.length == ''){
+	        layer.msg('请填写薪资。');
+	        return false;
+	    }
+
+	    paytime = $("#paytime").val();
+	    if(paytime.length == ''){
+	        layer.msg('请选择结算时间。');
+	        return false;
+	    }
+
+		showNextPage(page);
+	});
+
+	$("#RelD .turn").on('tap',function(){
+		var page = $(this).attr('data-turn');
+
+		jobstarday = $("#jobstarday").val();
+		if(jobstarday.length == ''){
+	        layer.msg('请选择开始日期。');
+	        return false;
+	    }
+
+	    jobendday = $("#jobendday").val();
+	    if(jobendday.length == ''){
+	        layer.msg('请选择结束日期。');
+	        return false;
+	    }
+
+	    jobstartime = $("#jobstartime").val();
+	    if(jobstartime.length == ''){
+	        layer.msg('请选择开始时间。');
+	        return false;
+	    }
+
+	    jobendtime = $("#jobendtime").val();
+	    if(jobendtime.length == ''){
+	        layer.msg('请选择结束时间。');
+	        return false;
+	    }
+
+	    if(!lng || lng == ''){
+	    	layer.msg('请选择定位地址。');
+	        return false;
+	    }
+
+		showNextPage(page);
 	});
 
 	$('.push').on('tap',function(){
@@ -234,12 +451,20 @@
 
 		    AMap.event.addListener(autocomplete, "select", function(data){
 		        console.log(data)
-		        district = data.poi.district;
-		        name = data.poi.name;
+		        var area = data.poi.district;
+		        address = data.poi.address;
 		        lng = data.poi.location.lng;
 		        lat = data.poi.location.lat;
-		        console.log(district,name,lng,lat)
-		        $("#jobarea").val(district);
+		        console.log(area,address,lng,lat)
+		        $("#jobarea").val(area);
+
+		        var arr = area.split('省');
+		        province = arr[0]+"省";
+		        //console.log(province);
+		        var arrB = arr[1].split('市');
+		        city = arrB[0]+"市";
+		        district = arrB[1];
+		        //$("#jobdistrict").val('南山区');
 		    }); 
 		});
 	})
