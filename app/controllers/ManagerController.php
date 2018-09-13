@@ -326,20 +326,39 @@ class ManagerController extends ControllerH5
         $this->reply('success', 0, $result);
     }
 
+    public function userresumeAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $applyid = $this->request->get('applyid','int');
+        if (!$applyid) {
+            $this->replyFailure('applyid error');
+            return '';
+        }
+        $apply = \Apply::findFirstById($applyid);
+        $job = \Job::findFirstById($apply->job_id);
+        if($job->user_id != $userid){
+            $this->replyFailure('power error');
+            return '';
+        }
+        $user = \User::findFirstById($apply->user_id);
+        $data['userinfo'] = $user->toArray();
+        //
+        $this->view->setVar('data', $data);
+    }
+
+    public function settingAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+    }
+
     public function modifyAction()
     {
         
     }
 
-    public function userresumeAction()
-    {
-        
-    }
 
-    public function settingAction()
-    {
-        
-    }
 
 
 

@@ -20,11 +20,11 @@
 	<div id="usertop">
 		<div class="userinfo clearfix">
 			<div class="userimg left">
-				<img src="/public/img/4.png" class="auto-center">
+				<img src="{{ data['userinfo']['headimgurl'] }}" class="auto-center">
 			</div>
 			<div class="info">
-				<div class="name">贝吉塔</div>
-				<div class="else"><span class="score">4.9</span>52单</div>
+				<div class="name">{{ data['userinfo']['real_name'] }}</div>
+				<!--<div class="else"><span class="score">4.9</span>52单</div>
 				<div class="tips clearfix">
 					<span>效率高</span>
 					<span>准时</span>
@@ -32,7 +32,7 @@
 					<span>效率高</span>
 					<span>准时</span>
 					<span>负责任</span>
-				</div>
+				</div>-->
 			</div>
 		</div>
 	</div>
@@ -40,11 +40,11 @@
 		<div class="resu">
 			<div class="mui-input-row">
 				<label>性别</label>
-				<p>男</p>
+				<p>{{ data['userinfo']['sex'] }}</p>
 			</div>
 			<div class="mui-input-row">
 				<label>生日</label>
-				<p>2018-2-31</p>
+				<p>{{ data['userinfo']['birth'] }}</p>
 			</div>
 			<div class="mui-input-row">
 				<label>身份</label>
@@ -56,7 +56,7 @@
 			</div>
 			<div class="mui-input-row">
 				<label>手机号码</label>
-				<p>13800138000</p>
+				<p>{{ data['userinfo']['phone'] }}</p>
 			</div>
 			<div class="mui-input-row">
 				<label>工作经验</label>
