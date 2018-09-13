@@ -153,6 +153,11 @@ class ManagerController extends ControllerH5
         
     }
 
+    public function settingAction()
+    {
+        
+    }
+
 
 
     
