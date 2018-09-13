@@ -75,7 +75,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-6">
-				<button class="turn" data-turn="1">上一步</button>
+				<button class="beforeturn" data-turn="1">上一步</button>
 			</div>
 			<div class="col-xs-6">
 				<button class="turn" data-turn="3">下一步</button>
@@ -103,7 +103,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-6">
-				<button class="turn" data-turn="2">上一步</button>
+				<button class="beforeturn" data-turn="2">上一步</button>
 			</div>
 			<div class="col-xs-6">
 				<button class="turn" data-turn="4">下一步</button>
@@ -157,7 +157,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-6">
-				<button class="turn" data-turn="3">上一步</button>
+				<button class="beforeturn" data-turn="3">上一步</button>
 			</div>
 			<div class="col-xs-6">
 				<button class="turn" data-turn="5">下一步</button>
@@ -195,7 +195,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-6">
-				<button class="turn" data-turn="4">上一步</button>
+				<button class="beforeturn" data-turn="4">上一步</button>
 			</div>
 			<div class="col-xs-6">
 				<button class="push">发布</button>
@@ -227,6 +227,11 @@
 	var paytime;
 
 	//index 4
+	var jobstarday;
+	var jobendday;
+	var jobstartime;
+	var jobendtime;
+
 	var lng;	//经度
 	var lat;	//纬度
 	var province;
@@ -328,10 +333,31 @@
 	    reader.readAsDataURL(e.target.files[0]);
 	}
 
+	function checkTime(checkStartDate, checkEndDate){
+		var arys1 = new Array();      
+		var arys2 = new Array();      
+		if(checkStartDate != null && checkEndDate != null) {      
+			arys1 = checkStartDate.split('-');      
+			var sdate=new Date(arys1[0],parseInt(arys1[1]-1),arys1[2]);      
+			arys2 = checkEndDate.split('-');      
+			var edate=new Date(arys2[0],parseInt(arys2[1]-1),arys2[2]);      
+			if(sdate > edate) {            
+				return false;         
+			} else {     
+				return true;      
+			}   
+		}      
+	}
+
 	function showNextPage(page){
 		$('.release').hide();
 		$(".release[data-rid='"+page+"']").fadeIn(200);
 	}
+
+	$(".beforeturn").on('tap',function(){
+		var page = $(this).attr('data-turn');
+		showNextPage(page);
+	});
 
 	$("#RelA .turn").on('tap',function(){
 		var page = $(this).attr('data-turn');
@@ -362,7 +388,7 @@
 
 		jobname = $("#jobname").val();
 		if(jobname.length == ''){
-	        layer.msg('请填写职位标题。');
+	        layer.msg('请填写职位名称。');
 	        return false;
 	    }
 
@@ -414,6 +440,11 @@
 	        return false;
 	    }
 
+	    if(!checkTime(jobstarday,jobendday)){
+	    	layer.msg('开始日期不能大于结束日期。');
+	        return false;
+	    }
+
 	    jobstartime = $("#jobstartime").val();
 	    if(jobstartime.length == ''){
 	        layer.msg('请选择开始时间。');
@@ -426,6 +457,14 @@
 	        return false;
 	    }
 
+	    var jobarea = $("#jobarea").val();
+	    if(jobarea.length == ''){
+	        layer.msg('请选择工作区域。');
+	        return false;
+	    }
+
+	    jobroom = $("#jobroom").val();
+
 	    if(!lng || lng == ''){
 	    	layer.msg('请选择定位地址。');
 	        return false;
@@ -435,8 +474,66 @@
 	});
 
 	$('.push').on('tap',function(){
-		layer.msg("发布成功！",{time:2000});
-		setTimeout("window.location.href = '/manager/index'",2000);
+
+		companyname = $("#companyname").val();
+		if(companyname.length == ''){
+	        layer.msg('请填写企业名称。');
+	        return false;
+	    }
+
+	    companyman = $("#companyman").val();
+	    if(companyman.length == ''){
+	        layer.msg('请填写联系人。');
+	        return false;
+	    }
+
+	    companytel = $("#companytel").val();
+	    if(companytel.length == ''){
+	        layer.msg('请填写联系人电话。');
+	        return false;
+	    }
+
+	    if(!base || base == ''){
+	    	layer.msg('请上传微信二维码。');
+	        return false;
+	    }
+
+		// layer.msg("发布成功！",{time:2000});
+		// setTimeout("window.location.href = '/manager/index'",2000);
+		
+		$.post('/manager/addjob',{
+			'title':jobname,
+			'province':province,
+			'city':city,
+			'district':district,
+			'address':address,
+			'roomno':jobroom,
+			'lng':lng,
+			'lat':lat,
+			'content':textarea,
+			'type':jobtype,
+			'sex':jobsex,
+			'num':jobpeople,
+			'salary_type':paytype,
+			'salary':paymoney,
+			'salary_time':paytime,
+			'start_date':jobstarday,
+			'end_date':jobendday,
+			'start_time':jobstartime,
+			'end_time':jobendtime,
+			'real_name':companyman,
+			'company_name':companyname,
+			'phone':companytel,
+			'wxcode_img':base
+		},function(data){
+			if(data.error_code == '0'){
+				mui.alert('您已成功发布一个新岗位。', '发布成功！',function(){
+					window.location.href = "/manager/admin";
+				});
+			} else {
+				layer.msg(data.reason);
+			}
+		},'json');
 	});
 
 	$("#inputAddress").on('tap',function(){
