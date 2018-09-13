@@ -133,12 +133,87 @@ class ManagerController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function signlistAction()
-    {
-        
+    public function releaseAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $data['userinfo'] = $this->userinfo;
+        $this->view->setVar('data', $data);
     }
 
-    public function releaseAction()
+    public function addjobAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $title = $this->request->get('title');
+        $province = $this->request->get('province');
+        $city = $this->request->get('city');
+        $district = $this->request->get('district');
+        $address = $this->request->get('address');
+        $roomno = $this->request->get('roomno');
+        $lng = $this->request->get('lng');
+        $lat = $this->request->get('lat');
+        $content = $this->request->get('content');
+        $type = $this->request->get('type');
+        $sex = $this->request->get('sex');
+        $num = $this->request->get('num');
+        $salary_type = $this->request->get('salary_type');
+        $salary = $this->request->get('salary');
+        $salary_time = $this->request->get('salary_time');
+        $start_date = $this->request->get('start_date');
+        $end_date = $this->request->get('end_date');
+        $start_time = $this->request->get('start_time');
+        $end_time = $this->request->get('end_time');
+        $real_name = $this->request->get('real_name');
+        $company_name = $this->request->get('company_name');
+        $phone = $this->request->get('phone');
+        $wxcode_img = $this->request->get('wxcode_img');
+
+        if (!$title || !$province || !$city || !$district || !$address || !$lng || !$lat || !$content || !$type || !$sex || !$num || !$salary_type || !$salary || !$salary_time || !$start_date|| !$end_date|| !$start_time|| !$end_time|| !$real_name|| !$company_name|| !$phone|| !$wxcode_img) {
+            $this->replyFailure('data error');
+            return '';
+        }
+
+        $file = $this->base64_image_content($wxcode_img,'/upload/wxcode');
+        if (!$file) {
+            $this->replyFailure('wx code error');
+            return '';
+        }
+
+        $job = new \Job();
+        $job->user_id = $userid;
+        $job->title = $title;
+        $job->province = $province;
+        $job->city = $city;
+        $job->district = $district;
+        $job->address = $address;
+        $job->roomno = $roomno;
+        $job->lng = $lng;
+        $job->lat = $lat;
+        $job->content = $content;
+        $job->type = $type;
+        $job->sex = $sex;
+        $job->num = $num;
+        $job->salary_type = $salary_type;
+        $job->salary = $salary;
+        $job->salary_time = $salary_time;
+        $job->start_date = $start_date;
+        $job->end_date = $end_date;
+        $job->start_time = $start_time;
+        $job->end_time = $end_time;
+        $job->real_name = $real_name;
+        $job->company_name = $company_name;
+        $job->phone = $phone;
+        $job->wxcode_img = $file;
+        $job->create_time = time();
+        $job->last_time = time();
+        $job->save();
+
+        $this->reply('success', 0, $result);
+
+    }
+
+    public function signlistAction()
     {
         
     }
