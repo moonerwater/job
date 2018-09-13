@@ -148,11 +148,12 @@ class ManagerController extends ControllerH5
         $userid = $this->userinfo['id'];
 
         $jobid = $this->request->get('jobid','int');
-        $jobinfo = \Job::findFirstById($jobid);
+        if($jobid){
+            $jobinfo = \Job::findFirstById($jobid);
+            $data['jobinfo'] = $jobinfo->toArray();
+        }
 
         $data['userinfo'] = $this->userinfo;
-        $data['jobinfo'] = $jobinfo->toArray();
-
         $this->view->setVar('data', $data);
     }
 
