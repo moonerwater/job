@@ -17,12 +17,16 @@
 <div class="mui-content">
 	<div class="resu boxcontain container" id="ManagerBind">
 		<div class="mui-input-row">
-			<label>姓名</label>
-			<input type="text" placeholder="请输入您的手机号">
+			<label>真实姓名</label>
+			<input type="text" placeholder="请输入您的真实姓名" value="{{ data['userinfo']['real_name'] }}">
+		</div>
+		<div class="mui-input-row">
+			<label>企业名称</label>
+			<input type="text" placeholder="请输入您的企业名称" value="{{ data['userinfo']['company_name'] }}">
 		</div>
 		<div class="mui-input-row">
 			<label>手机号</label>
-			<input type="text" placeholder="请输入您的手机号">
+			<input type="text" placeholder="请输入您的手机号" value="{{ data['userinfo']['phone'] }}">
 		</div>
 		<div class="mui-input-row">
 			<input type="text" placeholder="请输入短信验证码">
@@ -35,7 +39,7 @@
 	            <input type="file" accept="image/jpg ,image/jpeg ,image/png" onchange="imgChange(event)" id="file">
 	        </span>
 	        <div class="imgbox rel">
-				<img src="" class="auto-center" id="showImage">
+				<img src="{{ data['userinfo']['wxcode_img'] }}" class="auto-center" id="showImage">
 			</div>
 		</div>
 	</div>
