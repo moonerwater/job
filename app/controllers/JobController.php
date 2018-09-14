@@ -69,9 +69,19 @@ class JobController extends ControllerH5
         $this->reply(true, 0, $listuser);
     }
 
-    public function detailAction()
-    {
-        
+    public function detailAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $jobid = $this->request->get('jobid','int');
+        if($jobid){
+            $jobinfo = \Job::findFirstById($jobid);
+            $data['jobinfo'] = $jobinfo->toArray();
+        }
+
+        $data['userinfo'] = $this->userinfo;
+        $this->view->setVar('data', $data);
+
     }
 
     public function userAction()
