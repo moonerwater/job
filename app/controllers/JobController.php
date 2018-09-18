@@ -15,6 +15,9 @@ class JobController extends ControllerH5
     public function indexAction() {
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
+        $jssdk = new \Jssdk('wx4881a7dbcae7aab1', '39fe7c54ada0e213c5f18b630fb39451');
+        $signPackage = $jssdk->getSignPackage();
+        $this->view->setVar('sign', $signPackage);
 
     }
 
