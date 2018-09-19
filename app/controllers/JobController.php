@@ -161,32 +161,33 @@ class JobController extends ControllerH5
     }
 
     public function bindtelAction() {
-
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
     }
 
 
-    public function resumeAction()
-    {
-        
+    public function resumeAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
     }
 
-    public function myjobAction()
-    {
-        
+    public function myjobAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
     }
 
-    public function purseAction()
-    {
-        
+    public function aboutusAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
     }
 
-    public function aboutusAction()
-    {
-        
+    public function settingAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
     }
 
-    public function settingAction()
-    {
-        
+    public function purseAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
     }
 }
