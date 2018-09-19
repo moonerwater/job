@@ -16,10 +16,10 @@
 	<div id="usertop">
 		<div class="userinfo clearfix">
 			<div class="userimg left">
-				<img src="/public/img/1.png" class="auto-center">
+				<img src="{{ data['userinfo']['headimgurl'] }}" class="auto-center">
 			</div>
 			<div class="info">
-				<div class="name">卡卡罗特</div>
+				<div class="name">{{ data['userinfo']['nickname'] }}{{ data['userinfo']['phone'] }}</div>
 				<div class="else"><span class="score">4.9</span>52单</div>
 			</div>
 			<button id="Sign">签到</button>
@@ -29,37 +29,33 @@
 		<div class="resu romA">
 			<div class="mui-input-row">
 				<label>姓名</label>
-				<input type="text" placeholder="请输入您的真实姓名" id="userName">
+				<input type="text" placeholder="请输入您的真实姓名" id="userName" value="{{ data['userinfo']['real_name'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>性别</label>
-				<input type="text" placeholder="请选择您的性别" id="changeUserSex" value="">
+				<input type="text" placeholder="请选择您的性别" id="changeUserSex" value="{{ data['userinfo']['sex'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>生日</label>
-				<input type="text" data-options='{"type":"date","beginYear":1960,"endYear":2016}' value="" id="userBirthday" placeholder="请选择您的生日">
+				<input type="text" data-options='{"type":"date","beginYear":1960,"endYear":2016}' value="{{ data['userinfo']['birth'] }}" id="userBirthday" placeholder="请选择您的生日">
 			</div>
 			<div class="mui-input-row">
 				<label>身份</label>
-				<input type="text" placeholder="请输入您的身份" value="">
+				<input type="text" placeholder="请输入您的身份" value="{{ data['userinfo']['identity'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>学历</label>
-				<input type="text" placeholder="请选择您的学历" id="userDegree" value="">
-			</div>
-			<div class="mui-input-row">
-				<label>手机号码</label>
-				<input type="text" placeholder="请输入您的手机号" id="userTel" value="13800138000">
+				<input type="text" placeholder="请选择您的学历" id="userDegree" value="{{ data['userinfo']['education'] }}">
 			</div>
 		</div>
 		<div class="resu romB">
 			<div class="mui-input-row">
 				<label>工作经验</label>
-				<input type="text" placeholder="请选择工作经验" id="userJobyear" value="">
+				<input type="text" placeholder="请选择工作经验" id="userJobyear" value="{{ data['userinfo']['experience'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>工作领域</label>
-				<input type="text" placeholder="请选择工作领域" id="userJobfield" value="">
+				<input type="text" placeholder="请选择工作领域" id="userJobfield" value="{{ data['userinfo']['workarea'] }}">
 			</div>
 		</div>
 	</div>

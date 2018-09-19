@@ -160,20 +160,124 @@ class JobController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
+    public function getphonecodeAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $this->view->disable();
+        $mobile = $this->request->get('mobile', 'string');
+        $tempSms = $this->cache->get('sms_'.date("Ymd").'_'.$mobile);
+        $tempSms = $tempSms ? $tempSms : array();
+        $tempSmsLast = $tempSms[count($tempSms)-1];
+        if (!$this->isPhone($mobile)) {
+            $this->replyFailure('手机号码格式不正确');
+            return '';
+        }
+        elseif (count($tempSms) >= 3) {
+            $this->replyFailure('相同手机号码一天内只能发送三次短信');
+            return '';
+        }
+        elseif ($tempSmsLast) {
+            if (time() - $tempSmsLast['time'] < 60) {
+                $this->replyFailure('60秒后才能发送');
+                return '';
+            }
+        }
+        $code = rand(1000,9999);
+        $sms = new \Sms();
+        if (!$sms->sendSms($mobile, 'userSign', array('code' => $code))) {
+            $this->replyFailure('发送失败');
+            return '';
+        }
+        $tempSms[] = array('code' => $code, 'time' => time());
+        $this->cache->save('sms_'.date("Ymd").'_'.$mobile, $tempSms);
+
+        $this->reply(true, 0, $result);
+    }
+
+    public function edituserinfoAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $mobile = $this->request->get('mobile', 'string');
+        $vcode = $this->request->get('vcode', 'alphanum');
+        $tempSms = $this->cache->get('sms_'.date("Ymd").'_'.$mobile);
+        $tempSms = $tempSms ? $tempSms : array();
+        $tempSmsLast = $tempSms[count($tempSms)-1];
+        if (!$this->isPhone($mobile)) {
+            $this->replyFailure('手机号码格式不正确');
+            return '';
+        }
+
+        if (!($tempSmsLast['code'] && $tempSmsLast['code'] == $vcode)) {
+            $this->replyFailure('验证码错误');
+            return '';
+        }
+
+        $user = \User::findFirstById($userid);
+        $user->phone = $mobile;
+        $user->last_time = time();
+        $user->save();
+        //
+
+        $this->reply('success', 0, $result2);
+    }
+
     public function bindtelAction() {
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
+
+        $data['userinfo'] = $this->userinfo;
+        $this->view->setVar('data', $data);
     }
 
 
     public function resumeAction() {
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
+
+        $user = \User::findFirstById($userid);
+        $data['userinfo'] = $user->toArray();
+        //
+        $this->view->setVar('data', $data);
+    }
+
+    public function editresumeAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $real_name = $this->request->get('real_name');
+        $sex = $this->request->get('sex');
+        $birth = $this->request->get('birth');
+        $identity = $this->request->get('identity');
+        $education = $this->request->get('education');
+        $experience = $this->request->get('experience');
+        $workarea = $this->request->get('workarea');
+
+        if (!$real_name || !$sex || !$birth || !$identity || !$education || !$experience || !$workarea ) {
+            $this->replyFailure('data error');
+            return '';
+        }
+        $user = \User::findFirstById($userid);
+        $user->real_name = $real_name;
+        $user->sex = $sex;
+        $user->birth = $birth;
+        $user->identity = $identity;
+        $user->education = $education;
+        $user->experience = $experience;
+        $user->workarea = $workarea;
+        $user->last_time = time();
+        $user->save();
+        //
+
+        $this->reply('success', 0, $result2);
     }
 
     public function myjobAction() {
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
+
+        
     }
 
     public function aboutusAction() {
