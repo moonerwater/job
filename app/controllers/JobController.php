@@ -87,6 +87,66 @@ class JobController extends ControllerH5
 
     }
 
+    public function checkdataAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        if(!$this->userinfo['phone']) {
+            $this->replyFailure('no phone');
+        }
+        elseif(!$this->userinfo['real_name'] || !$this->userinfo['identity'] || !$this->userinfo['education']) {
+            $this->replyFailure('no other');
+        }
+        else{
+            $this->reply(true, 0, array());
+        }
+    }
+
+    public function applyAction(){
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $jobid = $this->request->get('jobid','int');
+        $job = \Job::findFirstById($jobid);
+        if (!$job) {
+            $this->replyFailure('no this job');
+            return '';
+        }
+
+        $apply =\Apply::findFirst([' user_id = ?1 and job_id = ?2 ', 'bind'=>[ 1=>$userid, 2=>$jobid ] ]);
+        if ($apply) {
+            $this->replyFailure('apply is exist');
+            return '';
+        }
+
+        $apply = new \Apply();
+        $apply->user_id = $userid;
+        $apply->job_id = $jobid;
+        $apply->create_time = time();
+        $apply->last_time = time();
+        $apply->save();
+        $this->reply(true, 0, array('apply_id'=>$apply->id));
+    }
+
+    public function signdoneAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $applyid = $this->request->get('applyid','int');
+        if (!$applyid) {
+            $this->replyFailure('applyid error');
+            return '';
+        }
+        $apply = \Apply::findFirstById($applyid);
+        if($apply->user_id != $userid){
+            $this->replyFailure('power error');
+            return '';
+        }
+        $jobinfo = \Job::findFirstById($apply->job_id);
+        $data['jobinfo'] = $jobinfo->toArray();
+        $this->view->setVar('data', $data);
+    }
+
     public function userAction()
     {
         
@@ -98,11 +158,6 @@ class JobController extends ControllerH5
     }
 
     public function myjobAction()
-    {
-        
-    }
-
-    public function signdoneAction()
     {
         
     }
