@@ -12,6 +12,11 @@ class JobController extends ControllerH5
         parent::initialize();
     }
 
+    public function logoutAction() {
+        $this->session->remove('userinfo');
+        $this->response->redirect('/job/index');
+    }
+
     public function indexAction() {
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
@@ -147,10 +152,18 @@ class JobController extends ControllerH5
         $this->view->setVar('data', $data);
     }
 
-    public function userAction()
-    {
-        
+    public function userAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $data['userinfo'] = $this->userinfo;
+        $this->view->setVar('data', $data);
     }
+
+    public function bindtelAction() {
+
+    }
+
 
     public function resumeAction()
     {
@@ -163,11 +176,6 @@ class JobController extends ControllerH5
     }
 
     public function purseAction()
-    {
-        
-    }
-
-    public function bindtelAction()
     {
         
     }
