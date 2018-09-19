@@ -37,7 +37,7 @@
 	<h1 class="mui-title">发布岗位</h1>
 </header>
 
-<div class="mui-content">
+<div class="mui-content" id="{{ data['jobinfo']['id'] }}">
 	<div class="release boxcontain container" id="RelA" data-rid="1">
 		<h2>发布兼职 (1)</h2>
 		<div class="statbox">
@@ -46,15 +46,15 @@
 		<div class="boxcontain mar10 resu">
 			<div class="mui-input-row">
 				<label>岗位类别</label>
-				<input type="text" placeholder="请选择岗位类别" id="jobtype" value="">
+				<input type="text" placeholder="请选择岗位类别" id="jobtype" value="{{ data['jobinfo']['type'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>性别要求</label>
-				<input type="text" placeholder="请选择性别" id="jobsex" value="">
+				<input type="text" placeholder="请选择性别" id="jobsex" value="{{ data['jobinfo']['sex'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>招聘人数</label>
-				<input type="text" placeholder="请输入招聘人数" id="jobpeople" value="">
+				<input type="text" placeholder="请输入招聘人数" id="jobpeople" value="{{ data['jobinfo']['num'] }}">
 			</div>
 		</div>
 		<div class="row">
@@ -70,8 +70,8 @@
 		</div>
 		<div class="boxcontain mar10">
 			<input type="text" placeholder="请输入职位名称" id="jobname" value="{{ data['jobinfo']['title'] }}">
-			<pre class="texts hidepre" id="pre"></pre>
-			<textarea class="texts" id="textarea" placeholder="请输入职位描述"></textarea>
+			<pre class="texts hidepre" id="pre" value="{{ data['jobinfo']['content'] }}"></pre>
+			<textarea class="texts" id="textarea" placeholder="请输入职位描述" value="">{{ data['jobinfo']['content'] }}</textarea>
 		</div>
 		<div class="row">
 			<div class="col-xs-6">
@@ -90,15 +90,15 @@
 		<div class="boxcontain mar10 resu">
 			<div class="mui-input-row">
 				<label>计薪方式</label>
-				<input type="text" placeholder="请选择计薪方式" id="paytype" value="">
+				<input type="text" placeholder="请选择计薪方式" id="paytype" value="{{ data['jobinfo']['salary_type'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>薪资</label>
-				<input type="text" placeholder="请输入金额(元)" id="paymoney" value="">
+				<input type="text" placeholder="请输入金额(元)" id="paymoney" value="{{ data['jobinfo']['salary'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>结算时间</label>
-				<input type="text" placeholder="请选择结算时间" id="paytime" value="">
+				<input type="text" placeholder="请选择结算时间" id="paytime" value="{{ data['jobinfo']['salary_time'] }}">
 			</div>
 		</div>
 		<div class="row">
@@ -118,23 +118,23 @@
 		<div class="boxcontain mar10 resu">
 			<div class="mui-input-row">
 				<label>开始日期</label>
-				<input type="text" placeholder="请选择开始日期" id="jobstarday" value="" data-options='{"type":"date","beginYear":2018,"endYear":2022}'>
+				<input type="text" placeholder="请选择开始日期" id="jobstarday" value="{{ data['jobinfo']['start_date'] }}" data-options='{"type":"date","beginYear":2018,"endYear":2022}'>
 			</div>
 			<div class="mui-input-row">
 				<label>结束日期</label>
-				<input type="text" placeholder="请选择结束日期" id="jobendday" value="" data-options='{"type":"date","beginYear":2018,"endYear":2022}'>
+				<input type="text" placeholder="请选择结束日期" id="jobendday" value="{{ data['jobinfo']['end_date'] }}" data-options='{"type":"date","beginYear":2018,"endYear":2022}'>
 			</div>
 			<div class="mui-input-row">
 				<label>开始时间</label>
-				<input type="text" placeholder="请选择开始时间" id="jobstartime" value="" data-options='{"type":"time"}'>
+				<input type="text" placeholder="请选择开始时间" id="jobstartime" value="{{ data['jobinfo']['start_time'] }}" data-options='{"type":"time"}'>
 			</div>
 			<div class="mui-input-row">
 				<label>结束时间</label>
-				<input type="text" placeholder="请选择结束时间" id="jobendtime" value="" data-options='{"type":"time"}'>
+				<input type="text" placeholder="请选择结束时间" id="jobendtime" value="{{ data['jobinfo']['end_time'] }}" data-options='{"type":"time"}'>
 			</div>
 			<div class="mui-input-row">
 				<label>工作区域</label>
-				<input type="text" placeholder="请选择工作区域" id="jobarea" value="">
+				<input type="text" placeholder="请选择工作区域" id="jobarea" value="{{ data['jobinfo']['province'] }}{{ data['jobinfo']['city'] }}{{ data['jobinfo']['district'] }}">
 				<input type="hidden" id="jobprovince">
 				<input type="hidden" id="jobcity">
 				<input type="hidden" id="jobdistrict">
@@ -145,13 +145,13 @@
 		            <span>上传图片...</span>
 		            <input type="button" id="addaddress">
 		        </span> -->
-				<input type="text" placeholder="添加工作地点" id="inputAddress" v-model="inputtext">
+				<input type="text" placeholder="添加工作地点" id="inputAddress" v-model="inputtext" value="{{ data['jobinfo']['address'] }}">
 				<input type="hidden" id="lng">
 				<input type="hidden" id="lat">
 			</div>
 			<div class="mui-input-row">
 				<label>门牌号</label>
-				<input type="text" placeholder="请输入门牌号（选填）" id="jobroom" value="">
+				<input type="text" placeholder="请输入门牌号（选填）" id="jobroom" value="{{ data['jobinfo']['roomno'] }}">
 			</div>
 			<!-- <div id="r-result"></div> -->
 		</div>
@@ -172,15 +172,27 @@
 		<div class="boxcontain mar10 resu">
 			<div class="mui-input-row">
 				<label>企业全称</label>
+				{%if data['jobinfo']['id'] %}
+				<input type="text" placeholder="请输入企业全称" id="companyname" value="{{ data['jobinfo']['company_name'] }}">
+				{% else %}
 				<input type="text" placeholder="请输入企业全称" id="companyname" value="{{ data['userinfo']['company_name'] }}">
+				{% endif %}
 			</div>
 			<div class="mui-input-row">
 				<label>联系人</label>
+				{%if data['jobinfo']['id'] %}
+				<input type="text" placeholder="请输入联系人姓名" id="companyman" value="{{ data['jobinfo']['real_name'] }}">
+				{% else %}
 				<input type="text" placeholder="请输入联系人姓名" id="companyman" value="{{ data['userinfo']['real_name'] }}">
+				{% endif %}
 			</div>
 			<div class="mui-input-row">
 				<label>联系电话</label>
+				{%if data['jobinfo']['id'] %}
+				<input type="text" placeholder="请输入联系电话" id="companytel" value="{{ data['jobinfo']['phone'] }}">
+				{% else %}
 				<input type="text" placeholder="请输入联系电话" id="companytel" value="{{ data['userinfo']['phone'] }}">
+				{% endif %}
 			</div>
 			<div class="mar10">
 				<label>微信二维码</label>
@@ -189,7 +201,11 @@
 		            <input type="file" accept="image/jpg ,image/jpeg ,image/png" onchange="imgChange(event)" id="file">
 		        </span>
 		        <div class="imgbox rel">
+		        	{%if data['jobinfo']['id'] %}
+					<img src="{{ data['jobinfo']['wxcode_img'] }}" class="auto-center" id="showImage">
+					{% else %}
 					<img src="{{ data['userinfo']['wxcode_img'] }}" class="auto-center" id="showImage">
+					{% endif %}
 				</div>
 			</div>
 		</div>
@@ -219,7 +235,7 @@
 
 	//index 2
 	var jobname;
-	var textarea;
+	var content;
 
 	//index 3
 	var paytype;
@@ -232,12 +248,12 @@
 	var jobstartime;
 	var jobendtime;
 
-	var lng;	//经度
-	var lat;	//纬度
-	var province;
-	var city;
-	var district;
-	var address;
+	var lng = "{{ data['jobinfo']['lng'] }}";	//经度
+	var lat = "{{ data['jobinfo']['lat'] }}";	//纬度
+	var province = "{{ data['jobinfo']['province'] }}";
+	var city = "{{ data['jobinfo']['city'] }}";
+	var district = "{{ data['jobinfo']['district'] }}";
+	var address = "{{ data['jobinfo']['address'] }}";
 	var jobroom;
 
 	//index 5
@@ -392,8 +408,8 @@
 	        return false;
 	    }
 
-	    textarea = $("#textarea").val();
-	    if(textarea.length == ''){
+	    content = $("#textarea").val();
+	    if(content.length == ''){
 	        layer.msg('请填写职位描述。');
 	        return false;
 	    }
@@ -411,7 +427,7 @@
 	    }
 
 	    paymoney = $("#paymoney").val();
-	    if(paymoney.length == ''){
+	    if(paymoney.length == '' || paymoney < 0){
 	        layer.msg('请填写薪资。');
 	        return false;
 	    }
@@ -500,40 +516,81 @@
 
 		// layer.msg("发布成功！",{time:2000});
 		// setTimeout("window.location.href = '/manager/index'",2000);
+		if($('.mui-content').attr('id') == ''){
 		
-		$.post('/manager/addjob',{
-			'title':jobname,
-			'province':province,
-			'city':city,
-			'district':district,
-			'address':address,
-			'roomno':jobroom,
-			'lng':lng,
-			'lat':lat,
-			'content':textarea,
-			'type':jobtype,
-			'sex':jobsex,
-			'num':jobpeople,
-			'salary_type':paytype,
-			'salary':paymoney,
-			'salary_time':paytime,
-			'start_date':jobstarday,
-			'end_date':jobendday,
-			'start_time':jobstartime,
-			'end_time':jobendtime,
-			'real_name':companyman,
-			'company_name':companyname,
-			'phone':companytel,
-			'wxcode_img':base
-		},function(data){
-			if(data.error_code == '0'){
-				mui.alert('您已成功发布一个新岗位。', '发布成功！',function(){
-					window.location.href = "/manager/admin";
-				});
-			} else {
-				layer.msg(data.reason);
-			}
-		},'json');
+			$.post('/manager/addjob',{
+				'title':jobname,
+				'province':province,
+				'city':city,
+				'district':district,
+				'address':address,
+				'roomno':jobroom,
+				'lng':lng,
+				'lat':lat,
+				'content':content,
+				'type':jobtype,
+				'sex':jobsex,
+				'num':jobpeople,
+				'salary_type':paytype,
+				'salary':paymoney,
+				'salary_time':paytime,
+				'start_date':jobstarday,
+				'end_date':jobendday,
+				'start_time':jobstartime,
+				'end_time':jobendtime,
+				'real_name':companyman,
+				'company_name':companyname,
+				'phone':companytel,
+				'wxcode_img':base
+			},function(data){
+				if(data.error_code == '0'){
+					mui.alert('您已成功发布一个新岗位。', '发布成功！',function(){
+						window.location.href = "/manager/admin";
+					});
+				} else {
+					layer.msg(data.reason);
+				}
+			},'json');
+
+		} else {
+			var jobid = $('.mui-content').attr('id');
+
+			$.post('/manager/addjob',{
+				'jobid':jobid,
+				'title':jobname,
+				'province':province,
+				'city':city,
+				'district':district,
+				'address':address,
+				'roomno':jobroom,
+				'lng':lng,
+				'lat':lat,
+				'content':content,
+				'type':jobtype,
+				'sex':jobsex,
+				'num':jobpeople,
+				'salary_type':paytype,
+				'salary':paymoney,
+				'salary_time':paytime,
+				'start_date':jobstarday,
+				'end_date':jobendday,
+				'start_time':jobstartime,
+				'end_time':jobendtime,
+				'real_name':companyman,
+				'company_name':companyname,
+				'phone':companytel,
+				'wxcode_img':base
+			},function(data){
+				if(data.error_code == '0'){
+					mui.alert('您已成功修改该岗位。', '修改成功！',function(){
+						window.location.href = "/manager/admin";
+					});
+				} else {
+					layer.msg(data.reason);
+				}
+			},'json');
+
+		}
 	});
 
 	$("#inputAddress").on('tap',function(){

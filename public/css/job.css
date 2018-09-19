@@ -385,6 +385,7 @@ p {
 		line-height: 1.4rem;
 		color:#3f4040;
 		font-size:1rem;
+		margin:1.4rem 0;
 	}
 	#detail .time {
 		float:left;
@@ -472,6 +473,7 @@ p {
 		font-size:1.8rem;
 		/*margin-bottom: 10px;*/
 		font-weight: 700;
+		margin-top:6%;
 	}
 	.userinfo .info .else {
 		font-size:1.2rem;
@@ -819,6 +821,7 @@ p {
 		top:5px;
 		right:5px;
 		font-size:1rem;
+		display: none;
 	}
 	.works span.statA {
 		border:1px solid #ccc;

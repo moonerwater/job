@@ -20,7 +20,7 @@
 
 <div class="mui-content">
 	<a href="javascript:void(0)" id="ManagerBanner"></a>
-	<p>首次发布岗位需要实名认证<a href="/manager/info">去认证 > </a></p>
+	<p id="checkphone" class="none">首次发布岗位需要实名认证<a href="/manager/info">去认证 > </a></p>
 	<div class="container" style="padding:15px;">
 		{%if data['job']%}
 			{% for key, item in data['job'] %}
@@ -32,13 +32,13 @@
 					<h3>{{ item['title'] }}</h3>
 					<div class="row people">
 						<div class="col-xs-4">
-							<a href="/manager/signlist">
+							<a href="/manager/signlist?jobid={{ item['id'] }}">
 								<p class="num">{{ item['applynum'] }}</p>
 								<p class="tit">报名人数</p>
 							</a>
 						</div>
 						<div class="col-xs-4">
-							<a href="/manager/signlist">
+							<a href="/manager/signlist?jobid={{ item['id'] }}">
 								<p class="num">{{ item['applyYnum'] }}</p>
 								<p class="tit">录取人数</p>
 							</a>
@@ -59,10 +59,10 @@
 							<a href="/job/detail?jobid={{ item['id'] }}" class="share">查看</a>
 						</div>
 						<div class="col-xs-3 right">
-							<a href="/manager/releast?jobid={{ item['id'] }}" class="modify">修改</a>
+							<a href="/manager/release?jobid={{ item['id'] }}" class="modify">修改</a>
 						</div>
 						<div class="col-xs-3 right">
-							<a href="javascript:void(0)" class="delete">删除</a>
+							<a href="javascript:void(0)" class="delete" data-id="{{ item['id'] }}">删除</a>
 						</div>
 					</div>
 				</div>
@@ -73,6 +73,38 @@
 	</div>
 </div>
 
+<script type="text/javascript">
+
+	$(function(){
+		$.get('/manager/checkphone',function(data){
+			if(data.error_code != '0'){
+				$("#checkphone").show();
+			} else {
+
+			}
+		},'json');
+	})
+
+	$(".control .delete").on('tap',function(){
+		var dom = $(this).parents('.works');
+		var id = $(this).attr('data-id');
+		var btnArray = ['取消', '删除'];
+		mui.confirm("您确定要删除该岗位？", '删除岗位', btnArray, function(e) {
+			if (e.index == 1) {
+				$.get('/manager/deljob',{'jobid':id},function(data){
+					if(data.error_code == '0'){
+						layer.msg("删除成功。");
+						dom.remove();
+					} else {
+						layer.msg(data.reason);
+					}
+				},'json');
+			} else {
+				
+			}
+		})
+	});
+</script>
 {% endblock %}
 {% block footer %}
        

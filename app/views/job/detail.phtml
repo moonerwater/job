@@ -33,6 +33,10 @@
 		width: 60%;
 		background: #f07527;
 		color:#fff;
+		float: none;
+	    margin: 0 auto;
+	    position: relative;
+	    bottom: 20px;
 	}
 </style>
 
@@ -46,24 +50,23 @@
 		<div id="detail">
 			<h1><strong>{{ data['jobinfo']['title'] }}</strong></h1>
 			<h3>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}</h3>
-			<div class="info"><span class="spen">日结</span><span class="spen">商品代理</span>999人</div>
+			<div class="info"><span class="spen">{{ data['jobinfo']['salary_time'] }}</span><span class="spen">{{ data['jobinfo']['type'] }}</span>{{ data['jobinfo']['num'] }}人</div>
 			<hr>
 			<h2>职位详情</h2>
 			<h4>职位描述</h4>
-			<p>百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长百货促销员兼陈列扫地倒垃圾我不信有这么长</p>
-			<h4>薪资福利</h4>
-			<p><span class="spen">日结</span>300元/天</p>
+			<p>{{ data['jobinfo']['content'] }}</h4>
+			<p><span class="spen">{{ data['jobinfo']['salary_time'] }}</span>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}</p>
 			<h4>工作时间</h4>
-			<p>开始日期：<span>2018.5.60</span></p>
-			<p>结束日期：<span>2018.9.93</span></p>
-			<div class="time">9:00 ~ 18:00</div>
+			<p>开始日期：<span>{{ data['jobinfo']['start_date'] }}</span></p>
+			<p>结束日期：<span>{{ data['jobinfo']['end_date'] }}</span></p>
+			<div class="time">{{ data['jobinfo']['start_time'] }} ~ {{ data['jobinfo']['end_time'] }}</div>
 			<div class="cls"></div>
 			<hr>
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right">
 						<div>工作地点</div>
-						<div>深圳市南山区南海大道新能源大厦</div>
+						<div>{{ data['jobinfo']['province'] }}{{ data['jobinfo']['city'] }}{{ data['jobinfo']['district'] }}{{ data['jobinfo']['address'] }}{{ data['jobinfo']['roomno'] }}</div>
 					</a>
 				</li>
 			</ul>
@@ -73,11 +76,11 @@
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right">
 						<div class="imgbox left">
-							<img src="/public/img/1.png" class="auto-center">
+							<img src="{{ data['jobinfo']['wxcode_img'] }}" class="auto-center">
 						</div>
 						<div class="infos left">
-							<div class="ltc"><span>李四</span>深圳巨尚传媒科技有限公司</div>
-							<div><span class="score">4.8</span>50人评价</div>
+							<div class="ltc"><span>{{ data['jobinfo']['real_name'] }}</span>{{ data['jobinfo']['company_name'] }}</div>
+							<!-- <div><span class="score">4.8</span>50人评价</div> -->
 						</div>
 					</a>
 				</li>
@@ -91,7 +94,7 @@
 		<br>
 		<br>
 		<footer>
-			<a href="#" class="collect">收藏</a>
+			<a href="#" class="collect none">收藏</a>
 			<a href="/job/signdone" class="sign">立即报名</a>
 		</footer>
 	</div>

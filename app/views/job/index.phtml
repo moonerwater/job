@@ -17,7 +17,7 @@
 	<div id="search">
 		<div>
 			<div class="select left mui-collapse">
-				<a class="mui-navigate-right selections" href="javascript:void(0)" data-type="city" id="Selections">全部</a>
+				<a class="mui-navigate-right selections" href="javascript:void(0)" data-type="city" id="Selections">城市</a>
 			</div>
 			<div class="mui-input-group left">
 				<div class="mui-input-row">
@@ -31,10 +31,11 @@
 			</div>
 			<div class="selectbox none" data-select="city">
 				<div class="container">
-					<h5>选择城市</h5>
+					<h5>当前城市</h5>
 					<div class="row">
-						<div class="col-xs-4"><a href="javascript:void(0)" class="active" id="allcity">全部</a></div>
+						<div class="col-xs-4"><a href="javascript:void(0)" class="active" id="nowcity"></a></div>
 					</div>
+					<h5>选择城市</h5>
 					<div class="row citys">
 						<div class="col-xs-4"><a href="/job/index?city=guangzhou" data-city="guangzhou" data-code="257" data-province="440000" data-cityid="440100">广州</a></div>
 						<div class="col-xs-4"><a href="/job/index?city=shenzhen" data-city="shenzhen" data-code="340" data-province="440000" data-cityid="440300">深圳</a></div>
@@ -51,6 +52,13 @@
 			</div>
 		</div>
 	</div>
+
+	<div style="position: relative;top:40px;">
+		<button id="getLocation">获取</button>
+		<span id="lng"></span>      
+		<span id="lat"></span>
+	</div>
+
 	<div id="slider" class="mui-slider">
 		<div class="mui-slider-group mui-slider-loop">
 			<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
@@ -194,7 +202,7 @@
 	</div>
 	<ul class="mui-table-view joblist">
 		<li class="mui-table-view-cell lists">
-			<a href="detail">
+			<a href="detail?jobid={{ item['id'] }}">
 				<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
 				<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
 				<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
@@ -267,6 +275,7 @@
 <!-- <script src="/public/js/city.data.js" charset="utf-8"></script>
 <script src="/public/js/city.data-3.js" charset="utf-8"></script> -->
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=36O14NhaK4ciWsoaG3xgNnngT29wiEpB"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
 
 	mui.init();
@@ -275,31 +284,137 @@
 		interval: 3000
 	});
 
+	wx.config({  
+	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。  
+	    appId: '{{ sign['appId'] }}', // 必填，公众号的唯一标识  
+	    timestamp: {{ sign['timestamp'] }}, // 必填，生成签名的时间戳  
+	    nonceStr: '{{ sign['nonceStr'] }}', // 必填，生成签名的随机串  
+	    signature: '{{ sign['signature'] }}',// 必填，签名，见附录1  
+	    jsApiList: [
+	    	'getLocation'
+	    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2  
+	});
+
+	function checkRate(input) {
+	　　var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
+	　　if (!re.test(input)) {
+	　　　　return false;
+	　　}
+	}
+
 	var indexA;
 	var indexB;
-
-	// var cityName;
 	// var code;
-	var lng;	//经度
-	var lat;	//纬度
+
+
+	wx.ready(function(){
+		wx.getLocation({
+			dataType:"json",
+			success: function (res) {
+				var lng = res.longitude;
+				var lat = res.latitude;
+				var date = new Date();
+				date.setTime(date.getTime()+60*60*24*1*1000);
+				$.cookie('lng', lng, {expires: date});
+				$.cookie('lat', lat, {expires: date});
+				//
+				geocoder = new AMap.Geocoder({
+		            city: ""//城市，默认：“全国”
+		        });
+		        alert($.cookie('lng'))
+		        var lnglatXY=[$.cookie('lng'), $.cookie('lat')];//地图上所标点的坐标
+		        geocoder.getAddress(lnglatXY, function(status, result) {
+		        	//alert(status)
+		        	//alert(JSON.stringify(result))
+		            if (status === 'complete' && result.info === 'OK') {
+		                //获得了有效的地址信息:
+		                //即，result.regeocode.formattedAddress
+		                //console.log(result);
+		                var city = result.regeocode.addressComponent.city;
+		            }else{
+		                var city = '获取失败';
+		                //获取地址失败
+		            }
+		            $.cookie('city', city, {expires: date});
+		            alert($.cookie('city'));
+		        });
+				//
+				//var code = result.code;
+				var cityName = city;
+				var nowCity = cityName;
+				var arr = cityName.split('市');
+				var losCity = arr[0];
+				console.log("当前定位城市:"+cityName);
+				$("#nowcity").text(losCity).attr('href',"/job/index?city="+cityName+"").attr("data-city",losCity);
+			}
+		});
+		
+	})
+
+
 	var map = new BMap.Map("allmap");
 	function myFun(result){
 		console.log(result)
-		lng = result.center.lng;
-		lat = result.center.lat;
+		//lng = result.center.lng;
+		//lat = result.center.lat;
 		var code = result.code;
 		var cityName = result.name;
-		//map.setCenter(cityName);
+		nowCity = cityName;
+		var arr = cityName.split('市');
+		var losCity = arr[0];
 		console.log("当前定位城市:"+cityName);
-		console.log(lng,lat)
+		$("#nowcity").text(losCity).attr('href',"/job/index?city="+cityName+"").attr("data-city",losCity);
+		//console.log(lng,lat)
+		//$("#lng").html(lng);
+		//$("#lat").html(lat);
 		star(code,cityName);
 	}
 	var myCity = new BMap.LocalCity();
 	myCity.get(myFun);
 
+	// $(function(){
+	// 	wx.getLocation({
+	// 		success: function (res) {
+	// 			//alert(res.latitude,res.longitude)
+	// 			lng = res.longitude;
+	// 			lat = res.latitude;
+	// 			$("#lng").html(lng);
+	// 			$("#lat").html(lat);
+	// 			Selection('',nowCity,lng,lat);
+	// 		}
+	// 	});
+	// });
+
+	var order = "create_time";
+
+	function Selection(keyword,city,district,type,sex,salary_time){
+		alert(keyword);
+		alert($.cookie('lng'));
+		// $.post('/job/getjob',{
+		// 	"keyword":keyword,
+		// 	"city":city,
+		// 	"lng":lng,
+		// 	"lat":lat,
+		// 	"district":"南山区",
+		// 	"type":'',
+		// 	"sex":'',
+		// 	"salary_time":'',
+		// 	"order":order,
+		// 	"orderby":"desc"
+		// },function(data){
+		// 	if(data.error_code == '0'){
+		// 		alert(keyword,city,lng,lat)
+		// 		console.log(data)
+		// 	} else {
+		// 		alert('nonono')
+		// 		console.log(data.reason);
+		// 	}
+		// },'json');
+	}
+
 	function star(code,cityName){
 		var urlArr = window.location.href.split('?');
-	    var rulesA = urlArr[1];
+	    var rulesA = decodeURIComponent(urlArr[1]);
 	    if(rulesA){
 	    	console.log(rulesA);
 	    	var rulesB = rulesA.split('=');
@@ -322,7 +437,7 @@
 							} else {
 								_this.addClass('active');
 				    			$("#Selections").text(text);
-				    			$("#allcity").removeClass('active');
+				    			//$("#allcity").removeClass('active');
 				    			showBindTel();
 				    			showCityList(provinceid,cityid);
 							}
@@ -330,7 +445,7 @@
 		    		} else {
 		    			_this.addClass('active');
 		    			$("#Selections").text(text);
-		    			$("#allcity").removeClass('active');
+		    			//$("#allcity").removeClass('active');
 		    			showBindTel();
 		    			showCityList(provinceid,cityid);
 		    		}

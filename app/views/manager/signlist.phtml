@@ -74,6 +74,17 @@
 		border:1px solid #f07527;
 		color:#fff;
 	}
+	.joblist .signs .rows a {
+		border:1px solid #ccc;
+		float:right;
+		width: 25%;
+		padding:5px;
+		border-radius: 5px;
+		margin-left:5px;
+		font-size:1rem;
+		color: #000;
+    	text-align: center;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -92,7 +103,7 @@
 			<ul class="mui-table-view joblist">
 				{% for key, item in data['apply'] %}
 					<li class="mui-table-view-cell signs" idvalue="{{ item['id'] }}">
-						<a href="userresume">
+						<a href="userresume?applyid={{ item['id'] }}">
 							<h4>{{ item['title'] }}</h4>
 							<div class="userinfo clearfix">
 								<div class="userimg left">
@@ -116,17 +127,18 @@
 							</div>
 						</a>
 						{% if item['type'] == 'Wait' %}
-							<div class="rows">
-								<button class="agree">录用</button>
-								<button class="reject">拒绝</button>
+							<div class="rows clearfix">
+								<button class="agree apply" data-type="Y" data-id="{{ item['id'] }}">录用</button>
+								<button class="reject apply" data-type="N" data-id="{{ item['id'] }}">拒绝</button>
+								<a class="none telephone" href="tel:{{ item['phone'] }}">联系他/她</a>
 							</div>
 						{% elseif item['type'] == 'N' %}
-							<div class="rows">
-								<button class="contact">联系他/她{{ item['phone'] }}</button>
+							<div class="rows clearfix">
+								<a class="telephone" href="tel:{{ item['phone'] }}">联系他/她</a>
 							</div>
 						{% elseif item['type'] == 'Y' %}
-							<div class="rows">
-								<button class="contact">联系他/她{{ item['phone'] }}</button>
+							<div class="rows clearfix">
+								<a class="telephone" href="tel:{{ item['phone'] }}">联系他/她</a>
 							</div>
 						{% endif %}
 					</li>
@@ -138,7 +150,7 @@
 				{% for key, item in data['apply'] %}
 				{% if item['type'] == 'Y' %}
 					<li class="mui-table-view-cell signs" idvalue="{{ item['id'] }}">
-						<a href="userresume">
+						<a href="userresume?applyid={{ item['id'] }}">
 							<h4>{{ item['title'] }}</h4>
 							<div class="userinfo clearfix">
 								<div class="userimg left">
@@ -161,8 +173,8 @@
 								</div>
 							</div>
 						</a>
-						<div class="rows">
-							<button class="contact">联系他/她{{ item['phone'] }}</button>
+						<div class="rows clearfix">
+							<a class="telephone" href="tel:{{ item['phone'] }}">联系他/她</a>
 						</div>
 					</li>
 				{% endif %}
@@ -174,7 +186,7 @@
 				{% for key, item in data['apply'] %}
 				{% if item['type'] == 'N' %}
 				<li class="mui-table-view-cell signs" idvalue="{{ item['id'] }}">
-					<a href="userresume">
+					<a href="userresume?applyid={{ item['id'] }}">
 						<h4>{{ item['title'] }}</h4>
 						<div class="userinfo clearfix">
 							<div class="userimg left">
@@ -197,8 +209,8 @@
 							</div>
 						</div>
 					</a>
-					<div class="rows">
-						<button class="contact">联系他/她{{ item['phone'] }}</button>
+					<div class="rows clearfix">
+						<a class="telephone" href="tel:{{ item['phone'] }}">联系他/她</a>
 					</div>
 				</li>
 				{% endif %}
@@ -207,6 +219,60 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+
+	$(".apply").on('tap',function(){
+		var _this = $(this);
+		var id = _this.attr('data-id');
+		var type = _this.attr('data-type');
+		var con = _this.parent().find('button');
+		var tel = _this.parent().find('a.none');
+		if(type == "Y"){
+			var btnArray = ['取消', '确认'];
+			mui.confirm("您是否要录用该报名者？", '确认录用', btnArray, function(e) {
+				if (e.index == 1) {
+					$.get('/manager/changeapply',{'applyid':id , 'type':type},function(data){
+						if(data.error_code == '0'){
+							layer.msg('录用成功。');
+							con.hide();
+							tel.show();
+							var par = _this.parents('.signs');
+							$("#item2 .joblist").append(par).clone();
+						} else {
+							layer.msg(data.reason);
+						}
+					},'json');
+				} else {
+
+				}
+			})
+		}
+
+		if(type == "N"){
+			var btnArray = ['取消', '确认'];
+			mui.confirm("您是否要拒绝该报名者？", '是否拒绝', btnArray, function(e) {
+				if (e.index == 1) {
+					$.get('/manager/changeapply',{'applyid':id , 'type':type},function(data){
+						if(data.error_code == '0'){
+							layer.msg('已拒绝该报名者。');
+							con.hide();
+							tel.show();
+							var par = _this.parents('.signs');
+							$("#item3 .joblist").append(par).clone();
+						} else {
+							layer.msg(data.reason);
+						}
+					},'json');
+				} else {
+
+				}
+			})
+		}
+	});
+
+
+</script>
 
 {% endblock %}
 {% block footer %}
