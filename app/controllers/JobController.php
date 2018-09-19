@@ -277,7 +277,37 @@ class JobController extends ControllerH5
         $this->checkNoUserGoLogin();
         $userid = $this->userinfo['id'];
 
-        
+        $apply = \Apply::find(array("user_id = ".$userid, 'order' => 'id desc'));
+        $apply = $apply->toArray();
+        foreach($apply as $k => $v){
+            $job = \Job::findFirstById($v['job_id']);
+            $apply[$k]['joinfo'] = $job->toArray();
+            $user = \User::findFirstById($v['user_id']);
+            $apply[$k]['real_name'] = $user->real_name;
+            $apply[$k]['headimgurl'] = $user->headimgurl;
+            $apply[$k]['phone'] = $user->phone;
+        }
+        $data['apply'] = $apply;
+        //
+        $this->view->setVar('data', $data);
+    }
+
+    public function delapplyAction(){
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $applyid = $this->request->get('applyid','int');
+        if (!$applyid) {
+            $this->replyFailure('applyid error');
+            return '';
+        }
+        $apply = \Apply::findFirstById($applyid);
+        if($apply->user_id != $userid){
+            $this->replyFailure('power error');
+            return '';
+        }
+        $apply->delete();
+        $this->reply('success', 0, $result);
     }
 
     public function aboutusAction() {

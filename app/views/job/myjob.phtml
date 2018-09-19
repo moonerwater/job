@@ -42,148 +42,77 @@
 		</div>
 	</div>
 	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
-		<a href="#item1" class="mui-control-item mui-active">全部</a>
-		<a href="#item2" class="mui-control-item">已报名</a>
-		<a href="#item3" class="mui-control-item">已录用</a>
-		<a href="#item4" class="mui-control-item">已拒绝</a>
+		<a href="#item1" class="mui-control-item mui-active">已报名</a>
+		<a href="#item2" class="mui-control-item">已录用</a>
+		<a href="#item3" class="mui-control-item">已拒绝</a>
 	</div>
 	<div id="Jobs">
 		<div id="item1" class="mui-control-content mui-active">
 			<ul class="mui-table-view joblist">
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已录用</span>
-					<div class="controls">
-						<button data-stat="cancle">取消报名</button>
-						<button data-stat="contact">联系督导</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">周末结算</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已评价</span>
-					<div class="controls">
-						<button data-stat="evaluate">评价</button>
-						<button data-stat="contact">联系督导</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已报名</span>
-					<div class="controls">
-						<button data-stat="cancle">取消报名</button>
-						<button data-stat="contact">联系督导</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已拒绝</span>
-				</li>
+				{% for key, item in data['apply'] %}
+					<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
+						<a href="/job/detail?jobid={{ item['job_id'] }}">
+							<h4>{{ item['joinfo']['title'] }}</h4>
+							<div><span class="place">{{ item['joinfo']['district'] }}</span><span class="time">{{ item['joinfo']['start_date'] }} - {{ item['joinfo']['end_date'] }}</span></div>
+							<div><span class="price">{{ item['joinfo']['salary'] }}元/{{ item['joinfo']['salary_type'] }}</span><span class="pricetype">{{ item['joinfo']['salary_time'] }}</span></div>
+						</a>
+						{% if item['type'] == 'Wait' %}
+							<span class="stat">已报名</span>
+						{% elseif item['type'] == 'N' %}
+							<span class="stat">已拒绝</span>
+						{% elseif item['type'] == 'Y' %}
+							<span class="stat">已录用</span>
+						{% endif %}
+						{% if item['type'] == 'Wait' %}
+							<div class="controls">
+								<button data-stat="cancle">取消报名</button>
+							</div>
+						{% elseif item['type'] == 'N' %}
+
+						{% elseif item['type'] == 'Y' %}
+							<div class="controls">
+								<button data-stat="cancle">取消报名</button>
+								<button data-stat="contact">联系督导{{ item['joinfo']['phone'] }}</button>
+							</div>
+						{% endif %}
+					</li>
+				{% endfor %}
 			</ul>
 		</div>
 		<div id="item2" class="mui-control-content">
 			<ul class="mui-table-view joblist">
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已录用</span>
-					<div class="controls">
-						<button data-stat="cancle">取消报名</button>
-						<button data-stat="contact">联系督导</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已录用</span>
-					<div class="controls">
-						<button data-stat="cancle">取消报名</button>
-						<button data-stat="contact">联系督导</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾我不信有这么长</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">日结</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已录用</span>
-					<div class="controls">
-						<button data-stat="cancle">取消报名</button>
-						<button data-stat="contact">联系督导</button>
-					</div>
-				</li>
+				{% for key, item in data['apply'] %}
+				{% if item['type'] == 'Y' %}
+					<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
+						<a href="/job/detail?jobid={{ item['job_id'] }}">
+							<h4>{{ item['joinfo']['title'] }}</h4>
+							<div><span class="place">{{ item['joinfo']['district'] }}</span><span class="time">{{ item['joinfo']['start_date'] }} - {{ item['joinfo']['end_date'] }}</span></div>
+							<div><span class="price">{{ item['joinfo']['salary'] }}元/{{ item['joinfo']['salary_type'] }}</span><span class="pricetype">{{ item['joinfo']['salary_time'] }}</span></div>
+						</a>
+						<span class="stat">已录用</span>
+						<div class="controls">
+							<button data-stat="cancle">取消报名</button>
+							<button data-stat="contact">联系督导{{ item['joinfo']['phone'] }}</button>
+						</div>
+					</li>
+				{% endif %}
+				{% endfor %}
 			</ul>
 		</div>
 		<div id="item3" class="mui-control-content">
 			<ul class="mui-table-view joblist">
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已报名</span>
-					<div class="controls">
-						<button data-stat="cancle">取消报名</button>
-						<button data-stat="contact">联系督导</button>
-					</div>
-				</li>
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已报名</span>
-					<div class="controls">
-						<button data-stat="cancle">取消报名</button>
-						<button data-stat="contact">联系督导</button>
-					</div>
-				</li>
-			</ul>
-		</div>
-		<div id="item4" class="mui-control-content">
-			<ul class="mui-table-view joblist">
-				<li class="mui-table-view-cell lists">
-					<a href="detail">
-						<h4>百货促销员兼陈列扫地倒垃圾</h4>
-						<div><span class="place">南山</span><span class="time">4.01 - 4.03</span></div>
-						<div><span class="price">130元/天</span><span class="pricetype">月底结算</span></div>
-						<span class="range">300m</span>
-					</a>
-					<span class="stat">已拒绝</span>
-				</li>
+				{% for key, item in data['apply'] %}
+				{% if item['type'] == 'N' %}
+					<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
+						<a href="/job/detail?jobid={{ item['job_id'] }}">
+							<h4>{{ item['joinfo']['title'] }}</h4>
+							<div><span class="place">{{ item['joinfo']['district'] }}</span><span class="time">{{ item['joinfo']['start_date'] }} - {{ item['joinfo']['end_date'] }}</span></div>
+							<div><span class="price">{{ item['joinfo']['salary'] }}元/{{ item['joinfo']['salary_type'] }}</span><span class="pricetype">{{ item['joinfo']['salary_time'] }}</span></div>
+						</a>
+						<span class="stat">已拒绝</span>
+					</li>
+				{% endif %}
+				{% endfor %}
 			</ul>
 		</div>
 	</div>
