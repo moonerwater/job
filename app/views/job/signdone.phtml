@@ -1,9 +1,11 @@
 {% extends "common/mobile-index.phtml" %}
-{% block title  %}兼职之家 - 报名成功{% endblock %}
+{% block title  %}兼职头条 - 报名成功{% endblock %}
 
 {% block content %}
 <style type="text/css">
-	
+	body,html,.mui-content{
+		background: #fff;
+	}
 	
 </style>
 
@@ -17,10 +19,11 @@
 		<h2>报名成功！</h2>
 		<p>请长按二维码添加督导微信，或拨打电话联系督导。</p>
 		<img class="QRcode" src="{{ data['jobinfo']['wxcode_img'] }}">
-		<button class="footbtn">拨打电话{{ data['jobinfo']['phone'] }}</button>
+		<!-- <button class="footbtn">拨打电话{{ data['jobinfo']['phone'] }}</button> -->
+		<a class="footbtn" href="tel:{{ data['jobinfo']['phone'] }}">拨打电话</a>
 	</div>
 	<div>
-		<a id="SignAD" href=""></a>
+		<a id="SignAD" href="javascript:void(0)"></a>
 		<a href="/job/index" class="footbtn">继续找兼职</a>
 	</div>
 </div>

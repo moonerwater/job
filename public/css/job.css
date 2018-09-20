@@ -319,6 +319,7 @@ p {
 		color:#f07527;
 		margin-left: 2rem;
 		padding:0 5px;
+		display: none;
 	}
 	.joblist .range {
 		position: absolute;
@@ -339,20 +340,22 @@ p {
 	}
 	.joblist .lists .controls {
 		height:3rem;
-		border-top:1px solid #eee;
-		border-bottom:1px solid #eee;
+		/*border-top:1px solid #eee;
+		border-bottom:1px solid #eee;*/
 		margin-top:5px;
 	}
-	.joblist .lists .controls button {
+	.joblist .lists .controls a {
 		display: inline-block;
-		width: 50%;
+		width: 30%;
 		height:100%;
-		line-height: 2rem;
+		line-height: 3rem;
 		font-size:1rem;
 		text-align: center;
-		border:none;
+		border:1px solid #eee;
+		margin-left:2%;
+		/*border:none;
 		border-left:1px solid #eee;
-		border-right: 1px solid #eee;
+		border-right: 1px solid #eee;*/
 		float:right;
 		color: #484848;
 	}
@@ -398,6 +401,12 @@ p {
 	#leader li {
 		padding:0;
 	}
+	#detail li a {
+		background: url('/public/img/map.png') no-repeat center;
+		background-size: cover;
+		padding: 1rem;
+    	color: #000;
+	}
 	#detail li a,
 	#leader li a {
 		margin:0;
@@ -405,6 +414,11 @@ p {
 	#detail li a::after,
 	#leader li a::after {
 		right: 0;
+	}
+	#detail li a .addbox {
+		width: 95%;
+	    float: left;
+	    overflow: hidden;
 	}
 	#leader .imgbox {
 		width: 4rem;

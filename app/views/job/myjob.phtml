@@ -1,5 +1,5 @@
 {% extends "common/mobile-index.phtml" %}
-{% block title  %}兼职之家 - 我的兼职{% endblock %}
+{% block title  %}兼职头条 - 我的兼职{% endblock %}
 
 {% block content %}
 <style type="text/css">
@@ -32,10 +32,10 @@
 	<div id="usertop">
 		<div class="userinfo clearfix">
 			<div class="userimg left">
-				<img src="/public/img/1.png" class="auto-center">
+				<img src="{{ data['userinfo']['headimgurl'] }}" class="auto-center">
 			</div>
 			<div class="info">
-				<div class="name">卡卡罗特</div>
+				<div class="name">{{ data['userinfo']['nickname'] }}</div>
 				<div class="else"><span class="score">4.9</span>52单</div>
 			</div>
 			<button id="Sign">签到</button>
@@ -65,14 +65,14 @@
 						{% endif %}
 						{% if item['type'] == 'Wait' %}
 							<div class="controls">
-								<button data-stat="cancle">取消报名</button>
+								<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}">取消报名</a>
 							</div>
 						{% elseif item['type'] == 'N' %}
 
 						{% elseif item['type'] == 'Y' %}
 							<div class="controls">
-								<button data-stat="cancle">取消报名</button>
-								<button data-stat="contact">联系督导{{ item['joinfo']['phone'] }}</button>
+								<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}">取消报名</a>
+								<a href="tel:{{ item['joinfo']['phone'] }}" data-stat="contact">联系督导</a>
 							</div>
 						{% endif %}
 					</li>
@@ -91,8 +91,8 @@
 						</a>
 						<span class="stat">已录用</span>
 						<div class="controls">
-							<button data-stat="cancle">取消报名</button>
-							<button data-stat="contact">联系督导{{ item['joinfo']['phone'] }}</button>
+							<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}">取消报名</a>
+							<a href="tel:{{ item['joinfo']['phone'] }}" data-stat="contact">联系督导</a>
 						</div>
 					</li>
 				{% endif %}
@@ -117,7 +117,33 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
 
+	$('.canclejob').on('tap',function(){
+		var _this = $(this);
+		var dom = _this.parents('li').find('.stat');
+		var id = _this.attr('data-id');
+		var btnArray = ['取消', '确定'];
+	    mui.confirm("您确定要取消该报名？", '确认取消报名', btnArray, function(e) {
+			if (e.index == 1) {
+				//$(".citys a[data-code='"+codA+"']").click();
+				$.get('/job/delapply',{'applyid':id},function(data){
+					if(data.error_code == '0'){
+						layer.msg("已取消报名。");
+						_this.parent().remove();
+						dom.html('已取消');
+					} else {
+						layer.msg(data.reason);
+					}
+				},'json')
+			} else {
+				
+			}
+		})
+		
+	});
+
+</script>
 {% endblock %}
 {% block footer %}
        

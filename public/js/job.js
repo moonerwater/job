@@ -1,3 +1,7 @@
+var indexload;
+
+
+
 function checkName( name ) {
     var regu = /[\u4E00-\u9FA5]/;
     var re = new RegExp(regu);
@@ -37,7 +41,14 @@ function checkMobile( strMobile ) {
     else {
         return false;
     }
-};
+}
+
+function checkRate(input) {
+　　var re = /^[0-9]+.?[0-9]*$/; //判断字符串是否为数字 //判断正整数 /^[1-9]+[0-9]*]*$/ 
+　　if (!re.test(input)) {
+　　　　return false;
+　　}
+}
 
 $(document).ready(function(){
 

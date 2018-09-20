@@ -1,5 +1,5 @@
 {% extends "common/mobile-index.phtml" %}
-{% block title  %}兼职之家 - 我的简历{% endblock %}
+{% block title  %}兼职头条 - 我的简历{% endblock %}
 
 {% block content %}
 <style type="text/css">
@@ -19,7 +19,7 @@
 				<img src="{{ data['userinfo']['headimgurl'] }}" class="auto-center">
 			</div>
 			<div class="info">
-				<div class="name">{{ data['userinfo']['nickname'] }}{{ data['userinfo']['phone'] }}</div>
+				<div class="name">{{ data['userinfo']['nickname'] }}</div>
 				<div class="else"><span class="score">4.9</span>52单</div>
 			</div>
 			<button id="Sign">签到</button>
@@ -27,35 +27,36 @@
 	</div>
 	<div id="Resume">
 		<div class="resu romA">
+			<input type="hidden" value="{{ data['userinfo']['phone'] }}">
 			<div class="mui-input-row">
 				<label>姓名</label>
 				<input type="text" placeholder="请输入您的真实姓名" id="userName" value="{{ data['userinfo']['real_name'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>性别</label>
-				<input type="text" placeholder="请选择您的性别" id="changeUserSex" value="{{ data['userinfo']['sex'] }}">
+				<input type="text" placeholder="请选择您的性别" id="changeUserSex" value="{{ data['userinfo']['sex'] }}" readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>生日</label>
-				<input type="text" data-options='{"type":"date","beginYear":1960,"endYear":2016}' value="{{ data['userinfo']['birth'] }}" id="userBirthday" placeholder="请选择您的生日">
+				<input type="text" data-options='{"type":"date","beginYear":1960,"endYear":2016}' value="{{ data['userinfo']['birth'] }}" id="userBirthday" placeholder="请选择您的生日" readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>身份</label>
-				<input type="text" placeholder="请输入您的身份" value="{{ data['userinfo']['identity'] }}">
+				<input type="text" placeholder="请输入您的身份" value="{{ data['userinfo']['identity'] }}" id="userIdentity">
 			</div>
 			<div class="mui-input-row">
 				<label>学历</label>
-				<input type="text" placeholder="请选择您的学历" id="userDegree" value="{{ data['userinfo']['education'] }}">
+				<input type="text" placeholder="请选择您的学历" id="userDegree" value="{{ data['userinfo']['education'] }}" readonly="readonly">
 			</div>
 		</div>
 		<div class="resu romB">
 			<div class="mui-input-row">
 				<label>工作经验</label>
-				<input type="text" placeholder="请选择工作经验" id="userJobyear" value="{{ data['userinfo']['experience'] }}">
+				<input type="text" placeholder="请选择工作经验" id="userJobyear" value="{{ data['userinfo']['experience'] }}" readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>工作领域</label>
-				<input type="text" placeholder="请选择工作领域" id="userJobfield" value="{{ data['userinfo']['workarea'] }}">
+				<input type="text" placeholder="请选择工作领域" id="userJobfield" value="{{ data['userinfo']['workarea'] }}" readonly="readonly">
 			</div>
 		</div>
 	</div>
@@ -63,128 +64,84 @@
 <button id="Push" class="footbtn">保存简历</button>
 <script type="text/javascript">
 
-	// $('.star').raty({
-	//   readOnly: true,
-	//   width:142,
-	//   score: 3
-	// });
+	$("#Push").on('tap',function(){
 
-	// (function($, doc) {
-	// 	$.init();
-	// 	$.ready(function() {
-	// 		//性别
-	// 		var userSex = new $.PopPicker();
-	// 		userSex.setData([{
-	// 			text: '男'
-	// 		}, {
-	// 			text: '女'
-	// 		}]);
-	// 		var setSex = doc.getElementById('changeUserSex');
-	// 		setSex.addEventListener('tap', function(event) {
-	// 			userSex.show(function(items) {
-	// 				setSex.value = JSON.stringify(items[0].text).replace(/\"/g,'');
-	// 				//返回 false 可以阻止选择框的关闭
-	// 				//return false;
-	// 				//userSex.dispose();
-	// 			});
-	// 		}, false);
-	// 		//------------------------------
-	// 		//生日
-	// 		var userBirthday = doc.getElementById('userBirthday');
-	// 		userBirthday.addEventListener('tap', function() {
-	// 			var optionsJson = this.getAttribute('data-options') || '{}';
-	// 			var options = JSON.parse(optionsJson);
-	// 			var picker = new $.DtPicker(options);
-	// 			picker.show(function(rs) {
-	// 				/*
-	// 				 * rs.value 拼合后的 value
-	// 				 * rs.text 拼合后的 text
-	// 				 * rs.y 年，可以通过 rs.y.vaue 和 rs.y.text 获取值和文本
-	// 				 * rs.m 月，用法同年
-	// 				 * rs.d 日，用法同年
-	// 				 * rs.h 时，用法同年
-	// 				 * rs.i 分（minutes 的第二个字母），用法同年
-	// 				 */
-	// 				userBirthday.value = rs.text;
-	// 				picker.dispose();
-	// 			});
-	// 		}, false);
-	// 		//------------------------------
-	// 		//学历
-	// 		var userDegree = new $.PopPicker();
-	// 		userDegree.setData([{
-	// 			text: '博士'
-	// 		}, {
-	// 			text: '硕士'
-	// 		}, {
-	// 			text: '本科'
-	// 		}, {
-	// 			text: '大专'
-	// 		}, {
-	// 			text: '高中/中专'
-	// 		}, {
-	// 			text: '初中'
-	// 		}, {
-	// 			text: '小学'
-	// 		}]);
-	// 		var setDegree = doc.getElementById('userDegree');
-	// 		setDegree.addEventListener('tap', function(event) {
-	// 			userDegree.show(function(items) {
-	// 				setDegree.value = JSON.stringify(items[0].text).replace(/\"/g,'');
-	// 				//返回 false 可以阻止选择框的关闭
-	// 				//return false;
-	// 				//userDegree.dispose();
-	// 			});
-	// 		}, false);
-	// 		//-------------------------------
-	// 		//工作年限
-	// 		var userJobyear = new $.PopPicker();
-	// 		userJobyear.setData([{
-	// 			text: '1年以下'
-	// 		}, {
-	// 			text: '1-3年'
-	// 		}, {
-	// 			text: '3-5年'
-	// 		}, {
-	// 			text: '5年以上'
-	// 		}]);
-	// 		var setJobyear = doc.getElementById('userJobyear');
-	// 		setJobyear.addEventListener('tap', function(event) {
-	// 			userJobyear.show(function(items) {
-	// 				setJobyear.value = JSON.stringify(items[0].text).replace(/\"/g,'');
-	// 				//返回 false 可以阻止选择框的关闭
-	// 				//return false;
-	// 				//userJobyear.dispose();
-	// 			});
-	// 		}, false);
-	// 		//-------------------------------
-	// 		//工作领域
-	// 		var userJobfield = new $.PopPicker();
-	// 		userJobfield.setData([{
-	// 			text: '传单派发'
-	// 		}, {
-	// 			text: '促销导购'
-	// 		}, {
-	// 			text: '地推拉访'
-	// 		}, {
-	// 			text: '商品代理'
-	// 		}, {
-	// 			text: '网赚试玩'
-	// 		}, {
-	// 			text: '其它'
-	// 		}]);
-	// 		var setJobfield = doc.getElementById('userJobfield');
-	// 		setJobfield.addEventListener('tap', function(event) {
-	// 			userJobfield.show(function(items) {
-	// 				setJobfield.value = JSON.stringify(items[0].text).replace(/\"/g,'');
-	// 				//返回 false 可以阻止选择框的关闭
-	// 				//return false;
-	// 				//userJobyear.dispose();
-	// 			});
-	// 		}, false);
-	// 	});
-	// })(mui, document);
+		var real_name = $("#userName").val();
+		if(real_name.length == ''){
+	        layer.msg('请填写姓名。');
+	        return false;
+	    }
+	    if(!checkName(real_name)){
+	    	layer.msg('请填写真实姓名。');
+        	return false;
+        }
 
+        var sex = $("#changeUserSex").val();
+        if(sex.length == ''){
+	        layer.msg('请选择性别。');
+	        return false;
+	    }
+
+	    var birth = $("#userBirthday").val();
+        if(birth.length == ''){
+	        layer.msg('请选择生日。');
+	        return false;
+	    }
+
+	    var birth = $("#userBirthday").val();
+        if(birth.length == ''){
+	        layer.msg('请选择生日。');
+	        return false;
+	    }
+
+	    var identity = $("#userIdentity").val();
+        if(identity.length == ''){
+	        layer.msg('请填写身份。');
+	        return false;
+	    }
+
+	    var education = $("#userDegree").val();
+        if(education.length == ''){
+	        layer.msg('请选择学历。');
+	        return false;
+	    }
+
+	    var experience = $("#userJobyear").val();
+        if(experience.length == ''){
+	        layer.msg('请选择工作经验。');
+	        return false;
+	    }
+
+	    var workarea = $("#userJobfield").val();
+        if(workarea.length == ''){
+	        layer.msg('请选择工作领域。');
+	        return false;
+	    }
+
+	    indexload = layer.load(2, {
+		  shade: [0.4,'#000'] //0.1透明度的白色背景
+		});
+
+	    $.get("/job/editresume",{
+	    	"real_name":real_name,
+	    	"sex":sex,
+	    	"birth":birth,
+	    	"identity":identity,
+	    	"education":education,
+	    	"experience":experience,
+	    	"workarea":workarea
+	    },function(data){
+	    	if(data.error_code == '0'){
+				layer.msg('简历提交成功！');
+				layer.close(indexload);
+				setTimeout("window.location.href = '/job/user'",2000);
+			} else {
+				layer.close(indexload);
+				layer.msg(data.reason);
+			}
+	    },'json')
+
+	});
 	
 
 </script>

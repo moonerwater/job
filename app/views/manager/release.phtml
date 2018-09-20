@@ -1,5 +1,5 @@
 {% extends "common/mobile-index.phtml" %}
-{% block title  %}兼职之家 - 发布岗位{% endblock %}
+{% block title  %}兼职头条 - 发布岗位{% endblock %}
 
 {% block content %}
 <style type="text/css">
@@ -46,11 +46,11 @@
 		<div class="boxcontain mar10 resu">
 			<div class="mui-input-row">
 				<label>岗位类别</label>
-				<input type="text" placeholder="请选择岗位类别" id="jobtype" value="{{ data['jobinfo']['type'] }}">
+				<input type="text" placeholder="请选择岗位类别" id="jobtype" value="{{ data['jobinfo']['type'] }}" readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>性别要求</label>
-				<input type="text" placeholder="请选择性别" id="jobsex" value="{{ data['jobinfo']['sex'] }}">
+				<input type="text" placeholder="请选择性别" id="jobsex" value="{{ data['jobinfo']['sex'] }}" readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>招聘人数</label>
@@ -90,7 +90,7 @@
 		<div class="boxcontain mar10 resu">
 			<div class="mui-input-row">
 				<label>计薪方式</label>
-				<input type="text" placeholder="请选择计薪方式" id="paytype" value="{{ data['jobinfo']['salary_type'] }}">
+				<input type="text" placeholder="请选择计薪方式" id="paytype" value="{{ data['jobinfo']['salary_type'] }}" readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>薪资</label>
@@ -98,7 +98,7 @@
 			</div>
 			<div class="mui-input-row">
 				<label>结算时间</label>
-				<input type="text" placeholder="请选择结算时间" id="paytime" value="{{ data['jobinfo']['salary_time'] }}">
+				<input type="text" placeholder="请选择结算时间" id="paytime" value="{{ data['jobinfo']['salary_time'] }}" readonly="readonly">
 			</div>
 		</div>
 		<div class="row">
@@ -118,19 +118,19 @@
 		<div class="boxcontain mar10 resu">
 			<div class="mui-input-row">
 				<label>开始日期</label>
-				<input type="text" placeholder="请选择开始日期" id="jobstarday" value="{{ data['jobinfo']['start_date'] }}" data-options='{"type":"date","beginYear":2018,"endYear":2022}'>
+				<input type="text" placeholder="请选择开始日期" id="jobstarday" value="{{ data['jobinfo']['start_date'] }}" data-options='{"type":"date","beginYear":2018,"endYear":2022}' readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>结束日期</label>
-				<input type="text" placeholder="请选择结束日期" id="jobendday" value="{{ data['jobinfo']['end_date'] }}" data-options='{"type":"date","beginYear":2018,"endYear":2022}'>
+				<input type="text" placeholder="请选择结束日期" id="jobendday" value="{{ data['jobinfo']['end_date'] }}" data-options='{"type":"date","beginYear":2018,"endYear":2022}' readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>开始时间</label>
-				<input type="text" placeholder="请选择开始时间" id="jobstartime" value="{{ data['jobinfo']['start_time'] }}" data-options='{"type":"time"}'>
+				<input type="text" placeholder="请选择开始时间" id="jobstartime" value="{{ data['jobinfo']['start_time'] }}" data-options='{"type":"time"}' readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>结束时间</label>
-				<input type="text" placeholder="请选择结束时间" id="jobendtime" value="{{ data['jobinfo']['end_time'] }}" data-options='{"type":"time"}'>
+				<input type="text" placeholder="请选择结束时间" id="jobendtime" value="{{ data['jobinfo']['end_time'] }}" data-options='{"type":"time"}' readonly="readonly">
 			</div>
 			<div class="mui-input-row">
 				<label>工作区域</label>

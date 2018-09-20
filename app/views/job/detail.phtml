@@ -1,5 +1,5 @@
 {% extends "common/mobile-index.phtml" %}
-{% block title  %}兼职之家 - 职位详情{% endblock %}
+{% block title  %}兼职头条 - 职位详情{% endblock %}
 
 {% block content %}
 <style type="text/css">
@@ -64,9 +64,13 @@
 			<hr>
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right">
-						<div>工作地点</div>
-						<div>{{ data['jobinfo']['province'] }}{{ data['jobinfo']['city'] }}{{ data['jobinfo']['district'] }}{{ data['jobinfo']['address'] }}{{ data['jobinfo']['roomno'] }}</div>
+					<a class="mui-navigate-right" id="showMap">
+						<div class="addbox">
+							<div>工作地点</div>
+							<div>{{ data['jobinfo']['province'] }}{{ data['jobinfo']['city'] }}{{ data['jobinfo']['district'] }}{{ data['jobinfo']['address'] }}{{ data['jobinfo']['roomno'] }}</div>
+						</div>
+						<input type="hidden" value="{{ data['jobinfo']['lng'] }}" id="lng">
+						<input type="hidden" value="{{ data['jobinfo']['lat'] }}" id="lat">
 					</a>
 				</li>
 			</ul>
@@ -76,7 +80,7 @@
 				<li class="mui-table-view-cell">
 					<a class="mui-navigate-right">
 						<div class="imgbox left">
-							<img src="{{ data['jobinfo']['wxcode_img'] }}" class="auto-center">
+							<img src="{{ data['jobuserinfo']['headimgurl'] }}" class="auto-center">
 						</div>
 						<div class="infos left">
 							<div class="ltc"><span>{{ data['jobinfo']['real_name'] }}</span>{{ data['jobinfo']['company_name'] }}</div>
@@ -87,7 +91,7 @@
 			</ul>
 		</div>
 		<div id="tips">
-			<p>防骗提示：未标明收费的职位不会收取任何费用，若商家要求费用或押金，请提高警惕并第一时间向我们举报。<a href="">去投诉</a></p>
+			<p>防骗提示：未标明收费的职位不会收取任何费用，若商家要求费用或押金，请提高警惕并第一时间向我们举报。<a href="javascript:void(0)">去投诉</a></p>
 		</div>
 		<br>
 		<br>
@@ -95,10 +99,297 @@
 		<br>
 		<footer>
 			<a href="#" class="collect none">收藏</a>
-			<a href="/job/signdone" class="sign">立即报名</a>
+			<a href="javascript:void(0)" class="sign" id="SignJob" data-id="{{ data['jobinfo']['id'] }}">立即报名</a>
 		</footer>
 	</div>
 </div>
+
+<div id="Bind" class="alert none">
+	<h3>绑定手机</h3>
+	<br>
+	<p>您尚未绑定手机，绑定后将获得更好的体验哦</p>
+	<div id="nobind" class="resu" style="padding:0;">
+		<div class="mui-input-row">
+			<label>手机号</label>
+			<input type="text" placeholder="请输入您的手机号" id="telphone">
+		</div>
+		<div class="mui-input-row">
+			<input type="number" name="captcha" placeholder="请输入短信验证码" id="captcha">
+			<button class="getcaptcha">获取验证码</button>
+			<button class="waiting none"></button>
+		</div>
+	</div>
+	<button class="footbtn" id="TelBind">绑定</button>
+</div>
+
+<div id="ResumeB" class="alert none">
+	<h3>个人简历</h3>
+	<br>
+	<p>请填写您的最基本资料，以获得快速投递简历的机会</p>
+	<p>更详细的资料请在个人中心填写</p>
+	<div id="resume" class="resu" style="padding:0;">
+		<div class="mui-input-row">
+			<label>姓名</label>
+			<input type="text" placeholder="请输入您的真实姓名" id="userName" value="{{ data['userinfo']['real_name'] }}">
+		</div>
+		<div class="mui-input-row">
+			<label>性别</label>
+			<input type="text" placeholder="请选择您的性别" id="changeUserSex" value="{{ data['userinfo']['sex'] }}" readonly="readonly">
+		</div>
+		<div class="mui-input-row">
+			<label>生日</label>
+			<input type="text" data-options='{"type":"date","beginYear":1960,"endYear":2016}' value="{{ data['userinfo']['birth'] }}" id="userBirthday" placeholder="请选择您的生日" readonly="readonly">
+		</div>
+		<div class="mui-input-row">
+			<label>身份</label>
+			<input type="text" placeholder="请输入您的身份" value="{{ data['userinfo']['identity'] }}" id="userIdentity">
+		</div>
+		<div class="mui-input-row">
+			<label>学历</label>
+			<input type="text" placeholder="请选择您的学历" id="userDegree" value="{{ data['userinfo']['education'] }}" readonly="readonly">
+		</div>
+		<div class="mui-input-row">
+			<label>工作经验</label>
+			<input type="text" placeholder="请选择工作经验" id="userJobyear" value="{{ data['userinfo']['experience'] }}" readonly="readonly">
+		</div>
+		<div class="mui-input-row">
+			<label>工作领域</label>
+			<input type="text" placeholder="请选择工作领域" id="userJobfield" value="{{ data['userinfo']['workarea'] }}" readonly="readonly">
+		</div>
+	</div>
+	<button id="Push" class="footbtn">保存简历</button>
+</div>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script type="text/javascript">
+
+	wx.config({  
+	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。  
+	    appId: '{{ sign['appId'] }}', // 必填，公众号的唯一标识  
+	    timestamp: {{ sign['timestamp'] }}, // 必填，生成签名的时间戳  
+	    nonceStr: '{{ sign['nonceStr'] }}', // 必填，生成签名的随机串  
+	    signature: '{{ sign['signature'] }}',// 必填，签名，见附录1  
+	    jsApiList: [
+	    	'getLocation',
+	    	'openLocation'
+	    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2  
+	});
+
+	var indexA;
+	var indexB;
+
+	function showBindTel(){
+		indexA = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:true,
+			content: $("#Bind"),
+			area: ['90%', 'auto'],
+			shadeClose: false,
+			time:0
+		});
+	}
+
+	function showInnelResume(){
+		indexB = layer.open({
+			type: 1,
+			title:false,
+			closeBtn:true,
+			content: $("#ResumeB"),
+			area: ['90%', 'auto'],
+			shadeClose: false,
+			time:0
+		});
+	}
+
+	$('#showMap').on('tap',function(){
+		var lng = $('#lng').val();
+		var lat = $('#lat').val();
+		var address = "{{ data['jobinfo']['province'] }}"+"{{ data['jobinfo']['city'] }}"+"{{ data['jobinfo']['district'] }}";
+		var name = "{{ data['jobinfo']['address'] }}"+"{{ data['jobinfo']['roomno'] }}";
+
+		wx.openLocation({
+		    latitude: lat,
+		    longitude: lng,
+		    name: name,
+		    address: address,
+		    scale: 14
+		    //infoUrl: 'http://weixin.qq.com'
+	    });
+	})
+
+	$('.getcaptcha').on('tap',function(){
+		var mobile = $("#telphone").val();
+		if(mobile.length == ''){
+	        layer.msg('请填写手机号。');
+	        return false;
+	    }
+		if(mobile.length != 11){
+	        layer.msg('手机号长度不正确。');
+	        return false;
+	    }
+	    if(!checkMobile(mobile)){
+	    	layer.msg('请输入正确的手机号。');
+        	return false;
+        }
+
+        $(this).attr('disabled','disabled');
+        $.get('/job/getphonecode',{'mobile':mobile},function(data){
+			if(data.error_code == '0'){
+				mobileMsg();
+			} else {
+				layer.msg(data.reason);
+			}
+		},'json');
+	});
+
+	$("#TelBind").on('tap',function(){
+		var mobile = $("#telphone").val();
+		if(mobile.length == ''){
+	        layer.msg('请填写手机号。');
+	        return false;
+	    }
+		if(mobile.length != 11){
+	        layer.msg('手机号长度不正确。');
+	        return false;
+	    }
+	    if(!checkMobile(mobile)){
+	    	layer.msg('请输入正确的手机号。');
+        	return false;
+        }
+
+		var captcha = $("#captcha").val();
+		if(captcha.length == ''){
+	        layer.msg('请填写验证码。');
+	        return false;
+	    }
+
+	    $(this).attr('disabled','disabled');
+	    $.get('/job/edituserinfo',{'mobile':mobile,'vcode':captcha},function(data){
+			if(data.error_code == '0'){
+				layer.msg('绑定成功！');
+				layer.close(indexA);
+			} else {
+				layer.msg(data.reason);
+			}
+		},'json');
+	});
+
+	$("#SignJob").on("tap",function(){
+
+		var id = $(this).attr('data-id');
+
+		indexload = layer.load(2, {
+		  shade: [0.4,'#000'] //0.1透明度的白色背景
+		});
+
+		$.get('/job/checkdata',function(data){
+			console.log(data);
+			if(data.error_code != '0'){
+				layer.close(indexload);
+				if(data.reason == "no phone"){	
+					showBindTel();
+					layer.msg("请先绑定个人手机哦~",{time:3000});
+				}
+				if(data.reason == "no other"){
+					showInnelResume();
+					layer.msg("请先填写个人简历哦~",{time:3000});
+				}
+			} else {
+				$.get('/job/apply',{'jobid':id},function(data){
+					if(data.error_code == '0'){
+						layer.close(indexload);
+						var href = '/job/signdone?applyid='+data.result.apply_id;
+						layer.msg("报名成功！");
+						setTimeout("window.location.href='" + href + "'",2000);
+					} else {
+						layer.close(indexload);
+						layer.msg("您已报名过该工作。");
+					}
+				},'json')
+			}
+		},'json');
+	});
+
+	$("#Push").on('tap',function(){
+
+		var real_name = $("#userName").val();
+		if(real_name.length == ''){
+	        layer.msg('请填写姓名。');
+	        return false;
+	    }
+	    if(!checkName(real_name)){
+	    	layer.msg('请填写真实姓名。');
+        	return false;
+        }
+
+        var sex = $("#changeUserSex").val();
+        if(sex.length == ''){
+	        layer.msg('请选择性别。');
+	        return false;
+	    }
+
+	    var birth = $("#userBirthday").val();
+        if(birth.length == ''){
+	        layer.msg('请选择生日。');
+	        return false;
+	    }
+
+	    var birth = $("#userBirthday").val();
+        if(birth.length == ''){
+	        layer.msg('请选择生日。');
+	        return false;
+	    }
+
+	    var identity = $("#userIdentity").val();
+        if(identity.length == ''){
+	        layer.msg('请填写身份。');
+	        return false;
+	    }
+
+	    var education = $("#userDegree").val();
+        if(education.length == ''){
+	        layer.msg('请选择学历。');
+	        return false;
+	    }
+
+	    var experience = $("#userJobyear").val();
+        if(experience.length == ''){
+	        layer.msg('请选择工作经验。');
+	        return false;
+	    }
+
+	    var workarea = $("#userJobfield").val();
+        if(workarea.length == ''){
+	        layer.msg('请选择工作领域。');
+	        return false;
+	    }
+
+	    indexload = layer.load(2, {
+		  shade: [0.4,'#000'] //0.1透明度的白色背景
+		});
+
+	    $.get("/job/editresume",{
+	    	"real_name":real_name,
+	    	"sex":sex,
+	    	"birth":birth,
+	    	"identity":identity,
+	    	"education":education,
+	    	"experience":experience,
+	    	"workarea":workarea
+	    },function(data){
+	    	if(data.error_code == '0'){
+	    		layer.close(indexB);
+	    		layer.close(indexload);
+				layer.msg('简历提交成功！您可以报名工作了~',{time:3000});
+			} else {
+				layer.close(indexload);
+				layer.msg(data.reason);
+			}
+	    },'json')
+
+	});
+
+</script>
 
 {% endblock %}
 {% block footer %}
