@@ -290,6 +290,7 @@ class JobController extends ControllerH5
             $apply[$k]['phone'] = $user->phone;
         }
         $data['apply'] = $apply;
+        $data['userinfo'] = $this->userinfo;
         //
         $this->view->setVar('data', $data);
     }
