@@ -56,7 +56,7 @@ class JobController extends ControllerH5
             $where .= " and type = '$type' ";
         }
         if($sex){
-            $where .= " and sex = '$sex' ";
+            $where .= " and (sex = '$sex'  or sex = '不限') ";
         }
         if($salary_time){
             $where .= " and salary_time = '$salary_time' ";
