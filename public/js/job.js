@@ -167,6 +167,54 @@ $(document).ready(function(){
 			}, {
 				text: '网赚试玩'
 			}, {
+				text: '核弹打蜡'
+			}, {
+				text: '编程'
+			}, {
+				text: '航母维修'
+			}, {
+				text: '打酱油'
+			}, {
+				text: '快递'
+			}, {
+				text: '抢银行'
+			}, {
+				text: '调研'
+			}, {
+				text: '送餐员'
+			}, {
+				text: '促销'
+			}, {
+				text: '礼仪'
+			}, {
+				text: '安保'
+			}, {
+				text: '销售'
+			}, {
+				text: '服务员'
+			}, {
+				text: '临时工'
+			}, {
+				text: '校内'
+			}, {
+				text: '设计'
+			}, {
+				text: '文员'
+			}, {
+				text: '派单'
+			}, {
+				text: '模特'
+			}, {
+				text: '实习'
+			}, {
+				text: '家教'
+			}, {
+				text: '演出'
+			}, {
+				text: '客服'
+			}, {
+				text: '翻译'
+			}, {
 				text: '其它'
 			}]);
 			var setJobfield = doc.getElementById('userJobfield');
@@ -198,33 +246,6 @@ $(document).ready(function(){
 						//返回 false 可以阻止选择框的关闭
 						//return false;
 						//userJobyear.dispose();
-					});
-				}, false);
-			}
-			//------------------------------
-			//工作类别
-			var jobtype = new $.PopPicker();
-			jobtype.setData([{
-				text: '传单派发'
-			}, {
-				text: '促销导购'
-			}, {
-				text: '地推拉访'
-			}, {
-				text: '商品代理'
-			}, {
-				text: '网赚试玩'
-			}, {
-				text: '其他'
-			}]);
-			var setjobtype = doc.getElementById('jobtype');
-			if(setjobtype){
-				setjobtype.addEventListener('tap', function(event) {
-					jobtype.show(function(items) {
-						setjobtype.value = JSON.stringify(items[0].text).replace(/\"/g,'');
-						//返回 false 可以阻止选择框的关闭
-						//return false;
-						//userSex.dispose();
 					});
 				}, false);
 			}

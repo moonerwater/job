@@ -101,16 +101,16 @@
 	<div id="selection" class="container">
 		<div class="row">
 			<div class="col-xs-3 mui-collapse">
-				<a class="mui-navigate-right selections" data-type="address" id="Address">全部</a>
+				<a class="mui-navigate-right selections" data-type="address" id="Address">地区</a>
 			</div>
 			<div class="col-xs-3 mui-collapse">
 				<a class="mui-navigate-right selections" data-type="type" id="Type">类型</a>
 			</div>
 			<div class="col-xs-3 mui-collapse">
-				<a class="mui-navigate-right selections" data-type="condition">筛选</a>
+				<a class="mui-navigate-right selections" data-type="condition" id="Condition">性别</a>
 			</div>
 			<div class="col-xs-3 mui-collapse">
-				<a class="mui-navigate-right selections" data-type="sort" id="Sort">排序</a>
+				<a class="mui-navigate-right selections" data-type="sort" id="Sort">默认排序</a>
 			</div>
 		</div>
 		<div class="selectbox none" data-select="address">
@@ -140,6 +140,11 @@
 					<div class="col-xs-4"><a href="javascript:void(0)" class="active" id="alltype" data-type="">全部</a></div>
 				</div>
 				<div class="row types">
+					<div class='col-xs-4'><a href='javascript:void(0)' data-type='传单派发'>传单派发</a></div>
+					<div class='col-xs-4'><a href='javascript:void(0)' data-type='促销导购'>促销导购</a></div>
+					<div class='col-xs-4'><a href='javascript:void(0)' data-type='地推拉访'>地推拉访</a></div>
+					<div class='col-xs-4'><a href='javascript:void(0)' data-type='商品代理'>商品代理</a></div>
+					<div class='col-xs-4'><a href='javascript:void(0)' data-type='网赚试玩'>网赚试玩</a></div>
 					<div class="col-xs-4"><a href="javascript:void(0)" data-type="核弹打蜡">核弹打蜡</a></div>
 					<div class="col-xs-4"><a href="javascript:void(0)" data-type="编程">编程</a></div>
 					<div class="col-xs-4"><a href="javascript:void(0)" data-type="航母维修">航母维修</a></div>
@@ -396,6 +401,7 @@
 	function Selection(keyword,district,type,sex,salary_time,order,city,orderby){
 		//alert(keyword+district+type+sex+salary_time+order+city);
 		//alert($.cookie('lng'));
+		//alert(city)
 		
 		indexload = layer.load(2, {
 		  shade: [0.4,'#000'] //0.1透明度的白色背景
@@ -410,9 +416,9 @@
 		
 		$.post('/job/getjob',{
 			"keyword":keyword,
-			"city":nowCity,
-			"lng":$.cookie('lng'),
-			"lat":$.cookie('lat'),
+			"city":nowCity ? nowCity : '深圳市',
+			"lng":$.cookie('lng') ? $.cookie('lng') : 113.235486,
+			"lat":$.cookie('lat') ? $.cookie('lat') : 22.619456,
 			// "lng":113.235486,
 			// "lat":22.619456,
 			"district":district,
@@ -459,15 +465,18 @@
 	    	var arr1 = city.split('市');
 			var losCity = arr1[0];
 			console.log(losCity);
+			var hasCity = 0;
 	    	$(".citys a").each(function(){
 	    		var _this = $(this);
 	    		var data = _this.attr("data-city");
 	    		var text = _this.text();
 	    		console.log(losCity,data)
 	    		if(data == losCity){
+	    			//alert(data+losCity)
 	    			_this.addClass('active');
 	    			//alert('789')
-	    			//alert(cityName+losCity)
+	    			// alert(cityName+losCity)
+	    			hasCity = 1;
 	    			var provinceid = _this.attr("data-province");
 		    		var cityid = _this.attr("data-cityid");
 		    		//alert(provinceid+cityid)
@@ -487,16 +496,20 @@
 						$("#Selections").text(text);
 						//checkdata();
 		    			showCityList(provinceid,cityid);
-		    			Selection(keyword,district,type,sex,salary_time,order,city);
+		    			Selection(keyword,district,type,sex,salary_time,order,nowCity);
 		    		} else {
 		    			$("#Selections").text(text);
 		    			//checkdata();
 		    			showCityList(provinceid,cityid);
 		    			$("#nowcity").addClass('active');
-		    			Selection(keyword,district,type,sex,salary_time,order,city);
+		    			Selection(keyword,district,type,sex,salary_time,order,nowCity);
 		    		}
 	    		}
 	    	});
+	    	if(hasCity == 0){
+	    		layer.msg('暂不支持该城市，即将跳转到深圳市。')
+	    		setTimeout("window.location.href = '/job/index?city=深圳市'",2000);
+	    	} 
 	    } else {
 	    	window.location.href = '/job/index?city=深圳市';
 	    }
@@ -590,8 +603,14 @@
 		$(this).addClass('active');
 		//$("#alladdress").removeClass('active');
 		var text = $(this).text();
-		$("#Address").text(text);
 		district = $(this).attr('data-district');
+		if(district == ''){
+			$("#Address").text('地区');
+		} else {
+			$("#Address").text(text);
+		}
+		$(".selectbox").hide();
+		$(".selections").removeClass('active');
 		Selection(keyword,district,type,sex,salary_time,order,nowCity);
 	});
 
@@ -600,24 +619,38 @@
 		$(this).addClass('active');
 		//$("#alltype").removeClass('active');
 		var text = $(this).text();
-		$("#Type").text(text);
 		type = $(this).attr('data-type');
+		if(type == ''){
+			$("#Type").text('类型');
+		} else {
+			$("#Type").text(text);
+		}
+		$(".selectbox").hide();
+		$(".selections").removeClass('active');
 		Selection(keyword,district,type,sex,salary_time,order,nowCity);
 	});
 
 	$(".sexs a").on('tap',function(){
 		$(".sexs a").removeClass('active')
 		$(this).addClass('active');
+		var text = $(this).text();
 		sex = $(this).attr('data-sex');
+		if(sex == ''){
+			$("#Condition").text('性别');
+		} else {
+			$("#Condition").text(text);
+		}
+		$(".selectbox").hide();
+		$(".selections").removeClass('active');
 		Selection(keyword,district,type,sex,salary_time,order,nowCity);
 	})
 
-	$(".salarys a").on('tap',function(){
-		$(".salarys a").removeClass('active')
-		$(this).addClass('active');
-		salary_time = $(this).attr('data-salary');
-		Selection(keyword,district,type,sex,salary_time,order,nowCity);
-	})
+	// $(".salarys a").on('tap',function(){
+	// 	$(".salarys a").removeClass('active')
+	// 	$(this).addClass('active');
+	// 	salary_time = $(this).attr('data-salary');
+	// 	Selection(keyword,district,type,sex,salary_time,order,nowCity);
+	// })
 
 	$(".sorts a").on('tap',function(){
 		$(".sorts a").removeClass('active')
@@ -625,6 +658,8 @@
 		var text = $(this).text();
 		$("#Sort").text(text);
 		order = $(this).attr('data-order');
+		$(".selectbox").hide();
+		$(".selections").removeClass('active');
 		if(order == 'juli'){
 			Selection(keyword,district,type,sex,salary_time,order,nowCity,'asc');
 		} else {
