@@ -84,6 +84,8 @@ class JobController extends ControllerH5
         $jobid = $this->request->get('jobid','int');
         if($jobid){
             $jobinfo = \Job::findFirstById($jobid);
+            $jobinfo->view_num = $jobinfo->view_num +1;
+            $jobinfo->save();
             $data['jobinfo'] = $jobinfo->toArray();
             $userinfo = \User::findFirstById($jobinfo->user_id);
             $data['jobuserinfo'] = $userinfo->toArray();
