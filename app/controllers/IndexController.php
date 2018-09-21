@@ -11,6 +11,7 @@ class IndexController extends ControllerBase
     {
         //$this->view->disable();
         //echo '金职链还在开发中';
+        $this->response->redirect('/job/index');
     }
     public function enAction()
     {
