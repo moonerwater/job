@@ -64,7 +64,7 @@
 			<hr>
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right" id="showMap">
+					<a href="javascript:void(0)" class="mui-navigate-right" id="showMap">
 						<div class="addbox">
 							<div>工作地点</div>
 							<div>{{ data['jobinfo']['province'] }}{{ data['jobinfo']['city'] }}{{ data['jobinfo']['district'] }}{{ data['jobinfo']['address'] }}{{ data['jobinfo']['roomno'] }}</div>
@@ -169,7 +169,6 @@
 	    nonceStr: '{{ sign['nonceStr'] }}', // 必填，生成签名的随机串  
 	    signature: '{{ sign['signature'] }}',// 必填，签名，见附录1  
 	    jsApiList: [
-	    	'getLocation',
 	    	'openLocation'
 	    ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2  
 	});
@@ -201,20 +200,22 @@
 		});
 	}
 
-	$('#showMap').on('tap',function(){
-		var lng = $('#lng').val();
-		var lat = $('#lat').val();
-		var address = "{{ data['jobinfo']['province'] }}"+"{{ data['jobinfo']['city'] }}"+"{{ data['jobinfo']['district'] }}";
-		var name = "{{ data['jobinfo']['address'] }}"+"{{ data['jobinfo']['roomno'] }}";
+	wx.ready(function () {
+		document.querySelector('#showMap').onclick = function () {
+			var Glng = Number($('#lng').val());
+			var Glat = Number($('#lat').val());
+			var Gaddress = "{{ data['jobinfo']['province'] }}"+"{{ data['jobinfo']['city'] }}"+"{{ data['jobinfo']['district'] }}";
+			var Gname = "{{ data['jobinfo']['address'] }}"+"{{ data['jobinfo']['roomno'] }}";
 
-		wx.openLocation({
-		    latitude: lat,
-		    longitude: lng,
-		    name: name,
-		    address: address,
-		    scale: 14
-		    //infoUrl: 'http://weixin.qq.com'
-	    });
+			wx.openLocation({
+			    latitude: Glat,
+			    longitude: Glng,
+			    name: Gname,
+			    address: Gaddress,
+			    scale: 14,
+			    infoUrl: 'http://weixin.qq.com'
+		    });
+		}
 	})
 
 	$('.getcaptcha').on('tap',function(){
