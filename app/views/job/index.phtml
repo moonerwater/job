@@ -432,20 +432,24 @@
 				$('#Joblist').empty();
 				console.log(data.result)
 				var len = data.result.length;
-				for(var i = 0; i < len; i++){
-					var dom =   "<li class='mui-table-view-cell lists'>"
-							+		"<a href='/job/detail?jobid="+data.result[i].id+"'>"
-							+			"<h4>"+data.result[i].title+"</h4>"
-							+			"<div><span class='place'>"+data.result[i].district+"</span><span class='time'>"+data.result[i].start_date+" - "+data.result[i].end_date+"</span><span style='color: #868686;'>共"+data.result[i].days+"天<span></div>"
-							+			"<div><span class='price'>"+data.result[i].salary+"元/"+data.result[i].salary_type+"</span><span class='pricetype'>日结</span></div>"
-							+			"<span class='range'>"+data.result[i].juli+"</span>"
-							+		"</a>"
-							+	"</li>";
-					$('#Joblist').append(dom);
+				if(len != 0){
+					for(var i = 0; i < len; i++){
+						var dom =   "<li class='mui-table-view-cell lists'>"
+								+		"<a href='/job/detail?jobid="+data.result[i].id+"'>"
+								+			"<h4>"+data.result[i].title+"</h4>"
+								+			"<div><span class='place'>"+data.result[i].district+"</span><span class='time'>"+data.result[i].start_date+" - "+data.result[i].end_date+"</span><span style='color: #868686;'>共"+data.result[i].days+"天<span></div>"
+								+			"<div><span class='price'>"+data.result[i].salary+"元/"+data.result[i].salary_type+"</span><span class='pricetype'>日结</span></div>"
+								+			"<span class='range'>"+data.result[i].juli+"</span>"
+								+		"</a>"
+								+	"</li>";
+						$('#Joblist').append(dom);
+					}
+				} else {
+					$('#Joblist').append("<div class='noneshow'>暂无相关工作。</div>");
 				}
 				layer.close(indexload);
 			} else {
-				alert('nonono')
+				//alert('nonono')
 				console.log(data.reason);
 				layer.close(indexload);
 			}
@@ -511,7 +515,15 @@
 	    		setTimeout("window.location.href = '/job/index?city=深圳市'",2000);
 	    	} 
 	    } else {
-	    	window.location.href = '/job/index?city=深圳市';
+			var btnArray = ['取消', '切换'];
+		    mui.confirm("您当前所在地区为"+nowCity+"，是否切换？", '切换城市', btnArray, function(e) {
+				if (e.index == 1) {
+					//$(".citys a[data-code='"+codA+"']").click();
+					window.location.href = '/job/index?city='+ nowCity;
+				} else {
+					window.location.href = '/job/index?city=深圳市';
+				}
+			})
 	    }
 	}
 

@@ -9,12 +9,26 @@ h1,h2,h3,h4,h5,h6 {
 p {
 	font-size:1rem;
 }
+label {
+	font-weight: 100;
+}
 .mar10 {
 	margin-top:10px;
+}
+.noneshow {
+	padding:1rem;
+	margin:0 auto;
+	margin-top:2rem;
+	text-align:center;
+	font-size:1.2rem;
 }
 #allmap {
 		width: 100%;height: 100%;overflow: hidden;margin:0;display: none;
 	}
+.mui-title {
+	font-size:1.6rem;
+	font-weight: 300;
+}
 .mui-popup,
 .mui-poppicker,
 .mui-dtpicker {
@@ -42,6 +56,7 @@ p {
 		border-radius: 3rem;
 		margin:0 auto;
 		margin-top:2rem;
+		box-shadow: 1px 2px 2px 1px #a3a3a3;
 	}
 	a.footbtn {
 		line-height: 3rem;
@@ -92,7 +107,7 @@ p {
     	padding:0;
 	}
 	#search > div .mui-input-group {
-		width: 68%;
+		width: 63%;
 	    margin-left: 2%;
 	    border-radius: 3px;
 	    height: 80%;
@@ -169,7 +184,7 @@ p {
     	line-height: 2.2rem;
 	}
 	#search .user {
-		width: 10%;
+		width: 15%;
 	}
 	#search .user a {
 		height: 100%;
@@ -255,14 +270,18 @@ p {
 		margin:0;
 		color:#484848;
 		width: 85%;
+		font-weight: 300;
 	}
 	.joblist .lists {
 		border-bottom: 1px solid #ececec;
 		background: #fff;
+		padding:0;
 	}
 	
 	.joblist .lists > a {
 		white-space:inherit;
+		padding:15px;
+		margin:0;
 	}
 	.joblist .lists > a > div {
 		margin-top:5px;
@@ -270,9 +289,13 @@ p {
 	}
 	.joblist span {
 		display: inline-block;
-		font-size:1.2rem;
+		font-size:1rem;
 		height: 1.4rem;
     	line-height: 1.4rem;
+	}
+	.joblist span.mui-icon {
+		font-size:1.5rem;
+		padding-right: 5px;
 	}
 	.joblist .stat {
 		position: absolute;
@@ -311,7 +334,7 @@ p {
 	.joblist .price,
 	.joblist .stat {
 		color:#f07527;
-		font-size:1.4rem;
+		font-size:1.2rem;
 	}
 	.joblist .pricetype {
 		font-size: .8rem;
@@ -330,7 +353,7 @@ p {
 	.joblist .range::before {
 		content: '';
 		position: absolute;
-		top:0rem;
+		top:0.1rem;
 		left:0;
 		width: 1rem;
 		height:1rem;
@@ -343,6 +366,7 @@ p {
 		/*border-top:1px solid #eee;
 		border-bottom:1px solid #eee;*/
 		margin-top:5px;
+		border-top:1px solid #eee;
 	}
 	.joblist .lists .controls a {
 		display: inline-block;
@@ -351,34 +375,36 @@ p {
 		line-height: 3rem;
 		font-size:1rem;
 		text-align: center;
-		border:1px solid #eee;
-		margin-left:2%;
+		border-left:1px solid #eee;
+		/*margin-left:2%;*/
 		/*border:none;
 		border-left:1px solid #eee;
 		border-right: 1px solid #eee;*/
 		float:right;
-		color: #484848;
+		color: #868686;
 	}
 	#detail h1 {
-		font-size:2rem;
+		font-size:1.6rem;
+		font-weight: 300;
 	}
 	#detail h3 {
 		color:#e36a26;
-		font-size:1.6rem;
-		margin:1rem 0;
+		font-size:1.4rem;
+		margin:1.4rem 0;
 	}
 	#detail .info {
 		color:#868686;
-		font-size:1.4rem;
+		font-size:1.2rem;
 	}
-	.spen {
-		display: inline-block;
-		padding-right: 5px;
-		margin-right: 5px;
-		border-right: 1px solid #868686;
+	#detail span.title {
+		color:#a5a5a5;
 	}
 	#detail h2 {
-		font-size:1.6rem;
+		font-size:1.4rem;
+		font-weight: 300;
+		padding-left: .8rem;
+	    color: #f07527;
+	    border-left: 3px solid #f07527;
 	}
 	#detail h4 {
 		margin:1.4rem 0;
@@ -387,11 +413,11 @@ p {
 	#detail p {
 		line-height: 1.4rem;
 		color:#3f4040;
-		font-size:1rem;
+		font-size:1.2rem;
 		margin:1.4rem 0;
 	}
-	#detail .time {
-		float:left;
+	#detail span.time {
+		display: inline-block;
 		padding:2px 5px;
 		color:#7e7e7e;
 		background: #f6f6f6;
@@ -451,6 +477,9 @@ p {
 	#leader .infos > div {
 		font-size:1.2rem;
 		margin-bottom: .5rem;
+		position: relative;
+	    top: 1.4rem;
+	    /*font-size: 1.6rem;*/
 	}
 	#leader .infos span {
 		display: inline-block;
@@ -468,8 +497,8 @@ p {
 		color:#f1a371;
 		margin:0;
 	}
-	#tips p a {
-		text-decoration: underline;
+	a.tips {
+		text-decoration: underline !important;
 		color:#0077ff;
 	}
 	#usertop {
@@ -501,10 +530,10 @@ p {
 		float:left;
 	}
 	.userinfo .info .name {
-		font-size:1.8rem;
+		font-size:1.6rem;
 		/*margin-bottom: 10px;*/
-		font-weight: 700;
-		margin-top:6%;
+		/*font-weight: 700;*/
+		margin-top:8%;
 	}
 	.userinfo .info .else {
 		font-size:1.2rem;
@@ -557,7 +586,7 @@ p {
 		background: -webkit-linear-gradient(rgba(255,255,255,.4), transparent); /* Safari 5.1 - 6.0 */
 		background: -o-linear-gradient(rgba(255,255,255,.4), transparent); /* Opera 11.1 - 12.0 */
 		background: -moz-linear-gradient(rgba(255,255,255,.4), transparent); /* Firefox 3.6 - 15 */
-		background: linear-gradient(rgba(255,255,255,.4), transparent); /* 标准的语法 */
+		background: linear-gradient(rgb(255, 255, 255), #e4e4e4); /* 标准的语法 */
 	}
 	#usertop .myjob a {
 		display: block;

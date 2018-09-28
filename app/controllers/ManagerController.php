@@ -353,7 +353,7 @@ class ManagerController extends ControllerH5
 
     }
 
-    public function modifyAction()
+    public function aboutusAction()
     {
         
     }

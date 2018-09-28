@@ -5,6 +5,7 @@
 <style type="text/css">
 	#Jobs .lists {
 		margin-bottom: 10px;
+		padding:0;
 	}
 	.mui-segmented-control {
 		font-size:1.4rem;
@@ -14,10 +15,10 @@
 	}
 	.mui-segmented-control .mui-control-item {
 		line-height: 3rem;
-		color:#8e8e8e;
+		color:#8e8e8e !important;
 	}
 	.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
-		color: #f07527;
+		color: #f07527 !important;
     	border-bottom: 2px solid #f07527;
 	}
 	
@@ -26,6 +27,7 @@
 <header class="mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title">我的兼职</h1>
+	<a href="/job/user" class="mui-pull-right"><span class="mui-icon mui-icon-contact"></span></a>
 </header>
 
 <div class="mui-content">
@@ -48,6 +50,7 @@
 	</div>
 	<div id="Jobs">
 		<div id="item1" class="mui-control-content mui-active">
+			{% if data['apply'] %}
 			<ul class="mui-table-view joblist">
 				{% for key, item in data['apply'] %}
 					<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
@@ -65,55 +68,66 @@
 						{% endif %}
 						{% if item['type'] == 'Wait' %}
 							<div class="controls">
-								<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}">取消报名</a>
+								<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}"><span class="mui-icon mui-icon-close"></span>取消报名</a>
 							</div>
 						{% elseif item['type'] == 'N' %}
 
 						{% elseif item['type'] == 'Y' %}
 							<div class="controls">
-								<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}">取消报名</a>
-								<a href="tel:{{ item['joinfo']['phone'] }}" data-stat="contact">联系督导</a>
+								<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}"><span class="mui-icon mui-icon-close"></span>取消报名</a>
+								<a href="tel:{{ item['joinfo']['phone'] }}" data-stat="contact"><span class="mui-icon mui-icon-phone"></span>联系督导</a>
 							</div>
 						{% endif %}
 					</li>
 				{% endfor %}
 			</ul>
+			{% else %}
+				<div class='noneshow'>暂无报名记录。</div>
+			{% endif %}
 		</div>
 		<div id="item2" class="mui-control-content">
-			<ul class="mui-table-view joblist">
-				{% for key, item in data['apply'] %}
-				{% if item['type'] == 'Y' %}
-					<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
-						<a href="/job/detail?jobid={{ item['job_id'] }}">
-							<h4>{{ item['joinfo']['title'] }}</h4>
-							<div><span class="place">{{ item['joinfo']['district'] }}</span><span class="time">{{ item['joinfo']['start_date'] }} - {{ item['joinfo']['end_date'] }}</span></div>
-							<div><span class="price">{{ item['joinfo']['salary'] }}元/{{ item['joinfo']['salary_type'] }}</span><span class="pricetype">{{ item['joinfo']['salary_time'] }}</span></div>
-						</a>
-						<span class="stat">已录用</span>
-						<div class="controls">
-							<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}">取消报名</a>
-							<a href="tel:{{ item['joinfo']['phone'] }}" data-stat="contact">联系督导</a>
-						</div>
-					</li>
-				{% endif %}
-				{% endfor %}
-			</ul>
+			{% if data['apply'] %}
+				<ul class="mui-table-view joblist">
+					{% for key, item in data['apply'] %}
+						{% if item['type'] == 'Y' %}
+							<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
+								<a href="/job/detail?jobid={{ item['job_id'] }}">
+									<h4>{{ item['joinfo']['title'] }}</h4>
+									<div><span class="place">{{ item['joinfo']['district'] }}</span><span class="time">{{ item['joinfo']['start_date'] }} - {{ item['joinfo']['end_date'] }}</span></div>
+									<div><span class="price">{{ item['joinfo']['salary'] }}元/{{ item['joinfo']['salary_type'] }}</span><span class="pricetype">{{ item['joinfo']['salary_time'] }}</span></div>
+								</a>
+								<span class="stat">已录用</span>
+								<div class="controls">
+									<a href='javascript:void(0)' class="canclejob" data-stat="cancle" data-id="{{ item['id'] }}"><span class="mui-icon mui-icon-close"></span>取消报名</a>
+									<a href="tel:{{ item['joinfo']['phone'] }}" data-stat="contact"><span class="mui-icon mui-icon-phone"></span>联系督导</a>
+								</div>
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			{% else %}
+				<div class='noneshow'>暂无录用记录。</div>
+			{% endif %}
 		</div>
 		<div id="item3" class="mui-control-content">
-			<ul class="mui-table-view joblist">
-				{% for key, item in data['apply'] %}
-				{% if item['type'] == 'N' %}
-					<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
-						<a href="/job/detail?jobid={{ item['job_id'] }}">
-							<h4>{{ item['joinfo']['title'] }}</h4>
-							<div><span class="place">{{ item['joinfo']['district'] }}</span><span class="time">{{ item['joinfo']['start_date'] }} - {{ item['joinfo']['end_date'] }}</span></div>
-							<div><span class="price">{{ item['joinfo']['salary'] }}元/{{ item['joinfo']['salary_type'] }}</span><span class="pricetype">{{ item['joinfo']['salary_time'] }}</span></div>
-						</a>
-						<span class="stat">已拒绝</span>
-					</li>
-				{% endif %}
-				{% endfor %}
-			</ul>
+			{% if data['apply'] %}
+				<ul class="mui-table-view joblist">
+					{% for key, item in data['apply'] %}
+						{% if item['type'] == 'N' %}
+							<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
+								<a href="/job/detail?jobid={{ item['job_id'] }}">
+									<h4>{{ item['joinfo']['title'] }}</h4>
+									<div><span class="place">{{ item['joinfo']['district'] }}</span><span class="time">{{ item['joinfo']['start_date'] }} - {{ item['joinfo']['end_date'] }}</span></div>
+									<div><span class="price">{{ item['joinfo']['salary'] }}元/{{ item['joinfo']['salary_type'] }}</span><span class="pricetype">{{ item['joinfo']['salary_time'] }}</span></div>
+								</a>
+								<span class="stat">已拒绝</span>
+							</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			{% else %}
+				<div class='noneshow'>暂无拒绝记录。</div>
+			{% endif %}
 		</div>
 	</div>
 </div>
@@ -142,6 +156,22 @@
 		})
 		
 	});
+
+	$('#item2 .joblist').each(function(){
+		var child = $(this).find('li').length;
+		console.log(child);
+		if(child == 0){
+			$(this).append("<div class='noneshow'>暂无录用记录。</div>");
+		}
+	});
+
+	$('#item3 .joblist').each(function(){
+		var child = $(this).find('li').length;
+		console.log(child);
+		if(child == 0){
+			$(this).append("<div class='noneshow'>暂无拒绝记录。</div>");
+		}
+	})
 
 </script>
 {% endblock %}

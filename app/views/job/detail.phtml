@@ -37,37 +37,43 @@
 	    margin: 0 auto;
 	    position: relative;
 	    bottom: 20px;
+	    border-radius: 3rem;
 	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
 	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title">职位详情</h1>
+	<a href="/job/user" class="mui-pull-right"><span class="mui-icon mui-icon-contact"></span></a>
 </header>
 
 <div class="mui-content">
 	<div class="contain">
 		<div id="detail">
-			<h1><strong>{{ data['jobinfo']['title'] }}</strong></h1>
+			<h1>{{ data['jobinfo']['title'] }}</h1>
 			<h3>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}</h3>
-			<div class="info"><span class="spen">{{ data['jobinfo']['salary_time'] }}</span><span class="spen">{{ data['jobinfo']['type'] }}</span>{{ data['jobinfo']['num'] }}人</div>
+			<p><span class="title">兼职类型：</span>{{ data['jobinfo']['type'] }}</p>
+			<p><span class="title">招聘人数：</span>{{ data['jobinfo']['num'] }}人</p>
+			<p><span class="title">结算方式：</span>{{ data['jobinfo']['salary_time'] }}</p>
+			<p><span class="title">基本工资：</span>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}</p>
 			<hr>
-			<h2>职位详情</h2>
-			<h4>职位描述</h4>
+			<h2>工作内容</h2>
 			<p>{{ data['jobinfo']['content'] }}</h4>
-			<p><span class="spen">{{ data['jobinfo']['salary_time'] }}</span>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}</p>
-			<h4>工作时间</h4>
-			<p>开始日期：<span>{{ data['jobinfo']['start_date'] }}</span></p>
-			<p>结束日期：<span>{{ data['jobinfo']['end_date'] }}</span></p>
-			<div class="time">{{ data['jobinfo']['start_time'] }} ~ {{ data['jobinfo']['end_time'] }}</div>
+			<hr>
+			<h2>工作时间</h4>
+			<p><span class="title">开始日期：</span><span>{{ data['jobinfo']['start_date'] }}</span></p>
+			<p><span class="title">结束日期：</span><span>{{ data['jobinfo']['end_date'] }}</span></p>
+			<p><span class="title">上班时段：</span><span class="time">{{ data['jobinfo']['start_time'] }} ~ {{ data['jobinfo']['end_time'] }}</span></p>
 			<div class="cls"></div>
 			<hr>
+			<h2>工作地点</h2>
+			<br>
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
 					<a href="javascript:void(0)" class="mui-navigate-right" id="showMap">
 						<div class="addbox">
-							<div>工作地点</div>
-							<div>{{ data['jobinfo']['province'] }}{{ data['jobinfo']['city'] }}{{ data['jobinfo']['district'] }}{{ data['jobinfo']['address'] }}{{ data['jobinfo']['roomno'] }}</div>
+							<div style="font-size: 1.2rem;"><b>{{ data['jobinfo']['address'] }}{{ data['jobinfo']['roomno'] }}</b></div>
+							<div>{{ data['jobinfo']['province'] }}{{ data['jobinfo']['city'] }}{{ data['jobinfo']['district'] }}</div>
 						</div>
 						<input type="hidden" value="{{ data['jobinfo']['lng'] }}" id="lng">
 						<input type="hidden" value="{{ data['jobinfo']['lat'] }}" id="lat">
@@ -91,7 +97,7 @@
 			</ul>
 		</div>
 		<div id="tips">
-			<p>防骗提示：未标明收费的职位不会收取任何费用，若商家要求费用或押金，请提高警惕并第一时间向我们举报。<a href="javascript:void(0)">去投诉</a></p>
+			<p>防骗提示：未标明收费的职位不会收取任何费用，若商家要求费用或押金，请提高警惕并第一时间向我们举报。<a href="javascript:void(0)" class="tips">去投诉</a></p>
 		</div>
 		<br>
 		<br>
