@@ -53,7 +53,7 @@
 			{% if data['apply'] %}
 			<ul class="mui-table-view joblist">
 				{% for key, item in data['apply'] %}
-				  {%if {{ item['joinfo']['title'] }} %}
+				  {% if  item['joinfo']['title'] %}
 					<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
 						<a href="/job/detail?jobid={{ item['job_id'] }}">
 							<h4>{{ item['joinfo']['title'] }}</h4>
@@ -91,7 +91,7 @@
 			{% if data['apply'] %}
 				<ul class="mui-table-view joblist">
 					{% for key, item in data['apply'] %}
-						{% if item['type'] == 'Y' && {{ item['joinfo']['title'] }} %}
+						{% if item['type'] == 'Y' and item['joinfo']['title'] %}
 							<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
 								<a href="/job/detail?jobid={{ item['job_id'] }}">
 									<h4>{{ item['joinfo']['title'] }}</h4>
@@ -114,8 +114,8 @@
 		<div id="item3" class="mui-control-content">
 			{% if data['apply'] %}
 				<ul class="mui-table-view joblist">
-					{% for key, item in data['apply'] && {{ item['joinfo']['title'] }}  %}
-						{% if item['type'] == 'N' %}
+					{% for key, item in data['apply'] %}
+						{% if item['type'] == 'N' and item['joinfo']['title'] %}
 							<li class="mui-table-view-cell lists" idvalue="{{ item['id'] }}">
 								<a href="/job/detail?jobid={{ item['job_id'] }}">
 									<h4>{{ item['joinfo']['title'] }}</h4>
