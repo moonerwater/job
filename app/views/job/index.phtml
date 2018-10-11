@@ -358,24 +358,24 @@
 		
 	})
 
-	var map = new BMap.Map("allmap");
-	function myFun(result){
-		console.log(result)
-		//lng = result.center.lng;
-		//lat = result.center.lat;
-		var cityName = result.name;
-		nowCity = cityName;
-		var arr = cityName.split('市');
-		var losCity = arr[0];
-		console.log("当前定位城市:"+cityName);
-		$("#nowcity").text(losCity).attr('href',"/job/index?city="+cityName+"").attr("data-city",losCity);
-		//console.log(lng,lat)
-		//$("#lng").html(lng);
-		//$("#lat").html(lat);
-		star(losCity);
-	}
-	var myCity = new BMap.LocalCity();
-	myCity.get(myFun);
+	// var map = new BMap.Map("allmap");
+	// function myFun(result){
+	// 	console.log(result)
+	// 	//lng = result.center.lng;
+	// 	//lat = result.center.lat;
+	// 	var cityName = result.name;
+	// 	nowCity = cityName;
+	// 	var arr = cityName.split('市');
+	// 	var losCity = arr[0];
+	// 	console.log("当前定位城市:"+cityName);
+	// 	$("#nowcity").text(losCity).attr('href',"/job/index?city="+cityName+"").attr("data-city",losCity);
+	// 	//console.log(lng,lat)
+	// 	//$("#lng").html(lng);
+	// 	//$("#lat").html(lat);
+	// 	star(losCity);
+	// }
+	// var myCity = new BMap.LocalCity();
+	// myCity.get(myFun);
 
 	// $(function(){
 	// 	wx.getLocation({
