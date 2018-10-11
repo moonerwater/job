@@ -459,72 +459,64 @@
 	function star(cityName,cityAllName){
 		var urlArr = window.location.href.split('?');
 		var rulesA = urlArr[1];
-		//alert('123')
 	    if(rulesA){
-	    	//alert('456')
-	    	var rulesB = decodeURIComponent(rulesA);
+			var rulesB = decodeURIComponent(rulesA);
 	    	var rulesC = rulesB.split('=');
 	    	var city = rulesC[1];
 	    	nowCity = city;
 	    	var arr1 = city.split('市');
 			var losCity = arr1[0];
 			console.log(losCity);
-			var hasCity = 0;
-	    	$(".citys a").each(function(){
-	    		var _this = $(this);
-	    		var data = _this.attr("data-city");
-	    		var text = _this.text();
-	    		console.log(losCity,data)
-	    		if(data == losCity){
-	    			//alert(data+losCity)
-	    			_this.addClass('active');
-	    			//alert('789')
-	    			// alert(cityName+losCity)
-	    			hasCity = 1;
-	    			var provinceid = _this.attr("data-province");
-		    		var cityid = _this.attr("data-cityid");
-		    		//alert(provinceid+cityid)
-		    		if(cityName != losCity){
-		    // 			var btnArray = ['取消', '切换'];
-					 //    mui.confirm("您当前所在地区为"+cityName+"市，是否切换？", '切换城市', btnArray, function(e) {
-						// 	if (e.index == 1) {
-						// 		//$(".citys a[data-code='"+codA+"']").click();
-						// 		window.location.href = $(".citys a[data-city='"+cityName+"']").attr('href');
-						// 	} else {
-						// 		$("#Selections").text(text);
-				  //   			// showBindTel();
-				  //   			showCityList(provinceid,cityid);
-				  //   			Selection(keyword,district,type,sex,salary_time,order,city);
-						// 	}
-						// })
-						$("#Selections").text(text);
-						//checkdata();
-		    			showCityList(provinceid,cityid);
-		    			Selection(keyword,district,type,sex,salary_time,order,nowCity);
-		    		} else {
-		    			$("#Selections").text(text);
-		    			//checkdata();
-		    			showCityList(provinceid,cityid);
-		    			$("#nowcity").addClass('active');
-		    			Selection(keyword,district,type,sex,salary_time,order,nowCity);
-		    		}
-	    		}
-	    	});
-	    	if(hasCity == 0){
-	    		layer.msg('暂不支持该城市，即将跳转到深圳市。')
-	    		setTimeout("window.location.href = '/job/index?city=深圳市'",2000);
-	    	} 
 	    } else {
-			var btnArray = ['取消', '切换'];
-		    mui.confirm("您当前所在地区为"+nowCity+"，是否切换？", '切换城市', btnArray, function(e) {
-				if (e.index == 1) {
-					//$(".citys a[data-code='"+codA+"']").click();
-					window.location.href = '/job/index?city='+ nowCity;
-				} else {
-					window.location.href = '/job/index?city=深圳市';
-				}
-			})
+	    	var city = cityAllName;
+			nowCity = city;
+			var losCity = cityName;
 	    }
+	    var hasCity = 0;
+    	$(".citys a").each(function(){
+    		var _this = $(this);
+    		var data = _this.attr("data-city");
+    		var text = _this.text();
+    		console.log(losCity,data)
+    		if(data == losCity){
+    			//alert(data+losCity)
+    			_this.addClass('active');
+    			//alert('789')
+    			// alert(cityName+losCity)
+    			hasCity = 1;
+    			var provinceid = _this.attr("data-province");
+	    		var cityid = _this.attr("data-cityid");
+	    		//alert(provinceid+cityid)
+	    		if(cityName != losCity){
+	    // 			var btnArray = ['取消', '切换'];
+				 //    mui.confirm("您当前所在地区为"+cityName+"市，是否切换？", '切换城市', btnArray, function(e) {
+					// 	if (e.index == 1) {
+					// 		//$(".citys a[data-code='"+codA+"']").click();
+					// 		window.location.href = $(".citys a[data-city='"+cityName+"']").attr('href');
+					// 	} else {
+					// 		$("#Selections").text(text);
+			  //   			// showBindTel();
+			  //   			showCityList(provinceid,cityid);
+			  //   			Selection(keyword,district,type,sex,salary_time,order,city);
+					// 	}
+					// })
+					$("#Selections").text(text);
+					//checkdata();
+	    			showCityList(provinceid,cityid);
+	    			Selection(keyword,district,type,sex,salary_time,order,nowCity);
+	    		} else {
+	    			$("#Selections").text(text);
+	    			//checkdata();
+	    			showCityList(provinceid,cityid);
+	    			$("#nowcity").addClass('active');
+	    			Selection(keyword,district,type,sex,salary_time,order,nowCity);
+	    		}
+    		}
+    	});
+    	if(hasCity == 0){
+    		layer.msg('暂不支持该城市，即将跳转到深圳市。')
+    		setTimeout("window.location.href = '/job/index?city=深圳市'",2000);
+    	} 
 	}
 
 	function showCityList(province,city){

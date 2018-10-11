@@ -423,13 +423,14 @@ label {
 	}
 	#detail p.content {
 		line-height: 2rem;
+		word-wrap: break-word;
 	}
 	#detail span.time {
 		display: inline-block;
 		padding:2px 5px;
 		color:#3f4040;
 		/*background: #f6f6f6;*/
-		font-size:1rem;
+		font-size:1.2rem;
 	}
 	#detail li,
 	#leader li {
