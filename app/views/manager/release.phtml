@@ -199,7 +199,7 @@
 				<label>微信二维码</label>
 				<span class="btn btn-default fileinput-button">
 		            <span>上传图片...</span>
-		            <input type="file" accept="image/jpg ,image/jpeg ,image/png" onchange="imgChange(event)" id="file">
+		            <input type="file" accept="image/*" onchange="imgChange(event)" id="file">
 		        </span>
 		        <div class="imgbox rel">
 		        	{%if data['jobinfo']['id'] %}
@@ -392,7 +392,7 @@
 	    }
 
 	    jobpeople = $("#jobpeople").val();
-	    if(jobpeople.length == ''){
+	    if($.trim(jobpeople).length == '' || jobpeople == '0'){
 	        layer.msg('请填写招聘人数。');
 	        return false;
 	    }
