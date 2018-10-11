@@ -61,8 +61,14 @@ label {
 	a.footbtn {
 		line-height: 3rem;
 	}
+	a.footbtn:link,
+    a.footbtn:visited,
+    a.footbtn:hover,
+    a.footbtn:active {
+    	color:#fff;
+    }
 .mui-slider {
-		height:12.6rem;
+		/*height:12.6rem;*/
 		background: #fff;
 		margin-top:3rem;
 	}
@@ -277,7 +283,6 @@ label {
 		background: #fff;
 		padding:0;
 	}
-	
 	.joblist .lists > a {
 		white-space:inherit;
 		padding:15px;
@@ -397,7 +402,7 @@ label {
 		font-size:1.2rem;
 	}
 	#detail span.title {
-		color:#a5a5a5;
+		color:#3f4040;
 	}
 	#detail h2 {
 		font-size:1.4rem;
@@ -416,11 +421,14 @@ label {
 		font-size:1.2rem;
 		margin:1.4rem 0;
 	}
+	#detail p.content {
+		line-height: 2rem;
+	}
 	#detail span.time {
 		display: inline-block;
 		padding:2px 5px;
-		color:#7e7e7e;
-		background: #f6f6f6;
+		color:#3f4040;
+		/*background: #f6f6f6;*/
 		font-size:1rem;
 	}
 	#detail li,
@@ -667,8 +675,9 @@ label {
 	#SignAD {
 		display: block;
 		width: 100%;
-		height:6rem;
-		background: #fff url('/public/img/2.jpg') no-repeat center;
+		/*height:6rem;*/
+		padding:14.3%;
+		background: #fff url('/public/img/banner33.jpg') no-repeat center;
 		background-size: contain;
 	}
 	.resu {
@@ -850,8 +859,8 @@ label {
 		display: block;
 		width: 100%;
 		height:0;
-		padding:16.3%;
-		background: url('/public/img/managerbanner.jpg') no-repeat center;
+		padding:23.3%;
+		background: url('/public/img/banner33.jpg') no-repeat center;
 		background-size:contain;
 	}
 	#ManagerBanner + p {

@@ -58,7 +58,7 @@
 			<p><span class="title">基本工资：</span>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}</p>
 			<hr>
 			<h2>工作内容</h2>
-			<p>{{ data['jobinfo']['content'] }}</h4>
+			<p class="content">{{ data['jobinfo']['content'] }}</h4>
 			<hr>
 			<h2>工作时间</h4>
 			<p><span class="title">开始日期：</span><span>{{ data['jobinfo']['start_date'] }}</span></p>
@@ -84,7 +84,8 @@
 		<div id="leader">
 			<ul class="mui-table-view">
 				<li class="mui-table-view-cell">
-					<a class="mui-navigate-right">
+					<!-- <a class="mui-navigate-right"> -->
+					<a href="javascript:void(0)">
 						<div class="imgbox left">
 							<img src="{{ data['jobuserinfo']['headimgurl'] }}" class="auto-center">
 						</div>
@@ -97,7 +98,7 @@
 			</ul>
 		</div>
 		<div id="tips">
-			<p>防骗提示：未标明收费的职位不会收取任何费用，若商家要求费用或押金，请提高警惕并第一时间向我们举报。<a href="javascript:void(0)" class="tips">去投诉</a></p>
+			<p>防骗提示：未标明收费的职位不会收取任何费用，若商家要求费用或押金，请提高警惕并第一时间向我们举报。<a href="javascript:void(0)" class="tips none">去投诉</a></p>
 		</div>
 		<br>
 		<br>
