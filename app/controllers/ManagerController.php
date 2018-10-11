@@ -198,8 +198,76 @@ class ManagerController extends ControllerH5
             }
         }
 
-        if (!$title || !$province || !$city || !$district || !$address || !$lng || !$lat || !$content || !$type || !$sex || !$num || !$salary_type || !$salary || !$salary_time || !$start_date|| !$end_date|| !$start_time|| !$end_time|| !$real_name|| !$company_name|| !$phone|| !$wxcode_img) {
-            $this->replyFailure('data error');
+        if (!$title || !$province || !$city || !$district || !$address || !$lng || !$lat || !$content || !$type || !$sex
+            || !$num || !$salary_type || !$salary || !$salary_time || !$start_date|| !$end_date||
+            !$start_time|| !$end_time|| !$real_name|| !$company_name|| !$phone|| !$wxcode_img) {
+            if(!$title){
+                $this->replyFailure('title error');
+            }
+            if(!$province){
+                $this->replyFailure('province error');
+            }
+            if(!$city){
+                $this->replyFailure('city error');
+            }
+            if(!$district){
+                $this->replyFailure('district error');
+            }
+            if(!$address){
+                $this->replyFailure('address error');
+            }
+            if(!$lng){
+                $this->replyFailure('lng error');
+            }
+            if(!$lat){
+                $this->replyFailure('lat error');
+            }
+            if(!$content){
+                $this->replyFailure('content error');
+            }
+            if(!$type){
+                $this->replyFailure('type error');
+            }
+            if(!$sex){
+                $this->replyFailure('sex error');
+            }
+            if(!$num){
+                $this->replyFailure('num error');
+            }
+            if(!$salary_type){
+                $this->replyFailure('salary_type error');
+            }
+            if(!$salary){
+                $this->replyFailure('salary error');
+            }
+            if(!$salary_time){
+                $this->replyFailure('salary_time error');
+            }
+            if(!$start_date){
+                $this->replyFailure('start_date error');
+            }
+            if(!$end_date){
+                $this->replyFailure('end_date error');
+            }
+            if(!$start_time){
+                $this->replyFailure('start_time error');
+            }
+            if(!$end_time){
+                $this->replyFailure('end_time error');
+            }
+            if(!$real_name){
+                $this->replyFailure('real_name error');
+            }
+            if(!$company_name){
+                $this->replyFailure('company_name error');
+            }
+            if(!$phone){
+                $this->replyFailure('phone error');
+            }
+            if(!$wxcode_img){
+                $this->replyFailure('wxcode_img error');
+            }
+            //$this->replyFailure('data error');
             return '';
         }
 
