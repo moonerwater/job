@@ -289,7 +289,9 @@ class JobController extends ControllerH5
         $apply = $apply->toArray();
         foreach($apply as $k => $v){
             $job = \Job::findFirstById($v['job_id']);
-            $apply[$k]['joinfo'] = $job->toArray();
+            if($job){
+                $apply[$k]['joinfo'] = $job->toArray();
+            }
             $user = \User::findFirstById($v['user_id']);
             $apply[$k]['real_name'] = $user->real_name;
             $apply[$k]['headimgurl'] = $user->headimgurl;
