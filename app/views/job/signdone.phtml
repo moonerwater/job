@@ -5,8 +5,11 @@
 <style type="text/css">
 	body,html,.mui-content{
 		background: #fff;
+		padding-bottom: 5rem;
 	}
-	
+	.footbtn {
+		margin-top:1rem;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -18,7 +21,8 @@
 <div class="mui-content">
 	<div class="signdone">
 		<h2>报名成功！</h2>
-		<p>请长按二维码添加督导微信，或拨打电话联系督导。</p>
+		<p>长按二维码添加督导微信</p>
+		<p>或拨打电话联系督导</p>
 		<img class="QRcode" src="{{ data['jobinfo']['wxcode_img'] }}">
 		<!-- <button class="footbtn">拨打电话{{ data['jobinfo']['phone'] }}</button> -->
 		<a class="footbtn" href="tel:{{ data['jobinfo']['phone'] }}">拨打电话</a>

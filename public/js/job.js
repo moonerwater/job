@@ -50,6 +50,22 @@ function checkRate(input) {
 　　}
 }
 
+var $_GET = (function() {
+    var url = document.location.href;
+    var param = url.split("?");
+    var get = {};
+    if ("string" == typeof(param[1])) {
+        var pair = param[1].split("&");
+        for (var i in pair) {
+            var j = pair[i].split("=");
+            get[j[0]] = j[1]? j[1]: "";
+        }
+    }
+    return get;
+})();
+
+
+
 $(document).ready(function(){
 
 	$("#Sign").on('tap',function(){
@@ -161,23 +177,15 @@ $(document).ready(function(){
 			}, {
 				text: '促销导购'
 			}, {
+				text: '督导'
+			}, {
 				text: '地推拉访'
 			}, {
 				text: '商品代理'
 			}, {
 				text: '网赚试玩'
 			}, {
-				text: '核弹打蜡'
-			}, {
-				text: '编程'
-			}, {
-				text: '航母维修'
-			}, {
-				text: '打酱油'
-			}, {
 				text: '快递'
-			}, {
-				text: '抢银行'
 			}, {
 				text: '调研'
 			}, {

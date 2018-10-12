@@ -613,6 +613,10 @@
 		    AMap.event.addListener(autocomplete, "select", function(data){
 		        console.log(data)
 		        var area = data.poi.district;
+		        var arrC = data.poi.district.split('市');
+		        if(!arrC[1]){
+		        	area = area+$("#jobdistrict").val();
+		        }
 		        address = data.poi.name;
 		        console.log(address)
 		        lng = data.poi.location.lng;
