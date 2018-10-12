@@ -59,7 +59,10 @@ class ControllerH5 extends ControllerBase
                     if(!$user) {
                         $user = new \User();
                         $user->openid = $wxuser['openid'];
-                        $user->nickname = $wxuser['nickname'];
+                        $user->nickname = preg_replace('/[\x{10000}-\x{10FFFF}]/u', '', $wxuser['nickname']);
+                        if(!$user->nickname){
+                            $user->nickname = '微信用户';
+                        }
                         $user->headimgurl = $wxuser['headimgurl'];
                         $user->sex = ($wxuser['sex'] == 2 ? '女' : '男');
                         $user->create_time = time();
