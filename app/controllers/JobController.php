@@ -87,7 +87,8 @@ class JobController extends ControllerH5
             $jobinfo->view_num = $jobinfo->view_num +1;
             $jobinfo->save();
             $data['jobinfo'] = $jobinfo->toArray();
-            $data['jobinfo']['content'] = nl2br($data['jobinfo']['content']);
+            $data['jobinfo']['content2'] = nl2br($data['jobinfo']['content']);
+            $data['jobinfo']['content3'] = preg_replace("/\s/","",$data['jobinfo']['content']);
             $userinfo = \User::findFirstById($jobinfo->user_id);
             $data['jobuserinfo'] = $userinfo->toArray();
         }
