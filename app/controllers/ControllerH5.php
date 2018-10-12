@@ -48,15 +48,6 @@ class ControllerH5 extends ControllerBase
         return $obj;
     }
 
-    protected function filterEmoji($str) {
-        $str = preg_replace_callback( '/./u',
-            function (array $match) {
-                return strlen($match[0]) >= 4 ? '' : $match[0];
-            },
-            $str);
-        return $str;
-    }
-
     protected function checkNoUserGoLogin(){
         $code = $this->request->get('code', 'string');
         if($code) {
@@ -68,7 +59,7 @@ class ControllerH5 extends ControllerBase
                     if(!$user) {
                         $user = new \User();
                         $user->openid = $wxuser['openid'];
-                        $user->nickname = $this->filterEmoji($wxuser['nickname']);
+                        $user->nickname = $wxuser['nickname'];
                         $user->headimgurl = $wxuser['headimgurl'];
                         $user->sex = ($wxuser['sex'] == 2 ? '女' : '男');
                         $user->create_time = time();
