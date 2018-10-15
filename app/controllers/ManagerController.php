@@ -31,6 +31,26 @@ class ManagerController extends ControllerH5
         
     }
 
+    /*public function index2Action() {
+        $job = \User::find(array('', 'order' => 'id asc'));
+        $job = $job->toArray();
+        foreach($job as $k => $v){
+            if($v['wxcode_img'] && !file_exists(APP_PATH."public".$v['wxcode_img'])){
+                $temp = explode('/',$v['wxcode_img']);
+                $img = file_get_contents('http://18.188.242.251:83'.$v['wxcode_img']);
+                $mypath =  APP_PATH."public".'/'.$temp[1].'/'.$temp[2].'/'.$temp[3];
+                if(!file_exists($mypath)){
+                    //检查是否有该文件夹，如果没有就创建，并给予最高权限
+                    mkdir($mypath, 0700);
+                }
+                file_put_contents(APP_PATH."public".$v['wxcode_img'],$img);
+                //$this->base64_image_content($wxcode_img,'/upload/wxcode');
+            }
+        }
+        echo 'done1';
+
+    }*/
+
     public function logoutAction() {
         $this->session->remove('userinfo');
         $this->response->redirect('/manager/index');
