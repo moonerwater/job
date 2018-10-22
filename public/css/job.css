@@ -201,8 +201,9 @@ label {
 	}
 	#selection {
 		background: #fff;
+		border-top: 1px solid #f07527;
 		border-bottom: 1px solid #f07527;
-		height:3rem;
+		height:3.2rem;
 		position: relative;
 	}
 	#selection .col-xs-3 {
@@ -210,7 +211,7 @@ label {
 	}
 	#selection a.mui-navigate-right {
 		height: 100%;
-	    line-height: 3rem;
+	    line-height: 3.1rem;
 	    margin: 0;
 	    text-align: center;
 	    white-space: nowrap;
@@ -391,6 +392,7 @@ label {
 	#detail h1 {
 		font-size:1.6rem;
 		font-weight: 300;
+		width: 60%;
 	}
 	#detail h3 {
 		color:#e36a26;

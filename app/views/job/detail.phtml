@@ -27,11 +27,18 @@
 		padding:10px;
 		text-align: center;
 	}
-	footer a.collect {
+	footer a.collect,
+	footer a.share {
 		width: 40%;
 		background: #fff1dc;
 		color:#353638;
 	}
+	/*footer a.collect,
+	footer a.share {
+		width: 20%;
+		background: #fff1dc;
+		color:#353638;
+	}*/
 	footer a.sign {
 		width: 60%;
 		background: #f07527;
@@ -42,16 +49,25 @@
 	    bottom: 20px;
 	    border-radius: 3rem;
 	}
-	#share {
+	#Btn {
 		position: absolute;
-		top:54px;
-		right: 15px;
-		border:1px solid #f07527;
-		padding:5px 10px;
-		color:#f07527;
-		font-size:1.2rem;
-		text-align: center;
+		top:60px;
+		right: 13px;
 		z-index:8;
+		width: 48%;
+	}
+	#Btn button,
+	#Btn a {
+		display: block;
+		float:right;
+		border:1px solid #f07527;
+		padding:3px 5px;
+		color:#f07527;
+		font-size:1rem;
+		line-height: 1rem;
+		text-align: center;
+	    margin-left: 5px;
+	    border-radius: 3px;
 	}
 	#mask {
 		position: absolute;
@@ -69,13 +85,17 @@
 	}
 </style>
 
-<button id="share">分享</button>
+<div id="Btn">
+	<a href="/job/index">更多兼职</a>
+	<button class="share">分享</button>
+</div>
+
 <div id="mask">
 	<img src="/public/img/share.png">
 </div>
 
 <header class="mui-bar mui-bar-nav">
-	<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	<a class="backtoindex mui-icon mui-icon-left-nav mui-pull-left"></a>
 	<h1 class="mui-title">职位详情</h1>
 	<a href="/job/user" class="mui-pull-right"><span class="mui-icon mui-icon-contact"></span></a>
 </header>
@@ -83,21 +103,23 @@
 <div class="mui-content">
 	<div class="contain">
 		<div id="detail" class="rel">
-			
 			<h1>{{ data['jobinfo']['title'] }}</h1>
-			<h3>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}</h3>
+			<h3>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;浏览人数：{{ data['jobinfo']['view_num'] }}人</h3>
 			<p><span class="title">兼职类型：</span>{{ data['jobinfo']['type'] }}</p>
 			<p><span class="title">招聘人数：</span>{{ data['jobinfo']['num'] }}人</p>
 			<p><span class="title">结算方式：</span>{{ data['jobinfo']['salary_time'] }}</p>
 			<p><span class="title">基本工资：</span>{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}</p>
 			<hr>
 			<h2>工作内容</h2>
-			<p class="content">{{ data['jobinfo']['content'] }}</h4>
+			<p class="content">{{ data['jobinfo']['content2'] }}</h4>
 			<hr>
 			<h2>工作时间</h4>
 			<p><span class="title">开始日期：</span><span>{{ data['jobinfo']['start_date'] }}</span></p>
 			<p><span class="title">结束日期：</span><span>{{ data['jobinfo']['end_date'] }}</span></p>
+			{%if data['jobinfo']['start_time'] == '无'%}
+			{% else %}
 			<p><span class="title">上班时段：</span><span class="time">{{ data['jobinfo']['start_time'] }} ~ {{ data['jobinfo']['end_time'] }}</span></p>
+			{% endif %}
 			<div class="cls"></div>
 			<hr>
 			<h2>工作地点</h2>
@@ -142,6 +164,11 @@
 			<a href="#" class="collect none">收藏</a>
 			<a href="javascript:void(0)" class="sign" id="SignJob" data-id="{{ data['jobinfo']['id'] }}">立即报名</a>
 		</footer>
+		<!-- <footer>
+			<a href="javascript:void(0)" class="share">分享</a>
+			<a href="/job/index" class="collect">更多兼职</a>
+			<a href="javascript:void(0)" class="sign" id="SignJob" data-id="{{ data['jobinfo']['id'] }}">立即报名</a>
+		</footer> -->
 	</div>
 </div>
 
@@ -203,6 +230,24 @@
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script type="text/javascript">
 
+	//mui.init({
+		// beforeback: function(){
+		// 	var his = window.history.back();
+		// 	console.log(his)
+		// 	return false;
+		// }
+	//});
+
+	$(".backtoindex").on('tap',function(){
+		var his = window.history;
+		console.log(his.length)
+		if(his.length == 1){
+			window.location.href = '/job/index';
+		} else {
+			window.history.back();
+		}
+	})
+
 	wx.config({  
 	    debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。  
 	    appId: '{{ sign['appId'] }}', // 必填，公众号的唯一标识  
@@ -261,8 +306,8 @@
 		}
 
 		wx.onMenuShareAppMessage({
-            title: '兼职头条-招聘-'+"{{ data['jobinfo']['title'] }}", // 分享标题
-            desc: "{{ data['jobinfo']['content'] }}", // 分享描述
+            title: "{{ data['jobinfo']['title'] }}"+'-'+"{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}"+'-工资'+"{{ data['jobinfo']['salary_time'] }}", // 分享标题
+            desc: "{{ data['jobinfo']['content3'] }}", // 分享描述
             link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'http://job.hontyco.com/public/img/aboutus.png', // 自定义图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
@@ -276,7 +321,8 @@
         });
 
         wx.onMenuShareTimeline({
-			title: '兼职头条-招聘-'+"{{ data['jobinfo']['title'] }}",
+			//title: '兼职头条-招聘-'+"{{ data['jobinfo']['title'] }}",
+			title: "{{ data['jobinfo']['title'] }}"+'-'+"{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}"+'-工资'+"{{ data['jobinfo']['salary_time'] }}",
 			link: window.location.href,
 			imgUrl: 'http://job.hontyco.com/public/img/aboutus.png',
 			trigger: function (res) {
@@ -296,7 +342,7 @@
 
 	})
 
-	$("#share").on('tap',function(){
+	$(".share").on('tap',function(){
 		$("#mask").show();
 	});
 

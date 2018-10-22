@@ -30,6 +30,20 @@
 	    margin: 0 auto;
 	    margin-top: 2rem;
 	}
+	.resu .mui-input-row .notime {
+		width: 20%;
+		float:left;
+		height:40px;
+		line-height: 21px;
+		padding: 10px 0px;
+	}
+	.resu .mui-input-row .notime input {
+		width: auto;
+	}
+	.resu .mui-input-row .notime label {
+		line-height: 21px;
+		padding:0;
+	}
 </style>
 
 <header class="mui-bar mui-bar-nav">
@@ -39,7 +53,7 @@
 </header>
 
 <div class="mui-content" id="{{ data['jobinfo']['id'] }}">
-	<div class="release boxcontain container" id="RelA" data-rid="1">
+	<div class="release boxcontain container " id="RelA" data-rid="1">
 		<h2>发布兼职 (1)</h2>
 		<div class="statbox">
 			<img src="/public/img/relA.png" class="auto-center">
@@ -95,7 +109,7 @@
 			</div>
 			<div class="mui-input-row">
 				<label>薪资</label>
-				<input type="text" placeholder="请输入金额(元)" id="paymoney" value="{{ data['jobinfo']['salary'] }}">
+				<input type="number" placeholder="请输入金额(元)" id="paymoney" value="{{ data['jobinfo']['salary'] }}">
 			</div>
 			<div class="mui-input-row">
 				<label>结算时间</label>
@@ -127,11 +141,13 @@
 			</div>
 			<div class="mui-input-row">
 				<label>开始时间</label>
-				<input type="text" placeholder="请选择开始时间" id="jobstartime" value="{{ data['jobinfo']['start_time'] }}" data-options='{"type":"time"}' readonly="readonly">
+				<input type="text" placeholder="请选择开始时间" id="jobstartime" value="{{ data['jobinfo']['start_time'] }}" data-options='{"type":"time"}' readonly="readonly" style="width: 45%;">
+				<div class="notime"><input type="checkbox" name="notime" id="" value="无"><label for="">无</label></div>
 			</div>
 			<div class="mui-input-row">
 				<label>结束时间</label>
-				<input type="text" placeholder="请选择结束时间" id="jobendtime" value="{{ data['jobinfo']['end_time'] }}" data-options='{"type":"time"}' readonly="readonly">
+				<input type="text" placeholder="请选择结束时间" id="jobendtime" value="{{ data['jobinfo']['end_time'] }}" data-options='{"type":"time"}' readonly="readonly" style="width: 45%;">
+				<div class="notime"><input type="checkbox" name="notime" id="" value="无"><label for="">无</label></div>
 			</div>
 			<div class="mui-input-row">
 				<label>工作区域</label>
@@ -229,6 +245,20 @@
 <div id="allmap"></div>
 <script type="text/javascript">
 
+	$(".notime").on('click',function () {
+		var stat = $(this).find("input[name='notime']");
+        if (stat.is(':checked')) {
+            $("input[name='notime']").prop("checked", true);
+            $("#jobstartime").attr('disabled',true).val('无');
+            $("#jobendtime").attr('disabled',true).val('无');
+        } else {
+            $("input[name='notime']").prop("checked", false);
+            $("#jobstartime").attr('disabled',false).val('');
+            $("#jobendtime").attr('disabled',false).val('');
+        }
+    });
+
+
 	//index 1
 	var jobtype;
 	var jobsex;
@@ -288,7 +318,7 @@
         ctx.drawImage(img, 0, 0, img.width, img.height);
         var dataURL = canvas.toDataURL("image/png");
         base = dataURL;
-        console.log(base);
+        //console.log(base);
         //return dataURL; // return dataURL.replace("data:image/png;base64,", ""); 
     }
     function main(srcA) { 
@@ -316,7 +346,7 @@
 		        	var arC = arB[1];
 		            IMG.onload = function(){
 	      				var w = this.naturalWidth, h = this.naturalHeight , resizeW = 0, resizeH = 0;
-	      				console.log(w,h)
+	      				//console.log(w,h)
 	      			
 		      			var maxSize = {
 					        width: 1200,
@@ -335,13 +365,13 @@
 						    var base64 = canvas.toDataURL("image/"+arC, maxSize.level);
 						    $("#showImage")[0].src=base64;
 				            base = base64
-				            console.log(base)
+				            //console.log(base)
 					    } else {
 					        // 如果图片尺寸小于最大限制，则不压缩直接上传
 					        $("#showImage")[0].src=IMG.src;
 				            //var arr = IMG.src.split(',');
 				            base = IMG.src;
-				            console.log(base);
+				            //console.log(base);
 					    }   
 				    }
 	            }
@@ -365,6 +395,17 @@
 			}   
 		}      
 	}
+
+	function checkNum( text ) {
+	    var regu = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
+	    var re = new RegExp(regu);
+	    if (re.test(text)) {
+	        return true;  
+	    }
+	    else {
+	        return false;
+	    }
+	};
 
 	function showNextPage(page){
 		$('.release').hide();
@@ -428,8 +469,16 @@
 	    }
 
 	    paymoney = $("#paymoney").val();
-	    if(paymoney.length == '' || paymoney < 0){
+	    if($.trim(paymoney).length == ''){
 	        layer.msg('请填写薪资。');
+	        return false;
+	    }
+	    if(paymoney == '0' || paymoney == '0.0' || paymoney == '0.00'){
+	        layer.msg('薪资不能为0。');
+	        return false;
+	    }
+	    if(!checkNum(paymoney)){
+	        layer.msg('请填写正确薪资，如有小数点保留后两位。');
 	        return false;
 	    }
 

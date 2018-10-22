@@ -56,19 +56,19 @@
 							<a href="javascript:void(0)" class="extend">全网推</a>
 						</div>
 						<div class="col-xs-3 right">
-							<a href="/job/detail?jobid={{ item['id'] }}" class="share">查看</a>
+							<a href="javascript:void(0)" class="delete" data-id="{{ item['id'] }}">删除</a>
 						</div>
 						<div class="col-xs-3 right">
 							<a href="/manager/release?jobid={{ item['id'] }}" class="modify">修改</a>
 						</div>
 						<div class="col-xs-3 right">
-							<a href="javascript:void(0)" class="delete" data-id="{{ item['id'] }}">删除</a>
+							<a href="/job/detail?jobid={{ item['id'] }}" class="share">查看</a>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
 		{% else %}
-			<div class='noneshow'>您尚未发布工作。<a href="/manager/release" class="tips checkphone">去发布</a></div>
+			<div class='noneshow'>您尚未发布工作。<a href="javascript:void(0)" class="tips checkphone">去发布</a></div>
 		{% endif %}
 	</div>
 </div>
