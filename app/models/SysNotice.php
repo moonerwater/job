@@ -2,7 +2,7 @@
 
 use Phalcon\Mvc\Model;
 
-class DbSysNotice extends Model
+class SysNotice extends Model
 {
     public function initialize()
     {
@@ -11,6 +11,6 @@ class DbSysNotice extends Model
 
     public function getSource()
     {
-        return "db_sys_notice";
+        return "sys_notice";
     }
 }

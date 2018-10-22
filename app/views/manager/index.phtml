@@ -17,7 +17,6 @@
 	<h1 class="mui-title">岗位管理</h1>
 	<a class="mui-pull-right" href="/manager/admin"><span class="mui-icon mui-icon-contact"></span></a>
 </header>
-
 <div class="mui-content">
 	<a href="http://www.jobchain.us/db/index" id="ManagerBanner"></a>
 	<p id="checkphone" class="none">首次发布岗位需要实名认证<a href="/manager/info">去认证 > </a></p>
@@ -72,7 +71,11 @@
 		{% endif %}
 	</div>
 </div>
-
+{% if sysnotice %}
+有新消息
+{% else %}
+无新消息
+{% endif %}
 <script type="text/javascript">
 
 	$(function(){

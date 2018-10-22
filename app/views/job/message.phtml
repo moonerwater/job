@@ -1,0 +1,31 @@
+{% if data['sysnotice'] %}
+<div class="mui-content">
+	{% for key, item in data['sysnotice'] %}
+	<h2>{{  item['create_time'] }}</h2>
+	<div class="mui-card">
+		<div class="mui-card-content">
+			<div class="mui-card-content-inner">
+				{% if item['type'] == 'applyjob' %}
+				<h4>求职申请通知</h4>
+				{% elseif item['type'] == 'getjob' %}
+				<h4>求职录取通知</h4>
+				{% else %}
+				<h4>其它</h4>
+				{% endif %}
+				<p>{{item['content']}}</p>
+			</div>
+		</div>
+		<div class="mui-card-footer">
+			<a href="{{ item['url'] }}" class="link">查看详情</a>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+{% else %}
+<div class="mui-content">
+	<img src="/public/img/db/noneshow.png" class="nonepng">
+	<div class="noneshow">
+		暂无系统消息
+	</div>
+</div>
+{% endif %}

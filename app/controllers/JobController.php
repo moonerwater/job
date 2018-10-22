@@ -24,6 +24,8 @@ class JobController extends ControllerH5
         $signPackage = $jssdk->getSignPackage();
         $this->view->setVar('sign', $signPackage);
 
+        $sysnotice = \SysNotice::findFirst(" user_id = $userid and is_read = 'N' and type = 'getjob' ");
+        $this->view->setVar('sysnotice', $sysnotice);
     }
 
     public function getjobAction() {
@@ -139,6 +141,17 @@ class JobController extends ControllerH5
         $apply->create_time = time();
         $apply->last_time = time();
         $apply->save();
+
+        //
+        $sysnotice = new \SysNotice();
+        $sysnotice->type = 'applyjob';
+        $sysnotice->user_id = $job->user_id;
+        $sysnotice->content = '你发布的（'.$job->title.'）岗位收到了求职者的申请';
+        $sysnotice->url = '/manager/signlist?jobid='.$job->id;
+        $sysnotice->create_time = time();
+        $sysnotice->last_time = time();
+        $sysnotice->save();
+
         $this->reply(true, 0, array('apply_id'=>$apply->id));
     }
 
@@ -320,6 +333,28 @@ class JobController extends ControllerH5
         }
         $apply->delete();
         $this->reply('success', 0, $result);
+    }
+
+    public function messageAction() {
+        $this->checkNoUserGoLogin();
+        $userid = $this->userinfo['id'];
+
+        $sysnotice = \SysNotice::find(array('user_id = '.$userid." and type = 'getjob' ", 'order' => 'id desc'));
+        $sysnotice = $sysnotice->toArray();
+        foreach($sysnotice as $k => $v){
+            $sysnotice[$k]['create_time'] = date('Y-m-d H:i:s', $v['create_time']);
+
+            if($v['is_read'] == 'N'){
+                $sysnotice2 = \SysNotice::findFirstById($v['id']);
+                $sysnotice2->is_read = 'Y';
+                $sysnotice2->last_time = time();
+                $sysnotice2->save();
+            }
+
+        }
+        $data['sysnotice'] = $sysnotice;
+        //
+        $this->view->setVar('data', $data);
     }
 
     public function aboutusAction() {
