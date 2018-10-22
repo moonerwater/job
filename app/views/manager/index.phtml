@@ -72,9 +72,14 @@
 	</div>
 </div>
 {% if sysnotice %}
-有新消息
+<a href="/manager/message" id="Mesbox">
+	<span class="mui-icon mui-icon-email auto-center"></span>
+	<span class="dot"></span>
+</a>
 {% else %}
-无新消息
+<a href="/manager/message" id="Mesbox">
+	<span class="mui-icon mui-icon-email auto-center"></span>
+</a>
 {% endif %}
 <script type="text/javascript">
 

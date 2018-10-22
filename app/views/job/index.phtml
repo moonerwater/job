@@ -254,9 +254,14 @@
 	</ul>
 </div>
 {% if sysnotice %}
-有新消息
+<a href="/job/message" id="Mesbox">
+	<span class="mui-icon mui-icon-email auto-center"></span>
+	<span class="dot"></span>
+</a>
 {% else %}
-无新消息
+<a href="/job/message" id="Mesbox">
+	<span class="mui-icon mui-icon-email auto-center"></span>
+</a>
 {% endif %}
 <!-- <div id="Bind" class="alert none">
 	<h3>绑定手机</h3>
