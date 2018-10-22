@@ -50,7 +50,7 @@ class ControllerH5 extends ControllerBase
 
     protected function checkNoUserGoLogin(){
         $code = $this->request->get('code', 'string');
-        if($code) {
+        if($code && !$this->userinfo) {
             $power = $this->getWxPower($code);
             if($power['openid']){
                 $wxuser = $this->getWxUserInfo2($power['access_token'], $power['openid']);
