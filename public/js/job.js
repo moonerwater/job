@@ -1,7 +1,5 @@
 var indexload;
 
-
-
 function checkName( name ) {
     var regu = /[\u4E00-\u9FA5]/;
     var re = new RegExp(regu);
@@ -63,8 +61,6 @@ var $_GET = (function() {
     }
     return get;
 })();
-
-
 
 $(document).ready(function(){
 

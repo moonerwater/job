@@ -71,13 +71,15 @@ label {
     	display: block;
     	color: #f07527;
 		position: fixed;
-		width: 2rem;
-		height:2rem;
 		bottom: 3rem;
 		right:15px;
 		z-index:5;
 		background: #fff;
-    	box-shadow: 2px 2px 5px 0px #ccc;
+	}
+	#Mesbox .mui-icon {
+		width: 100%;
+		height: 100%;
+		font-size:30px;
 	}
 	#Mesbox .dot {
 		position: absolute;
@@ -529,12 +531,14 @@ label {
 		margin:0 auto;
 		background: #f4e5dc;
 		padding:15px;
+		margin-bottom: 4rem;
 	}
 	#tips p {
 		text-align: center;
 		font-size:1rem;
 		color:#f1a371;
 		margin:0;
+		line-height: 1.6rem;
 	}
 	a.tips {
 		text-decoration: underline !important;
@@ -709,8 +713,8 @@ label {
 		display: block;
 		width: 100%;
 		/*height:6rem;*/
-		padding:18.3%;
-		background: #fff url('/public/img/banner33.jpg') no-repeat center;
+		padding:14.3%;
+		background: #fff url('/public/img/bannerdone.jpg') no-repeat center;
 		background-size: contain;
 	}
 	.resu {

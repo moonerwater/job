@@ -15,7 +15,7 @@
 		position: fixed;
 		left:0;
 		bottom:0;
-		height:3rem;
+		height:7rem;
 		width: 100%;
 	}
 	footer a {
@@ -82,6 +82,31 @@
 	#mask img {
 		width: 100%;
 		display: block;
+	}
+	#detailAD {
+		position: fixed;
+		left:0;
+		bottom:0;
+		width: 100%;
+		/*height:5rem;*/
+		background: #e70101;
+	}
+	#detailAD img {
+		display: block;
+		max-width: 100%;
+		/*height:100%;*/
+		margin:0 auto;
+	}
+	#detailAD .closead {
+		position: absolute;
+		top:0;
+		right:0px;
+		width: 2rem;
+		height:100%;
+		color:#fff;
+	}
+	#detailAD .closead span {
+		height:2rem;
 	}
 </style>
 
@@ -172,6 +197,13 @@
 	</div>
 </div>
 
+<div id="detailAD" class="none">
+	<img src="/public/img/bannerbottom.jpg">
+	<div class="closead">
+		<span class="mui-icon mui-icon-close auto-center"></span>
+	</div>
+</div>
+
 <div id="Bind" class="alert none">
 	<h3>绑定手机</h3>
 	<br>
@@ -237,6 +269,22 @@
 		// 	return false;
 		// }
 	//});
+	
+	$("#detailAD .closead").on('tap',function(){
+		$("#detailAD").remove();
+		$('footer').css("height","3rem");
+		var date = new Date();
+		date.setTime(date.getTime()+60*60*24*3*1000);
+		$.cookie('showAD2', 1, {expires: date});
+	});
+
+	$(function(){
+		if($.cookie('showAD2') > 0){
+			$('footer').css("height","3rem");
+		} else {
+			$("#detailAD").show();
+		}
+	});
 
 	$(".backtoindex").on('tap',function(){
 		var his = window.history;
@@ -309,7 +357,7 @@
             title: "{{ data['jobinfo']['title'] }}"+'-'+"{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}"+'-工资'+"{{ data['jobinfo']['salary_time'] }}", // 分享标题
             desc: "{{ data['jobinfo']['content3'] }}", // 分享描述
             link: window.location.href, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://job.hontyco.com/public/img/aboutus.png', // 自定义图标
+            imgUrl: 'http://www.ijztt.com/public/img/aboutus.png', // 自定义图标
             type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
@@ -324,7 +372,7 @@
 			//title: '兼职头条-招聘-'+"{{ data['jobinfo']['title'] }}",
 			title: "{{ data['jobinfo']['title'] }}"+'-'+"{{ data['jobinfo']['salary'] }}元/{{ data['jobinfo']['salary_type'] }}"+'-工资'+"{{ data['jobinfo']['salary_time'] }}",
 			link: window.location.href,
-			imgUrl: 'http://job.hontyco.com/public/img/aboutus.png',
+			imgUrl: 'http://www.ijztt.com/public/img/aboutus.png',
 			trigger: function (res) {
 			// 不要尝试在trigger中使用ajax异步请求修改本次分享的内容，因为客户端分享操作是一个同步操作，这时候使用ajax的回包会还没有返回
 			//alert('用户点击发送给朋友');
